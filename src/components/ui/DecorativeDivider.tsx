@@ -5,7 +5,7 @@ interface DecorativeDividerProps {
 export function DecorativeDivider({ className = '' }: DecorativeDividerProps) {
   return (
     <div className={`mx-auto max-w-7xl px-4 md:px-8 ${className}`}>
-      <img src="/seperator.svg" alt="" className="h-5 w-full" />
+      <img src="/seperator_oval.svg" alt="" className="h-9 w-full" />
     </div>
   )
 }

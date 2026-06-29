@@ -105,6 +105,38 @@ export function HeroCarousel() {
           <ChevronRight size={18} />
         </button>
       </div>
+
+      {/* Decorative mahal scalloped frame at the bottom */}
+      <svg
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-10 block"
+        width="100%"
+        height="30"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <pattern
+            id="mahalFrame"
+            patternUnits="userSpaceOnUse"
+            width="75"
+            height="30"
+          >
+            {/* Fill below the scallop with the page background to hide the image (full tile width, no gaps) */}
+            <path
+              d="M73.9707 0.00179482C73.9707 2.52848 71.5245 4.57728 68.5063 4.57728H68.2385V9.85911H62.7929V11.3651C62.7929 13.5506 60.6771 15.3228 58.0669 15.3228H57.5932C57.5932 23.7637 40.6651 24.4472 37.4711 28.9336C34.277 24.4472 17.3489 23.7637 17.3489 15.3228H16.8752C14.265 15.3228 12.1492 13.5506 12.1492 11.3651V9.85911H6.70358V4.57728H6.43576C3.41757 4.57728 0.970703 2.52848 0.970703 0.00179482 L0 0 L0 30 L75 30 L75 0 Z"
+              fill="#fbf3e7"
+              stroke="none"
+            />
+            {/* Gold scallop line */}
+            <path
+              d="M73.9707 0.00179482C73.9707 2.52848 71.5245 4.57728 68.5063 4.57728H68.2385V9.85911H62.7929V11.3651C62.7929 13.5506 60.6771 15.3228 58.0669 15.3228H57.5932C57.5932 23.7637 40.6651 24.4472 37.4711 28.9336C34.277 24.4472 17.3489 23.7637 17.3489 15.3228H16.8752C14.265 15.3228 12.1492 13.5506 12.1492 11.3651V9.85911H6.70358V4.57728H6.43576C3.41757 4.57728 0.970703 2.52848 0.970703 0.00179482"
+              fill="none"
+              stroke="#BD8A3C"
+              strokeWidth="1.9403"
+            />
+          </pattern>
+        </defs>
+        <rect width="100%" height="30" fill="url(#mahalFrame)" />
+      </svg>
     </section>
   )
 }

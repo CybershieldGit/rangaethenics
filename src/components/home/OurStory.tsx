@@ -1,35 +1,62 @@
 import { Button } from '../ui/Button'
 
+function Corner({ className }: { className: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={`pointer-events-none absolute h-14 w-14 md:h-[72px] md:w-[72px] ${className}`}
+      style={{
+        backgroundColor: '#420001',
+        WebkitMaskImage: 'url(/corner_sqare.svg)',
+        maskImage: 'url(/corner_sqare.svg)',
+        WebkitMaskRepeat: 'no-repeat',
+        maskRepeat: 'no-repeat',
+        WebkitMaskSize: 'contain',
+        maskSize: 'contain',
+      }}
+    />
+  )
+}
+
 export function OurStory() {
   return (
-    <section id="about" className="bg-cream-dark py-12 md:py-16">
-      <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="overflow-hidden bg-cream-light">
-          <div className="grid md:grid-cols-2">
-            <div className="flex flex-col justify-center p-8 md:p-12 lg:p-16">
-              <p className="mb-3 text-xs font-bold tracking-[0.2em] text-maroon uppercase">
-                Our Story
-              </p>
-              <h2 className="font-serif text-3xl leading-tight text-maroon md:text-4xl lg:text-5xl">
-                Rooted in Tradition.
-                <br />
-                Crafted with Purpose.
+    <section id="about" className="relative" style={{ backgroundColor: '#fffaf3' }}>
+      {/* Maroon base that blends seamlessly into the footer below */}
+      <div className="absolute inset-x-0 bottom-0 h-28 bg-maroon md:h-36" />
+
+      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-8">
+        <div className="relative bg-[#F4EADB] px-10 py-14 md:px-20 md:py-16">
+          {/* Ornate frame inset from the card edges */}
+          <div className="pointer-events-none absolute inset-4 md:inset-5">
+            <Corner className="left-0 top-0" />
+            <Corner className="right-0 top-0 -scale-x-100" />
+            <Corner className="left-0 bottom-0 -scale-y-100" />
+            <Corner className="right-0 bottom-0 -scale-100" />
+
+            {/* Top & bottom gold rules, aligned just past the corner flourish */}
+            <span className="absolute top-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px]" />
+            <span className="absolute bottom-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px]" />
+          </div>
+
+          <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
+            <div className="flex flex-col justify-center">
+              <h2 className="font-serif font-bold leading-tight text-maroon text-3xl md:text-[40px]">
+                Rooted in Tradition. Crafted with Purpose.
               </h2>
-              <p className="mt-6 text-sm leading-relaxed text-text md:text-base">
-                At Rangethnics, we believe that every piece of jewellery and every thread of
-                fabric carries a story — of artisans who pour their hearts into their craft,
-                of traditions passed down through generations, and of celebrations that deserve
-                to be adorned with nothing less than elegance. Our collections are a tribute
-                to India&apos;s rich heritage, reimagined for the modern muse.
+              <p className="mt-5 max-w-md text-sm leading-relaxed text-text md:text-[15px]">
+                At Rang Ethnics, we believe in preserving our rich heritage through
+                intricate craftsmanship and elegant designs. Every piece we create is a
+                reflection of our passion for authenticity, quality, and timeless beauty.
               </p>
               <div className="mt-8">
                 <Button>Know More About Us</Button>
               </div>
             </div>
-            <div className="relative min-h-64 md:min-h-0">
+
+            <div className="relative aspect-[4/3] overflow-hidden md:aspect-[5/4]">
               <img
-                src="https://images.unsplash.com/photo-1558171813-4c088753af8f?w=800&h=600&fit=crop"
-                alt="Artisan crafting embroidery"
+                src="/images/about.png"
+                alt="Artisan crafting jewellery"
                 className="h-full w-full object-cover"
               />
             </div>
