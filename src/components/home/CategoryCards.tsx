@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Button } from '../ui/Button'
 
 const categories = [
@@ -7,6 +8,7 @@ const categories = [
     description: 'Timeless design that add touch of tradition to every moment.',
     cta: 'Shop Jewellery',
     image: '/images/jewellery.png',
+    to: '/jewellery',
     align: 'left' as const,
   },
   {
@@ -15,6 +17,7 @@ const categories = [
     description: 'Elegant weaves and contemporary style for everyone',
     cta: 'Shop Clothing',
     image: '/images/clothing.png',
+    to: '/clothing',
     align: 'right' as const,
   },
 ]
@@ -24,10 +27,10 @@ export function CategoryCards() {
     <section className="mx-auto max-w-7xl px-4 py-10 md:px-8">
       <div className="grid gap-4 md:grid-cols-2">
         {categories.map((cat) => (
-          <a
+          <Link
             key={cat.id}
             id={cat.id}
-            href={`#${cat.id}`}
+            to={cat.to}
             className="group relative block h-72 overflow-hidden md:h-80"
           >
             <img
@@ -47,7 +50,7 @@ export function CategoryCards() {
                 </Button>
               </div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

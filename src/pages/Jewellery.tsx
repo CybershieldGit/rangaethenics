@@ -1,0 +1,139 @@
+import { Button } from '../components/ui/Button'
+import { ArtisanBanner } from '../components/shared/ArtisanBanner'
+
+const categories = [
+  { name: 'Necklaces', image: '/images/Necklaces.png' },
+  { name: 'Earrings', image: '/images/Earrings.png' },
+  { name: 'Rings', image: '/images/Rings.png' },
+  { name: 'Bracelets', image: '/images/Bracelets.png' },
+  { name: 'Bangles', image: '/images/Bangles.png' },
+  { name: 'Anklets', image: '/images/Anklets.png' },
+  { name: 'Pendants', image: '/images/Pendants.png' },
+]
+
+const JEWELLERY_ARC_BORDER =
+  'M87.5 0.5C105.44 0.5 121.166 6.00745 130.274 14.2764L130.417 14.4062H135.581C140.889 14.4063 145.671 15.6937 149.108 17.749C152.556 19.8104 154.574 22.5878 154.574 25.5605V27.3555H155.507C160.814 27.3555 165.596 28.643 169.033 30.6982C172.481 32.7595 174.499 35.5373 174.5 38.5098V161.488C174.5 164.461 172.482 167.239 169.034 169.301C165.597 171.356 160.815 172.644 155.507 172.644H154.574V174.438C154.574 177.411 152.556 180.189 149.108 182.25C145.671 184.305 140.889 185.593 135.581 185.593H130.417L130.274 185.723C121.166 193.993 105.44 199.5 87.5 199.5C69.56 199.5 53.8343 193.992 44.7256 185.723L44.583 185.593H39.4189C34.1108 185.593 29.3291 184.305 25.8916 182.25C22.4442 180.189 20.4259 177.411 20.4258 174.438V172.644H19.4932C14.185 172.644 9.40337 171.356 5.96582 169.301C2.51807 167.239 0.500035 164.461 0.5 161.488V38.5107L0.505859 38.2324C0.627601 35.3647 2.62588 32.6952 5.96582 30.6982C9.40337 28.6429 14.185 27.3555 19.4932 27.3555H20.4258V25.5605C20.4259 22.5878 22.4442 19.8104 25.8916 17.749C29.3291 15.6937 34.1108 14.4063 39.4189 14.4062H44.583L44.7256 14.2764C53.8343 6.00745 69.5599 0.5 87.5 0.5Z'
+
+const JEWELLERY_ARC_MASK =
+  'M150.844 31.976H150.44V30.7716C150.44 24.7852 142.312 19.9325 132.284 19.9325H127.654C119.061 12.1438 104.29 7 87.5 7C70.7099 7 55.9388 12.1438 47.3459 19.9325H42.7161C32.6885 19.9325 24.5598 24.7852 24.5598 30.7716V31.976H24.1563C14.1287 31.976 6 36.8287 6 42.8151V157.184C6 163.17 14.1287 168.023 24.1563 168.023H24.5598V169.227C24.5598 175.214 32.6885 180.067 42.7161 180.067H47.3459C55.9388 187.855 70.7099 193 87.5 193C104.29 193 119.061 187.856 127.654 180.067H132.284C142.312 180.067 150.44 175.214 150.44 169.227V168.023H150.844C160.871 168.023 169 163.17 169 157.184V42.8141C168.998 36.8287 160.87 31.976 150.844 31.976Z'
+
+function JewelleryArcCard({
+  name,
+  image,
+}: {
+  name: string
+  image: string
+}) {
+  const clipId = `jewellery-arc-${name.toLowerCase()}`
+
+  return (
+    <a href="#" className="group flex flex-col items-center">
+      <svg
+        viewBox="0 0 175 200"
+        className="block w-full"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <clipPath id={clipId}>
+            <path d={JEWELLERY_ARC_MASK} />
+          </clipPath>
+        </defs>
+        <g clipPath={`url(#${clipId})`}>
+          <rect x="-10" y="4" width="195" height="198" fill="#1d1712" />
+          <image
+            href={image}
+            x="-10"
+            y="4"
+            width="195"
+            height="198"
+            preserveAspectRatio="xMidYMid slice"
+            className="origin-center transition-transform duration-500 group-hover:scale-110"
+          />
+        </g>
+        <path d={JEWELLERY_ARC_BORDER} fill="none" stroke="#BD8A3C" />
+      </svg>
+      <span className="mt-3 font-serif text-sm font-semibold text-maroon">
+        {name}
+      </span>
+    </a>
+  )
+}
+
+function JewelleryHero() {
+  return (
+    <section className="relative h-[85vh] min-h-[560px] max-h-[820px] overflow-hidden">
+      <img
+        src="/images/jewellery_hero.png"
+        alt=""
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+
+      <div className="relative z-10 flex h-full items-center">
+        <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
+          <div className="max-w-lg">
+            <h1 className="font-serif text-5xl leading-[1.1] text-white md:text-6xl lg:text-7xl">
+              Oxidised Jewellery
+            </h1>
+            <p className="mt-4 font-serif text-lg font-semibold text-white md:text-xl">
+              Timeless. Versatile. Unapologetically You.
+            </p>
+
+            <img
+              src="/hero_seperator.svg"
+              alt=""
+              className="mt-6 mb-8 h-4 w-auto"
+            />
+
+            <p className="mb-8 max-w-md text-base leading-relaxed text-white/75">
+              Explore our exclusive collection of oxidised jewellery crafted to add a
+              touch of tradition to your everyday look.
+            </p>
+
+            <Button className="!px-8 !py-3">Explore Collections</Button>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function CollectionGrid() {
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
+      <p className="text-center font-inter text-[22px] font-normal leading-[160%] tracking-normal text-[#BD8A3C]">
+        Crafted In Tradition
+      </p>
+      <h2 className="mt-1 text-center font-serif text-[36px] font-normal leading-[100%] tracking-normal text-maroon">
+        Our Oxidised Jewellery Collection
+      </h2>
+      <p className="mx-auto mt-3 max-w-xl text-center text-sm text-text md:text-base">
+        Handcrafted pieces that blend heritage craftsmanship with contemporary style.
+      </p>
+      <img
+        src="/historical_seperator.svg"
+        alt=""
+        className="mx-auto mt-4 h-4 w-auto"
+      />
+
+      <div className="mt-12 grid grid-cols-3 gap-5 sm:grid-cols-4 md:gap-6 lg:grid-cols-7">
+        {categories.map((category) => (
+          <JewelleryArcCard
+            key={category.name}
+            name={category.name}
+            image={category.image}
+          />
+        ))}
+      </div>
+    </section>
+  )
+}
+
+export function Jewellery() {
+  return (
+    <>
+      <JewelleryHero />
+      <CollectionGrid />
+      <ArtisanBanner imageSide="left" />
+    </>
+  )
+}

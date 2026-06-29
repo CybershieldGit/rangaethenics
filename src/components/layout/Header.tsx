@@ -1,13 +1,17 @@
 import { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { Search, ShoppingBag, Heart, Menu, X } from 'lucide-react'
 import { Button } from '../ui/Button'
 
 const navLinks = [
-  { label: 'Clothing', href: '#clothing' },
-  { label: 'Jewellery', href: '#jewellery' },
-  { label: 'About Us', href: '#about' },
-  { label: 'Contact Us', href: '#contact' },
+  { label: 'Clothing', to: '/clothing' },
+  { label: 'Jewellery', to: '/jewellery' },
+  { label: 'About Us', to: '/#about' },
+  { label: 'Contact Us', to: '/#contact' },
 ]
+
+const navLinkBase =
+  'font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] align-middle transition-colors'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -16,24 +20,30 @@ export function Header() {
     <header className="sticky top-0 z-50 bg-[#F7E7DA]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
         {/* Logo */}
-        <a href="/" className="flex items-center">
+        <Link to="/" className="flex items-center">
           <img
             src="/ranga_logo_header.svg"
             alt="Rangethnics"
             className="h-10 w-auto md:h-12"
           />
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-8 lg:flex">
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.label}
-              href={link.href}
-              className="font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] align-middle text-[#717171] transition-colors hover:text-maroon"
+              to={link.to}
+              className={({ isActive }) =>
+                `${navLinkBase} ${
+                  isActive
+                    ? 'text-maroon underline decoration-maroon decoration-1 underline-offset-[6px]'
+                    : 'text-[#717171] hover:text-maroon'
+                }`
+              }
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
 
@@ -69,14 +79,18 @@ export function Header() {
       {mobileOpen && (
         <nav className="border-t border-maroon/10 bg-[#F7E7DA] px-4 py-4 lg:hidden">
           {navLinks.map((link) => (
-            <a
+            <NavLink
               key={link.label}
-              href={link.href}
-              className="block py-2 font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] text-[#717171] hover:text-maroon"
+              to={link.to}
+              className={({ isActive }) =>
+                `block py-2 ${navLinkBase} ${
+                  isActive ? 'text-maroon' : 'text-[#717171] hover:text-maroon'
+                }`
+              }
               onClick={() => setMobileOpen(false)}
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
           <div className="mt-3 flex gap-3">
             <Button variant="outline" className="flex-1">Log In</Button>
