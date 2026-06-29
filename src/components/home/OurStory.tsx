@@ -34,8 +34,8 @@ export function OurStory() {
             <Corner className="right-0 bottom-0 -scale-100" />
 
             {/* Top & bottom gold rules, aligned just past the corner flourish */}
-            <span className="absolute top-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px]" />
-            <span className="absolute bottom-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px]" />
+            <span className="absolute top-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px] mt-1" />
+            <span className="absolute bottom-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px] mb-1" />
           </div>
 
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
