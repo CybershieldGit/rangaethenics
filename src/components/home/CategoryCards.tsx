@@ -6,8 +6,7 @@ const categories = [
     title: 'Jewellery',
     description: 'Timeless design that add touch of tradition to every moment.',
     cta: 'Shop Jewellery',
-    image:
-      'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=800&h=600&fit=crop',
+    image: '/images/jewellery.png',
     align: 'left' as const,
   },
   {
@@ -15,8 +14,7 @@ const categories = [
     title: 'Clothing',
     description: 'Elegant weaves and contemporary style for everyone',
     cta: 'Shop Clothing',
-    image:
-      'https://images.unsplash.com/photo-1610030459667-6b788b2a6d0e?w=800&h=600&fit=crop',
+    image: '/images/clothing.png',
     align: 'right' as const,
   },
 ]

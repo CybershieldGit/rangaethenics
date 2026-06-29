@@ -1,4 +1,5 @@
 import { SectionHeader } from '../ui/SectionHeader'
+import './GallerySection.css'
 
 const galleryImages = [
   'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=600&fit=crop',
@@ -10,23 +11,31 @@ const galleryImages = [
 ]
 
 export function GallerySection() {
+  const items = galleryImages.slice(0, 5)
+
   return (
-    <section className="py-12 md:py-16">
+    <section className="house-elegance">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <SectionHeader
           title="The House of Elegance"
           subtitle="Explore signature looks inspired by heritage and crafted for modern celebrations."
-          className="mb-10"
+          className="mb-12"
         />
+      </div>
 
-        <div className="flex gap-1 overflow-x-auto pb-2">
-          {galleryImages.map((src, i) => (
-            <div key={i} className="h-64 w-44 shrink-0 overflow-hidden md:h-80 md:w-52">
-              <img
-                src={src}
-                alt={`Gallery ${i + 1}`}
-                className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-              />
+      <svg width="0" height="0" style={{ position: 'absolute' }}>
+        <defs>
+          <clipPath id="galleryArc" clipPathUnits="objectBoundingBox">
+            <path d="M0,0 Q0.5,0.14 1,0 L1,0.82 Q0.5,0.68 0,0.82 Z" />
+          </clipPath>
+        </defs>
+      </svg>
+
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
+        <div className="house-elegance__row">
+          {items.map((src, i) => (
+            <div key={i} className="house-elegance__cell">
+              <img src={src} alt={`Gallery ${i + 1}`} />
             </div>
           ))}
         </div>

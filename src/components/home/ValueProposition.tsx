@@ -30,21 +30,23 @@ const features = [
 
 export function ValueProposition() {
   return (
-    <section className="bg-cream-dark py-10">
-      <div className="mx-auto grid max-w-7xl grid-cols-2 gap-6 px-4 md:grid-cols-5 md:gap-4 md:px-8">
-        {features.map((feature) => (
-          <div key={feature.title} className="flex flex-col items-center text-center md:flex-row md:items-start md:gap-3 md:text-left">
-            <feature.icon
-              size={28}
-              strokeWidth={1.2}
-              className="mb-2 shrink-0 text-maroon md:mb-0"
-            />
-            <div>
-              <p className="text-sm font-bold text-maroon">{feature.title}</p>
-              <p className="mt-0.5 text-xs text-text">{feature.description}</p>
+    <section className="py-10">
+      <div className="mx-auto max-w-7xl px-4 md:px-8">
+        <div className="grid grid-cols-2 gap-6 rounded-lg bg-[#F7EEE0] px-6 py-8 md:grid-cols-5 md:gap-4 md:px-8">
+          {features.map((feature) => (
+            <div key={feature.title} className="flex flex-col items-center text-center md:flex-row md:items-start md:gap-3 md:text-left">
+              <feature.icon
+                size={32}
+                strokeWidth={1.2}
+                className="mb-2 shrink-0 text-[#BD8A3C] md:mb-0"
+              />
+              <div>
+                <p className="text-sm font-semibold text-text-dark">{feature.title}</p>
+                <p className="mt-1 text-xs text-text">{feature.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   )

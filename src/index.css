@@ -4,8 +4,8 @@
   --color-cream: #fcf5eb;
   --color-cream-dark: #f5f1e6;
   --color-cream-light: #faf7f0;
-  --color-maroon: #4a0404;
-  --color-maroon-dark: #3a0303;
+  --color-maroon: #420001;
+  --color-maroon-dark: #2e0001;
   --color-maroon-light: #5d1a1d;
   --color-gold: #c5a059;
   --color-gold-light: #d4af37;
@@ -13,7 +13,8 @@
   --color-text-dark: #4a3f38;
 
   --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Lato", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-inter: "Inter", system-ui, sans-serif;
 }
 
 * {
@@ -24,10 +25,11 @@ body {
   margin: 0;
   font-family: var(--font-sans);
   color: var(--color-text-dark);
-  background-color: var(--color-cream);
+  background-color: #fffaf3;
   -webkit-font-smoothing: antialiased;
 }
 
 #root {
   min-height: 100vh;
+  background-color: #bd8a3c0f;
 }

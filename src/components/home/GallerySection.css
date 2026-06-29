@@ -1,0 +1,36 @@
+.house-elegance {
+  padding: 48px 0;
+  overflow: hidden;
+}
+
+/* The row keeps the exact 1440 x 420 design aspect ratio at every
+   width, so the clip-path curve always matches the spec proportions. */
+.house-elegance__row {
+  position: relative;
+  display: flex;
+  gap: 0;
+  width: 1440px;
+  max-width: 100%;
+  aspect-ratio: 1440 / 520;
+  margin: 0 auto;
+  clip-path: url(#galleryArc);
+  -webkit-clip-path: url(#galleryArc);
+}
+
+.house-elegance__cell {
+  flex: 1 1 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.house-elegance__cell img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.house-elegance__cell img:hover {
+  transform: scale(1.05);
+}

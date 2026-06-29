@@ -13,14 +13,15 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-cream">
+    <header className="sticky top-0 z-50 bg-[#F7E7DA]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
         {/* Logo */}
-        <a href="/" className="flex items-baseline gap-0.5">
-          <span className="font-serif text-2xl font-bold text-maroon italic md:text-3xl">
-            Rang
-          </span>
-          <span className="font-serif text-xl text-gold md:text-2xl">ethnics</span>
+        <a href="/" className="flex items-center">
+          <img
+            src="/ranga_logo_header.svg"
+            alt="Rangethnics"
+            className="h-10 w-auto md:h-12"
+          />
         </a>
 
         {/* Desktop Nav */}
@@ -29,7 +30,7 @@ export function Header() {
             <a
               key={link.label}
               href={link.href}
-              className="text-sm text-text-dark transition-colors hover:text-maroon"
+              className="font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] align-middle text-[#717171] transition-colors hover:text-maroon"
             >
               {link.label}
             </a>
@@ -38,20 +39,20 @@ export function Header() {
 
         {/* Actions */}
         <div className="flex items-center gap-3 md:gap-4">
-          <button type="button" aria-label="Search" className="text-maroon hover:text-maroon-dark">
+          <button type="button" aria-label="Search" className="text-[#1a1a1a] hover:text-maroon">
             <Search size={20} strokeWidth={1.5} />
           </button>
-          <button type="button" aria-label="Cart" className="hidden text-maroon hover:text-maroon-dark sm:block">
+          <button type="button" aria-label="Cart" className="hidden text-[#1a1a1a] hover:text-maroon sm:block">
             <ShoppingBag size={20} strokeWidth={1.5} />
           </button>
-          <button type="button" aria-label="Wishlist" className="hidden text-maroon hover:text-maroon-dark sm:block">
+          <button type="button" aria-label="Wishlist" className="hidden text-[#1a1a1a] hover:text-maroon sm:block">
             <Heart size={20} strokeWidth={1.5} />
           </button>
-          <a href="#login" className="hidden text-sm text-maroon hover:underline md:block">
+          <a href="#login" className="hidden font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] text-maroon hover:underline md:block">
             Log In
           </a>
-          <span className="hidden h-5 w-px bg-maroon/30 md:block" />
-          <Button className="hidden !px-5 !py-2 md:inline-flex">Sign Up</Button>
+          <span className="hidden h-5 w-px bg-[#1a1a1a]/40 md:block" />
+          <Button className="hidden rounded-md !px-5 !py-2 md:inline-flex">Sign Up</Button>
 
           <button
             type="button"
@@ -66,12 +67,12 @@ export function Header() {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <nav className="border-t border-maroon/10 bg-cream px-4 py-4 lg:hidden">
+        <nav className="border-t border-maroon/10 bg-[#F7E7DA] px-4 py-4 lg:hidden">
           {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="block py-2 text-sm text-text-dark hover:text-maroon"
+              className="block py-2 font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] text-[#717171] hover:text-maroon"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}

@@ -19,13 +19,9 @@ export function ProductSection({
   className = '',
 }: ProductSectionProps) {
   return (
-    <section className={`py-12 md:py-16 ${className}`}>
+    <section className={`py-5 md:py-6 ${className}`}>
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        {title ? (
-          <SectionHeader title={title} subtitle={subtitle} className="mb-10" />
-        ) : (
-          <div className="mb-6" />
-        )}
+        {title && <SectionHeader title={title} subtitle={subtitle} className="mb-10" />}
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
           {products.map((product) => (
