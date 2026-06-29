@@ -1,5 +1,18 @@
-const companyLinks = ['Portfolio', 'Services', 'Career', 'Contact']
-const quickLinks = ['Video Gallery', 'Creative Gallery', 'Case Studies', 'Testimonials']
+import { Link } from 'react-router-dom'
+
+const companyLinks = [
+  { label: 'About Us', to: '/#about' },
+  { label: 'Clothing', to: '/clothing' },
+  { label: 'Jewellery', to: '/jewellery' },
+  { label: 'Contact', to: '/#contact' },
+]
+
+const quickLinks = [
+  { label: 'New Arrivals', to: '/' },
+  { label: 'Shop Clothing', to: '/clothing' },
+  { label: 'Shop Jewellery', to: '/jewellery' },
+  { label: 'Home', to: '/' },
+]
 
 const socialLinks = [
   { label: 'Facebook', path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
@@ -13,11 +26,13 @@ export function Footer() {
       <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-14">
         {/* Top row: logo + social */}
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-          <a href="/" className="flex items-baseline">
-            <span className="font-serif text-4xl text-cream">R</span>
-            <span className="font-serif text-2xl text-cream">ang</span>
-            <span className="font-serif text-2xl text-gold">ethnics</span>
-          </a>
+          <Link to="/" className="inline-flex">
+            <img
+              src="/ranga_logo_header.svg"
+              alt="Rangethnics"
+              className="h-10 w-auto brightness-0 invert md:h-12"
+            />
+          </Link>
           <div className="flex gap-3">
             {socialLinks.map((social) => (
               <a
@@ -43,11 +58,21 @@ export function Footer() {
           <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
             <div>
               <p className="text-sm text-white/60">Send message</p>
-              <p className="mt-1.5 text-base font-semibold text-white">hello@rangethnic.com</p>
+              <a
+                href="mailto:hello@rangethnic.com"
+                className="mt-1.5 block text-base font-semibold text-white transition-colors hover:text-gold-light"
+              >
+                hello@rangethnic.com
+              </a>
             </div>
             <div>
               <p className="text-sm text-white/60">Say Hello!!</p>
-              <p className="mt-1.5 text-base font-semibold text-white">+91 9555 233 111</p>
+              <a
+                href="tel:+919555233111"
+                className="mt-1.5 block text-base font-semibold text-white transition-colors hover:text-gold-light"
+              >
+                +91 9555 233 111
+              </a>
             </div>
           </div>
 
@@ -57,10 +82,13 @@ export function Footer() {
               <h4 className="mb-3 text-sm font-semibold text-gold">Company</h4>
               <ul className="space-y-2.5">
                 {companyLinks.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-sm text-white/70 transition-colors hover:text-white">
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -69,10 +97,13 @@ export function Footer() {
               <h4 className="mb-3 text-sm font-semibold text-gold">Quicklinks</h4>
               <ul className="space-y-2.5">
                 {quickLinks.map((link) => (
-                  <li key={link}>
-                    <a href="#" className="text-sm text-white/70 transition-colors hover:text-white">
-                      {link}
-                    </a>
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -90,9 +121,13 @@ export function Footer() {
             Cybershield Tecnologies Private Limited.
           </p>
           <div className="flex items-center gap-4">
-            <a href="#" className="transition-colors hover:text-white">Privacy Policy</a>
+            <Link to="/" className="transition-colors hover:text-white">
+              Privacy Policy
+            </Link>
             <span className="h-3 w-px bg-white/30" />
-            <a href="#" className="transition-colors hover:text-white">Terms &amp; Conditions</a>
+            <Link to="/" className="transition-colors hover:text-white">
+              Terms &amp; Conditions
+            </Link>
           </div>
         </div>
       </div>
