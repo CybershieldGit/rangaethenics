@@ -1,0 +1,88 @@
+import { useState } from 'react'
+import { Search, ShoppingBag, Heart, Menu, X } from 'lucide-react'
+import { Button } from '../ui/Button'
+
+const navLinks = [
+  { label: 'Clothing', href: '#clothing' },
+  { label: 'Jewellery', href: '#jewellery' },
+  { label: 'About Us', href: '#about' },
+  { label: 'Contact Us', href: '#contact' },
+]
+
+export function Header() {
+  const [mobileOpen, setMobileOpen] = useState(false)
+
+  return (
+    <header className="sticky top-0 z-50 bg-cream">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
+        {/* Logo */}
+        <a href="/" className="flex items-baseline gap-0.5">
+          <span className="font-serif text-2xl font-bold text-maroon italic md:text-3xl">
+            Rang
+          </span>
+          <span className="font-serif text-xl text-gold md:text-2xl">ethnics</span>
+        </a>
+
+        {/* Desktop Nav */}
+        <nav className="hidden items-center gap-8 lg:flex">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="text-sm text-text-dark transition-colors hover:text-maroon"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Actions */}
+        <div className="flex items-center gap-3 md:gap-4">
+          <button type="button" aria-label="Search" className="text-maroon hover:text-maroon-dark">
+            <Search size={20} strokeWidth={1.5} />
+          </button>
+          <button type="button" aria-label="Cart" className="hidden text-maroon hover:text-maroon-dark sm:block">
+            <ShoppingBag size={20} strokeWidth={1.5} />
+          </button>
+          <button type="button" aria-label="Wishlist" className="hidden text-maroon hover:text-maroon-dark sm:block">
+            <Heart size={20} strokeWidth={1.5} />
+          </button>
+          <a href="#login" className="hidden text-sm text-maroon hover:underline md:block">
+            Log In
+          </a>
+          <span className="hidden h-5 w-px bg-maroon/30 md:block" />
+          <Button className="hidden !px-5 !py-2 md:inline-flex">Sign Up</Button>
+
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            className="text-maroon lg:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Nav */}
+      {mobileOpen && (
+        <nav className="border-t border-maroon/10 bg-cream px-4 py-4 lg:hidden">
+          {navLinks.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="block py-2 text-sm text-text-dark hover:text-maroon"
+              onClick={() => setMobileOpen(false)}
+            >
+              {link.label}
+            </a>
+          ))}
+          <div className="mt-3 flex gap-3">
+            <Button variant="outline" className="flex-1">Log In</Button>
+            <Button className="flex-1">Sign Up</Button>
+          </div>
+        </nav>
+      )}
+    </header>
+  )
+}
