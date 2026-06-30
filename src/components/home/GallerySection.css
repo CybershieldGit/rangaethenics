@@ -9,7 +9,7 @@
 .house-elegance__row {
   position: relative;
   display: flex;
-  gap: 0;
+  gap: 20px;
   width: 1440px;
   max-width: 100%;
   aspect-ratio: 1440 / 520;

@@ -30,7 +30,7 @@ const features = [
 
 export function ValueProposition() {
   return (
-    <section className="py-10">
+    <section className="pb-10">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="flex flex-col gap-6 md:flex-row md:items-center py-8 border-y border-[#BD8A3C]/30">
           {features.map((feature, idx) => (

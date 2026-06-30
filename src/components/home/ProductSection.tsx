@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { Product } from '../../data/products'
 import { SectionHeader } from '../ui/SectionHeader'
 import { Button } from '../ui/Button'
@@ -9,6 +10,7 @@ interface ProductSectionProps {
   subtitle?: string
   products: Product[]
   viewAllLabel?: string
+  viewAllTo?: string
   className?: string
 }
 
@@ -17,6 +19,7 @@ export function ProductSection({
   subtitle,
   products,
   viewAllLabel,
+  viewAllTo = '/products',
   className = '',
 }: ProductSectionProps) {
   return (
@@ -52,7 +55,9 @@ export function ProductSection({
 
         {viewAllLabel && (
           <div className="mt-10 text-center">
-            <Button>{viewAllLabel}</Button>
+            <Link to={viewAllTo}>
+              <Button>{viewAllLabel}</Button>
+            </Link>
           </div>
         )}
       </div>

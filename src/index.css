@@ -33,3 +33,40 @@ body {
   min-height: 100vh;
   background-color: #bd8a3c0f;
 }
+
+/* Dual-handle price range slider (Products page) */
+.range-thumb {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.range-thumb::-webkit-slider-thumb {
+  pointer-events: auto;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: #420001;
+  border: 2px solid #fffaf3;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: #420001;
+  border: 2px solid #fffaf3;
+  cursor: pointer;
+}

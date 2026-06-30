@@ -3,6 +3,7 @@ import { Layout } from './components/layout/Layout'
 import { Home } from './pages/Home'
 import { Clothing } from './pages/Clothing'
 import { Jewellery } from './pages/Jewellery'
+import { Products } from './pages/Products'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/clothing" element={<Clothing />} />
         <Route path="/jewellery" element={<Jewellery />} />
+        <Route path="/products" element={<Products />} />
       </Route>
     </Routes>
   )

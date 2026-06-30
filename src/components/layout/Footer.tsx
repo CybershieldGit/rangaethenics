@@ -8,7 +8,7 @@ const companyLinks = [
 ]
 
 const quickLinks = [
-  { label: 'New Arrivals', to: '/' },
+  { label: 'All Products', to: '/products' },
   { label: 'Shop Clothing', to: '/clothing' },
   { label: 'Shop Jewellery', to: '/jewellery' },
   { label: 'Home', to: '/' },

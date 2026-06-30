@@ -192,15 +192,19 @@ export function Clothing() {
           title="Most Selling"
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
           products={mostSellingClothing}
+          viewAllLabel="View All Most Selling"
+          viewAllTo="/products?category=clothing"
         />
         <OccasionSection />
         <ProductSection
           title="New Arrivals"
           subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
           products={newArrivalClothing}
+          viewAllLabel="View All New Arrivals"
+          viewAllTo="/products?category=clothing"
         />
       </div>
-      <FestiveSpecial eyebrow="FLAT 15% OFF" note="On all jewellery" />
+      <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" />
       <ValueProposition />
       <OurStory background="transparent" />
     </div>

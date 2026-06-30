@@ -168,6 +168,7 @@ export function Jewellery() {
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
           products={mostSellingJewelry}
           viewAllLabel="View All Most Selling"
+          viewAllTo="/products?category=jewellery"
         />
         <OccasionSection />
         <ProductSection
@@ -175,6 +176,7 @@ export function Jewellery() {
           subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
           products={newArrivalJewelry}
           viewAllLabel="View All New Arrivals"
+          viewAllTo="/products?category=jewellery"
         />
       </div>
       <FestiveSpecial />
