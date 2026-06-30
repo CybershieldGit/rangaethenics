@@ -1,5 +1,15 @@
 import { Button } from '../components/ui/Button'
 import { ArtisanBanner } from '../components/shared/ArtisanBanner'
+import { DecorativeDivider } from '../components/ui/DecorativeDivider'
+import { ProductSection } from '../components/home/ProductSection'
+import { OccasionSection } from '../components/home/OccasionSection'
+import { ValueProposition } from '../components/home/ValueProposition'
+import { OurStory } from '../components/home/OurStory'
+import { FestiveSpecial } from '../components/jewellery/FestiveSpecial'
+import { mostSellingJewelry, newArrivalJewelry } from '../data/products'
+
+const GOLD_TINT =
+  'brightness(0) saturate(100%) invert(63%) sepia(42%) saturate(523%) hue-rotate(358deg) brightness(89%) contrast(86%)'
 
 const categories = [
   { name: 'Necklaces', image: '/images/Necklaces.png' },
@@ -89,7 +99,12 @@ function JewelleryHero() {
               touch of tradition to your everyday look.
             </p>
 
-            <Button className="!px-8 !py-3">Explore Collections</Button>
+            <div className="flex flex-wrap gap-4">
+              <Button className="!px-8 !py-3">Get Now</Button>
+              <Button variant="ghost" className="!px-8 !py-3">
+                Explore Collections
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -100,20 +115,32 @@ function JewelleryHero() {
 function CollectionGrid() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
-      <p className="text-center font-inter text-[22px] font-normal leading-[160%] tracking-normal text-[#BD8A3C]">
-        Crafted In Tradition
-      </p>
-      <h2 className="mt-1 text-center font-serif text-[36px] font-normal leading-[100%] tracking-normal text-maroon">
-        Our Oxidised Jewellery Collection
-      </h2>
-      <p className="mx-auto mt-3 max-w-xl text-center text-sm text-text md:text-base">
+      <div className="flex items-center gap-3 md:gap-4">
+        <h2
+          className="font-serif whitespace-nowrap text-maroon"
+          style={{
+            fontWeight: 700,
+            fontSize: '40px',
+            lineHeight: '100%',
+            letterSpacing: '0px',
+          }}
+        >
+          Oxidised Jewellery Collection
+        </h2>
+        <img
+          src="/square_straight.svg"
+          alt=""
+          className="h-px min-w-0 flex-1 object-fill"
+          style={{ filter: GOLD_TINT }}
+        />
+        <span className="flex shrink-0 items-center gap-2">
+          <img src="/flower.svg" alt="" className="h-5 w-auto" />
+          <span className="block h-px w-12" style={{ backgroundColor: '#BD8A3C' }} />
+        </span>
+      </div>
+      <p className="mt-3 max-w-xl text-sm text-text md:text-base">
         Handcrafted pieces that blend heritage craftsmanship with contemporary style.
       </p>
-      <img
-        src="/historical_seperator.svg"
-        alt=""
-        className="mx-auto mt-4 h-4 w-auto"
-      />
 
       <div className="mt-12 grid grid-cols-3 gap-5 sm:grid-cols-4 md:gap-6 lg:grid-cols-7">
         {categories.map((category) => (
@@ -133,7 +160,25 @@ export function Jewellery() {
     <>
       <JewelleryHero />
       <CollectionGrid />
-      <ArtisanBanner imageSide="left" />
+      <ArtisanBanner imageSide="right" image="/images/about.png" />
+      <DecorativeDivider className="py-6" />
+      <ProductSection
+        title="Most Selling"
+        subtitle="Loved by our customers for their elegance, quality and timeless charm."
+        products={mostSellingJewelry}
+        viewAllLabel="View All Most Selling"
+        slider
+      />
+      <OccasionSection />
+      <ProductSection
+        title="New Arrivals"
+        subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
+        products={newArrivalJewelry}
+        viewAllLabel="View All New Arrivals"
+      />
+      <FestiveSpecial />
+      <ValueProposition />
+      <OurStory />
     </>
   )
 }
