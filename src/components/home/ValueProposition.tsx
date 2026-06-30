@@ -1,30 +1,30 @@
-import { Heart, Award, Leaf, Gift, Headphones } from 'lucide-react'
+import { ShieldCheck, Sparkles, Package, RotateCcw, Headphones } from 'lucide-react'
 
 const features = [
   {
-    icon: Heart,
-    title: 'Handcrafted with love',
-    description: 'Made by skilled artisans.',
+    icon: ShieldCheck,
+    title: 'Authentic',
+    description: '100% Original',
   },
   {
-    icon: Award,
-    title: 'Premium Quality',
-    description: 'Finest materials, flawless finish.',
+    icon: Sparkles,
+    title: 'Handcrafted',
+    description: 'With Love',
   },
   {
-    icon: Leaf,
-    title: 'Timeless Design',
-    description: 'Blending tradition with modern style.',
-  },
-  {
-    icon: Gift,
+    icon: Package,
     title: 'Secure Packaging',
-    description: 'Packed with care, delivered safely.',
+    description: 'Delivered Safe',
+  },
+  {
+    icon: RotateCcw,
+    title: 'Easy Returns',
+    description: 'Hassle-Free',
   },
   {
     icon: Headphones,
-    title: 'Customer First',
-    description: "We're here for you always.",
+    title: 'Support',
+    description: "We're Here For You",
   },
 ]
 
@@ -32,18 +32,26 @@ export function ValueProposition() {
   return (
     <section className="py-10">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="grid grid-cols-2 gap-6 rounded-lg bg-[#F7EEE0] px-6 py-8 md:grid-cols-5 md:gap-4 md:px-8">
-          {features.map((feature) => (
-            <div key={feature.title} className="flex flex-col items-center text-center md:flex-row md:items-start md:gap-3 md:text-left">
+        <div className="flex flex-col gap-6 md:flex-row md:items-center py-8 border-y border-[#BD8A3C]/30">
+          {features.map((feature, idx) => (
+            <div
+              key={feature.title}
+              className="flex flex-1 items-center justify-center gap-4 px-4 relative"
+            >
               <feature.icon
                 size={32}
                 strokeWidth={1.2}
-                className="mb-2 shrink-0 text-[#BD8A3C] md:mb-0"
+                className="text-[#BD8A3C]"
               />
-              <div>
-                <p className="text-sm font-semibold text-text-dark">{feature.title}</p>
-                <p className="mt-1 text-xs text-text">{feature.description}</p>
+              <div className="text-left">
+                <p className="text-sm font-semibold uppercase tracking-wider text-text-dark">
+                  {feature.title}
+                </p>
+                <p className="text-xs text-text">{feature.description}</p>
               </div>
+              {idx < features.length - 1 && (
+                <div className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-8 w-px bg-[#BD8A3C]/30" />
+              )}
             </div>
           ))}
         </div>

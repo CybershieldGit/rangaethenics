@@ -32,17 +32,17 @@ const collections = [
 
 function ClothingHero() {
   return (
-    <section className="relative h-[85vh] min-h-[560px] max-h-[820px] overflow-hidden">
+    <section className="relative h-[80vh] min-h-[560px] max-h-[780px] overflow-hidden bg-[#F7E9DB]">
       <img
         src="/images/clothing_hero.png"
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover"
+        alt="Rooted in Heritage"
+        className="absolute inset-0 h-full w-full object-cover object-[75%_center] md:object-right"
       />
 
       <div className="relative z-10 flex h-full items-center">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
-          <div className="max-w-lg">
-            <h1 className="font-serif text-5xl leading-[1.1] text-maroon md:text-6xl lg:text-7xl">
+          <div className="max-w-xl lg:max-w-2xl">
+            <h1 className="font-serif text-5xl leading-[1.15] text-maroon md:text-6xl lg:text-7xl font-normal">
               Rooted in Heritage,
               <br />
               Woven for You
@@ -54,14 +54,20 @@ function ClothingHero() {
               className="mt-6 mb-8 h-4 w-auto"
             />
 
-            <p className="mb-8 max-w-md text-base leading-relaxed text-text-dark">
-              Timeless Indian styles in soft cotton and exquisite oxidised jewellery,
-              crafted to celebrate every occasion.
+            <p className="mb-8 max-w-md text-base md:text-lg leading-relaxed text-text-dark font-normal">
+              Timeless Indian styles in soft cotton and exquisite
+              <br />
+              oxidised jewellery.
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Button className="!px-8 !py-3">Our Story</Button>
-              <Button variant="outline" className="!px-8 !py-3">
+              <Button className="!px-8 !py-3.5 bg-maroon text-white border-maroon hover:bg-maroon-dark transition-all duration-300 font-semibold tracking-wide">
+                Our Story
+              </Button>
+              <Button
+                variant="outline"
+                className="!px-8 !py-3.5 border-[#BD8A3C] text-maroon hover:bg-[#BD8A3C] hover:text-white transition-all duration-300 font-semibold tracking-wide"
+              >
                 Explore Collections
               </Button>
             </div>
@@ -141,7 +147,7 @@ function ArchCard({ name, image }: { name: string; image: string }) {
 function CollectionsGrid() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
-      <div className="flex items-center gap-3 md:gap-4">
+      <div className="flex items-center gap-3 md:gap-4 mb-12">
         <h2
           className="font-serif whitespace-nowrap text-maroon"
           style={{
@@ -164,9 +170,6 @@ function CollectionsGrid() {
           <span className="block h-px w-12" style={{ backgroundColor: '#BD8A3C' }} />
         </span>
       </div>
-      <p className="mt-3 mb-12 max-w-xl text-sm text-text md:text-base">
-        Discover timeless weaves and contemporary silhouettes crafted for every occasion.
-      </p>
 
       <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
         {collections.map((item) => (
@@ -179,28 +182,27 @@ function CollectionsGrid() {
 
 export function Clothing() {
   return (
-    <>
+    <div style={{ backgroundColor: '#f5eee1' }}>
       <ClothingHero />
       <CollectionsGrid />
-      <ArtisanBanner imageSide="right" image="/images/about.png" />
-      <DecorativeDivider className="py-6" />
-      <ProductSection
-        title="Most Selling"
-        subtitle="Loved by our customers for their elegance, quality and timeless charm."
-        products={mostSellingClothing}
-        viewAllLabel="View All Most Selling"
-        slider
-      />
-      <OccasionSection />
-      <ProductSection
-        title="New Arrivals"
-        subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
-        products={newArrivalClothing}
-        viewAllLabel="View All New Arrivals"
-      />
-      <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" />
+      <ArtisanBanner image="/images/ourstory.png" />
+      <div style={{ backgroundColor: '#f0e7d6' }}>
+        <DecorativeDivider className="py-6" />
+        <ProductSection
+          title="Most Selling"
+          subtitle="Loved by our customers for their elegance, quality and timeless charm."
+          products={mostSellingClothing}
+        />
+        <OccasionSection />
+        <ProductSection
+          title="New Arrivals"
+          subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
+          products={newArrivalClothing}
+        />
+      </div>
+      <FestiveSpecial eyebrow="FLAT 15% OFF" note="On all jewellery" />
       <ValueProposition />
-      <OurStory />
-    </>
+      <OurStory background="transparent" />
+    </div>
   )
 }

@@ -51,7 +51,7 @@ export const newArrivalJewelry: Product[] = [
 export const newArrivalClothing: Product[] = [
   {
     id: 'c1',
-    category: 'Rani Pink Silk Saree',
+    category: 'Rani Pink Silk Saree- Rajasthani',
     name: 'Rajasthani',
     subtitle: 'Rani Pink Silk Saree',
     price: 5950,
@@ -61,9 +61,9 @@ export const newArrivalClothing: Product[] = [
   },
   {
     id: 'c2',
-    category: 'Maroon Lehenga',
+    category: 'Rani Pink Silk Saree- Rajasthani',
     name: 'Bridal Collection',
-    subtitle: 'Maroon Lehenga',
+    subtitle: 'Rani Pink Silk Saree',
     price: 5950,
     originalPrice: 9950,
     image: '/images/Lehengas.png',
@@ -71,9 +71,9 @@ export const newArrivalClothing: Product[] = [
   },
   {
     id: 'c3',
-    category: 'Salwar Kameez',
+    category: 'Rani Pink Silk Saree- Rajasthani',
     name: 'Festive Set',
-    subtitle: 'Maroon Kurta Set',
+    subtitle: 'Rani Pink Silk Saree',
     price: 5950,
     originalPrice: 9950,
     image: '/images/Kurta_Sets.png',
@@ -81,12 +81,12 @@ export const newArrivalClothing: Product[] = [
   },
   {
     id: 'c4',
-    category: 'Green Silk Suit',
+    category: 'Rani Pink Silk Saree- Rajasthani',
     name: 'Festive Edit',
-    subtitle: 'Green Dupatta Set',
+    subtitle: 'Rani Pink Silk Saree',
     price: 5950,
     originalPrice: 9950,
-    image: '/images/Dupattas.png',
+    image: '/images/sarees.png',
     aspectRatio: 'portrait',
   },
 ]
