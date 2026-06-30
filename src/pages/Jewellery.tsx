@@ -157,30 +157,31 @@ function CollectionGrid() {
 
 export function Jewellery() {
   return (
-    <>
+    <div style={{ backgroundColor: '#f5eee1' }}>
       <JewelleryHero />
       <CollectionGrid />
-      <ArtisanBanner imageSide="right" image="/images/about.png" />
-      <DecorativeDivider className="py-6" />
-      <ProductSection
-        title="Most Selling"
-        subtitle="Loved by our customers for their elegance, quality and timeless charm."
-        products={mostSellingJewelry}
-        viewAllLabel="View All Most Selling"
-        viewAllTo="/products?category=jewellery"
-        slider
-      />
-      <OccasionSection />
-      <ProductSection
-        title="New Arrivals"
-        subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
-        products={newArrivalJewelry}
-        viewAllLabel="View All New Arrivals"
-        viewAllTo="/products?category=jewellery"
-      />
+      <div style={{ backgroundColor: '#f0e7d6' }}>
+        <ArtisanBanner image="/images/ourstory.png" />
+        <DecorativeDivider className="py-6" />
+        <ProductSection
+          title="Most Selling"
+          subtitle="Loved by our customers for their elegance, quality and timeless charm."
+          products={mostSellingJewelry}
+          viewAllLabel="View All Most Selling"
+          viewAllTo="/products?category=jewellery"
+        />
+        <OccasionSection />
+        <ProductSection
+          title="New Arrivals"
+          subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
+          products={newArrivalJewelry}
+          viewAllLabel="View All New Arrivals"
+          viewAllTo="/products?category=jewellery"
+        />
+      </div>
       <FestiveSpecial />
       <ValueProposition />
-      <OurStory />
-    </>
+      <OurStory background="transparent" />
+    </div>
   )
 }
