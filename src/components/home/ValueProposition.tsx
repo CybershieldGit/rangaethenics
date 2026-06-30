@@ -30,7 +30,7 @@ const features = [
 
 export function ValueProposition() {
   return (
-    <section className="py-10">
+    <section className="pb-10">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="grid grid-cols-2 gap-6 rounded-lg bg-[#F7EEE0] px-6 py-8 md:grid-cols-5 md:gap-4 md:px-8">
           {features.map((feature) => (

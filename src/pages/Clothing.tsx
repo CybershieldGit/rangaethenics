@@ -189,6 +189,7 @@ export function Clothing() {
         subtitle="Loved by our customers for their elegance, quality and timeless charm."
         products={mostSellingClothing}
         viewAllLabel="View All Most Selling"
+        viewAllTo="/products?category=clothing"
         slider
       />
       <OccasionSection />
@@ -197,6 +198,7 @@ export function Clothing() {
         subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
         products={newArrivalClothing}
         viewAllLabel="View All New Arrivals"
+        viewAllTo="/products?category=clothing"
       />
       <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" />
       <ValueProposition />

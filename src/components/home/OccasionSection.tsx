@@ -37,13 +37,7 @@ export function OccasionSection() {
       {/* Heading with trailing divider */}
       <div className="flex items-center gap-3 md:gap-4">
         <h2
-          className="font-serif whitespace-nowrap text-maroon"
-          style={{
-            fontWeight: 700,
-            fontSize: '48px',
-            lineHeight: '100%',
-            letterSpacing: '0px',
-          }}
+          className="font-serif whitespace-nowrap text-maroon text-[28px] font-bold leading-none tracking-normal sm:text-4xl md:text-[48px]"
         >
           Shop by Occasion
         </h2>
@@ -57,7 +51,10 @@ export function OccasionSection() {
           <img src="/flower.svg" alt="" className="h-5 w-auto" />
           <span
             className="block h-px w-12"
-            style={{ backgroundColor: '#BD8A3C' }}
+            style={{
+              background:
+                'linear-gradient(to right, transparent, #BD8A3C 50%, transparent)',
+            }}
           />
         </span>
       </div>
