@@ -9,20 +9,6 @@ export interface Product {
   aspectRatio: 'square' | 'portrait'
 }
 
-const jewelryImages = [
-  'https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=600&h=600&fit=crop',
-  'https://images.unsplash.com/photo-1506630448388-4e683c67ddb0?w=600&h=600&fit=crop',
-]
-
-const clothingImages = [
-  'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500&h=700&fit=crop',
-  'https://images.unsplash.com/photo-1610030459667-6b788b2a6d0e?w=500&h=700&fit=crop',
-  'https://images.unsplash.com/photo-1595587637422-90cff7def97a?w=500&h=700&fit=crop',
-  'https://images.unsplash.com/photo-1617627143750-d86bc21e3367?w=500&h=700&fit=crop',
-]
-
 export const newArrivalJewelry: Product[] = [
   {
     id: 'j1',
@@ -30,7 +16,7 @@ export const newArrivalJewelry: Product[] = [
     name: 'Tribal Necklace',
     price: 5950,
     originalPrice: 9950,
-    image: jewelryImages[0],
+    image: '/images/Necklaces.png',
     aspectRatio: 'square',
   },
   {
@@ -39,7 +25,7 @@ export const newArrivalJewelry: Product[] = [
     name: 'Jhumka Earrings',
     price: 5950,
     originalPrice: 9950,
-    image: jewelryImages[1],
+    image: '/images/Earrings.png',
     aspectRatio: 'square',
   },
   {
@@ -48,16 +34,16 @@ export const newArrivalJewelry: Product[] = [
     name: 'Cuff Bracelet',
     price: 5950,
     originalPrice: 9950,
-    image: jewelryImages[2],
+    image: '/images/Bracelets.png',
     aspectRatio: 'square',
   },
   {
     id: 'j4',
     category: 'Oxidised',
-    name: 'Floral Earrings',
+    name: 'Floral Pendant',
     price: 5950,
     originalPrice: 9950,
-    image: jewelryImages[3],
+    image: '/images/Pendants.png',
     aspectRatio: 'square',
   },
 ]
@@ -70,7 +56,7 @@ export const newArrivalClothing: Product[] = [
     subtitle: 'Rani Pink Silk Saree',
     price: 5950,
     originalPrice: 9950,
-    image: clothingImages[0],
+    image: '/images/sarees.png',
     aspectRatio: 'portrait',
   },
   {
@@ -80,27 +66,27 @@ export const newArrivalClothing: Product[] = [
     subtitle: 'Maroon Lehenga',
     price: 5950,
     originalPrice: 9950,
-    image: clothingImages[1],
+    image: '/images/Lehengas.png',
     aspectRatio: 'portrait',
   },
   {
     id: 'c3',
     category: 'Salwar Kameez',
     name: 'Festive Set',
-    subtitle: 'Maroon Salwar Kameez',
+    subtitle: 'Maroon Kurta Set',
     price: 5950,
     originalPrice: 9950,
-    image: clothingImages[2],
+    image: '/images/Kurta_Sets.png',
     aspectRatio: 'portrait',
   },
   {
     id: 'c4',
-    category: 'Rani Pink Silk Saree',
-    name: 'Rajasthani',
-    subtitle: 'Rani Pink Silk Saree',
+    category: 'Green Silk Suit',
+    name: 'Festive Edit',
+    subtitle: 'Green Dupatta Set',
     price: 5950,
     originalPrice: 9950,
-    image: clothingImages[3],
+    image: '/images/Dupattas.png',
     aspectRatio: 'portrait',
   },
 ]
@@ -110,10 +96,44 @@ export const mostSellingClothing: Product[] = newArrivalClothing.map((p, i) => (
   id: `ms${i + 1}`,
 }))
 
-export const mostSellingJewelry: Product[] = newArrivalJewelry.map((p, i) => ({
-  ...p,
-  id: `msj${i + 1}`,
-}))
+export const mostSellingJewelry: Product[] = [
+  {
+    id: 'msj1',
+    category: 'Oxidised',
+    name: 'Statement Necklace',
+    price: 5950,
+    originalPrice: 9950,
+    image: '/images/Pendants.png',
+    aspectRatio: 'square',
+  },
+  {
+    id: 'msj2',
+    category: 'Oxidised',
+    name: 'Jhumka Earrings',
+    price: 5950,
+    originalPrice: 9950,
+    image: '/images/Earrings.png',
+    aspectRatio: 'square',
+  },
+  {
+    id: 'msj3',
+    category: 'Oxidised',
+    name: 'Temple Necklace',
+    price: 5950,
+    originalPrice: 9950,
+    image: '/images/Necklaces.png',
+    aspectRatio: 'square',
+  },
+  {
+    id: 'msj4',
+    category: 'Oxidised',
+    name: 'Floral Bangles',
+    price: 5950,
+    originalPrice: 9950,
+    image: '/images/Bangles.png',
+    aspectRatio: 'square',
+  },
+]
 
 export function formatPrice(amount: number): string {
   return `₹${amount.toLocaleString('en-IN')}`

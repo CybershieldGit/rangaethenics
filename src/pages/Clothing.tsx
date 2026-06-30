@@ -1,5 +1,15 @@
 import { Button } from '../components/ui/Button'
 import { ArtisanBanner } from '../components/shared/ArtisanBanner'
+import { DecorativeDivider } from '../components/ui/DecorativeDivider'
+import { ProductSection } from '../components/home/ProductSection'
+import { OccasionSection } from '../components/home/OccasionSection'
+import { ValueProposition } from '../components/home/ValueProposition'
+import { OurStory } from '../components/home/OurStory'
+import { FestiveSpecial } from '../components/jewellery/FestiveSpecial'
+import { mostSellingClothing, newArrivalClothing } from '../data/products'
+
+const GOLD_TINT =
+  'brightness(0) saturate(100%) invert(63%) sepia(42%) saturate(523%) hue-rotate(358deg) brightness(89%) contrast(86%)'
 
 const collections = [
   {
@@ -131,17 +141,32 @@ function ArchCard({ name, image }: { name: string; image: string }) {
 function CollectionsGrid() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
-      <p className="text-center font-inter text-[22px] font-normal leading-[160%] tracking-normal text-[#BD8A3C]">
-        Explore Our World
+      <div className="flex items-center gap-3 md:gap-4">
+        <h2
+          className="font-serif whitespace-nowrap text-maroon"
+          style={{
+            fontWeight: 700,
+            fontSize: '40px',
+            lineHeight: '100%',
+            letterSpacing: '0px',
+          }}
+        >
+          Our Signature Collections
+        </h2>
+        <img
+          src="/square_straight.svg"
+          alt=""
+          className="h-px min-w-0 flex-1 object-fill"
+          style={{ filter: GOLD_TINT }}
+        />
+        <span className="flex shrink-0 items-center gap-2">
+          <img src="/flower.svg" alt="" className="h-5 w-auto" />
+          <span className="block h-px w-12" style={{ backgroundColor: '#BD8A3C' }} />
+        </span>
+      </div>
+      <p className="mt-3 mb-12 max-w-xl text-sm text-text md:text-base">
+        Discover timeless weaves and contemporary silhouettes crafted for every occasion.
       </p>
-      <h2 className="mt-1 text-center font-serif text-[36px] font-normal leading-[100%] tracking-normal text-maroon">
-        Our Signature Collections
-      </h2>
-      <img
-        src="/historical_seperator.svg"
-        alt=""
-        className="mx-auto mt-4 mb-12 h-4 w-auto"
-      />
 
       <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
         {collections.map((item) => (
@@ -157,7 +182,25 @@ export function Clothing() {
     <>
       <ClothingHero />
       <CollectionsGrid />
-      <ArtisanBanner imageSide="right" />
+      <ArtisanBanner imageSide="right" image="/images/about.png" />
+      <DecorativeDivider className="py-6" />
+      <ProductSection
+        title="Most Selling"
+        subtitle="Loved by our customers for their elegance, quality and timeless charm."
+        products={mostSellingClothing}
+        viewAllLabel="View All Most Selling"
+        slider
+      />
+      <OccasionSection />
+      <ProductSection
+        title="New Arrivals"
+        subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
+        products={newArrivalClothing}
+        viewAllLabel="View All New Arrivals"
+      />
+      <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" />
+      <ValueProposition />
+      <OurStory />
     </>
   )
 }
