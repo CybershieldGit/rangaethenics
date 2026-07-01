@@ -20,7 +20,7 @@ function Corner({ className }: { className: string }) {
 
 export function OurStory({ background = '#fffaf3' }: { background?: string }) {
   return (
-    <section id="about" className="relative" style={{ backgroundColor: background }}>
+    <section id="about" className="relative mt-[58px]" style={{ backgroundColor: background }}>
       {/* Maroon base that blends seamlessly into the footer below */}
       <div className="absolute inset-x-0 bottom-0 h-28 bg-maroon md:h-36" />
 
