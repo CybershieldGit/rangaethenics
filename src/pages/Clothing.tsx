@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Button } from '../components/ui/Button'
 import { ArtisanBanner } from '../components/shared/ArtisanBanner'
 import { DecorativeDivider } from '../components/ui/DecorativeDivider'
@@ -6,7 +7,12 @@ import { OccasionSection } from '../components/home/OccasionSection'
 import { ValueProposition } from '../components/home/ValueProposition'
 import { OurStory } from '../components/home/OurStory'
 import { FestiveSpecial } from '../components/jewellery/FestiveSpecial'
-import { mostSellingClothing, newArrivalClothing } from '../data/products'
+import { getProducts } from '../utils/api'
+import {
+  Product,
+  mostSellingClothing as fallbackMostSelling,
+  newArrivalClothing as fallbackNewArrival,
+} from '../data/products'
 
 const GOLD_TINT =
   'brightness(0) saturate(100%) invert(63%) sepia(42%) saturate(523%) hue-rotate(358deg) brightness(89%) contrast(86%)'
@@ -181,6 +187,22 @@ function CollectionsGrid() {
 }
 
 export function Clothing() {
+  const [mostSelling, setMostSelling] = useState<Product[]>(fallbackMostSelling)
+  const [newArrivals, setNewArrivals] = useState<Product[]>(fallbackNewArrival)
+
+  useEffect(() => {
+    async function loadClothing() {
+      const { products } = await getProducts({ category: 'clothing', pageSize: 100 })
+      if (products && products.length > 0) {
+        const liveMostSelling = products.filter(p => p.isBestSelling)
+        const liveNewArrivals = products.filter(p => p.isNewArrival)
+        if (liveMostSelling.length > 0) setMostSelling(liveMostSelling.slice(0, 4))
+        if (liveNewArrivals.length > 0) setNewArrivals(liveNewArrivals.slice(0, 4))
+      }
+    }
+    loadClothing()
+  }, [])
+
   return (
     <div style={{ backgroundColor: '#f5eee1' }}>
       <ClothingHero />
@@ -191,7 +213,7 @@ export function Clothing() {
         <ProductSection
           title="Most Selling"
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
-          products={mostSellingClothing}
+          products={mostSelling}
           viewAllLabel="View All Most Selling"
           viewAllTo="/products?category=clothing"
         />
@@ -199,7 +221,7 @@ export function Clothing() {
         <ProductSection
           title="New Arrivals"
           subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
-          products={newArrivalClothing}
+          products={newArrivals}
           viewAllLabel="View All New Arrivals"
           viewAllTo="/products?category=clothing"
         />

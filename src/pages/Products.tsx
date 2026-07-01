@@ -4,12 +4,14 @@ import { Check } from 'lucide-react'
 import { Breadcrumb } from '../components/ui/Breadcrumb'
 import { Dropdown } from '../components/ui/Dropdown'
 import { ProductCard } from '../components/home/ProductCard'
+import { getProducts } from '../utils/api'
 import {
   allProducts,
   formatPrice,
   PRICE_MAX,
   PRICE_MIN,
   type ProductType,
+  Product,
 } from '../data/products'
 
 type CategoryFilter = 'all' | ProductType
@@ -92,9 +94,20 @@ export function Products() {
   const [selectedFabrics, setSelectedFabrics] = useState<string[]>([])
   const [showMoreFabrics, setShowMoreFabrics] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
+  const [products, setProducts] = useState<Product[]>(allProducts)
+
+  useEffect(() => {
+    async function loadAllProducts() {
+      const { products: liveProducts } = await getProducts({ pageSize: 100 })
+      if (liveProducts && liveProducts.length > 0) {
+        setProducts(liveProducts)
+      }
+    }
+    loadAllProducts()
+  }, [])
 
   const filteredProducts = useMemo(() => {
-    let results = allProducts.filter((product) => {
+    let results = products.filter((product) => {
       if (category !== 'all' && product.type !== category) return false
       if (newArrivalsOnly && bestSellingOnly) {
         if (!product.isNewArrival && !product.isBestSelling) return false

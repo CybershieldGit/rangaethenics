@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Search, ShoppingBag, Heart, Menu, X } from 'lucide-react'
 import { Button } from '../ui/Button'
 
@@ -15,6 +15,15 @@ const navLinkBase =
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const location = useLocation()
+
+  const isLinkActive = (to: string) => {
+    if (to.includes('#')) {
+      const [path, hash] = to.split('#')
+      return location.pathname === path && location.hash === `#${hash}`
+    }
+    return location.pathname === to
+  }
 
   return (
     <header className="sticky top-0 z-50 bg-[#F7E7DA]">
@@ -30,21 +39,22 @@ export function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-8 lg:flex">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.label}
-              to={link.to}
-              className={({ isActive }) =>
-                `${navLinkBase} ${
-                  isActive
+          {navLinks.map((link) => {
+            const active = isLinkActive(link.to)
+            return (
+              <Link
+                key={link.label}
+                to={link.to}
+                className={`${navLinkBase} ${
+                  active
                     ? 'text-maroon underline decoration-maroon decoration-1 underline-offset-[6px]'
                     : 'text-[#717171] hover:text-maroon'
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
         </nav>
 
         {/* Actions */}
@@ -78,20 +88,21 @@ export function Header() {
       {/* Mobile Nav */}
       {mobileOpen && (
         <nav className="border-t border-maroon/10 bg-[#F7E7DA] px-4 py-4 lg:hidden">
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.label}
-              to={link.to}
-              className={({ isActive }) =>
-                `block py-2 ${navLinkBase} ${
-                  isActive ? 'text-maroon' : 'text-[#717171] hover:text-maroon'
-                }`
-              }
-              onClick={() => setMobileOpen(false)}
-            >
-              {link.label}
-            </NavLink>
-          ))}
+          {navLinks.map((link) => {
+            const active = isLinkActive(link.to)
+            return (
+              <Link
+                key={link.label}
+                to={link.to}
+                className={`block py-2 ${navLinkBase} ${
+                  active ? 'text-maroon' : 'text-[#717171] hover:text-maroon'
+                }`}
+                onClick={() => setMobileOpen(false)}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
           <div className="mt-3 flex gap-3">
             <Button variant="outline" className="flex-1">Log In</Button>
             <Button className="flex-1">Sign Up</Button>

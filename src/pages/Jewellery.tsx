@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Button } from '../components/ui/Button'
 import { ArtisanBanner } from '../components/shared/ArtisanBanner'
 import { DecorativeDivider } from '../components/ui/DecorativeDivider'
@@ -6,7 +7,12 @@ import { OccasionSection } from '../components/home/OccasionSection'
 import { ValueProposition } from '../components/home/ValueProposition'
 import { OurStory } from '../components/home/OurStory'
 import { FestiveSpecial } from '../components/jewellery/FestiveSpecial'
-import { mostSellingJewelry, newArrivalJewelry } from '../data/products'
+import { getProducts } from '../utils/api'
+import {
+  Product,
+  mostSellingJewelry as fallbackMostSelling,
+  newArrivalJewelry as fallbackNewArrival,
+} from '../data/products'
 
 const GOLD_TINT =
   'brightness(0) saturate(100%) invert(63%) sepia(42%) saturate(523%) hue-rotate(358deg) brightness(89%) contrast(86%)'
@@ -156,6 +162,22 @@ function CollectionGrid() {
 }
 
 export function Jewellery() {
+  const [mostSelling, setMostSelling] = useState<Product[]>(fallbackMostSelling)
+  const [newArrivals, setNewArrivals] = useState<Product[]>(fallbackNewArrival)
+
+  useEffect(() => {
+    async function loadJewellery() {
+      const { products } = await getProducts({ category: 'jewellery', pageSize: 100 })
+      if (products && products.length > 0) {
+        const liveMostSelling = products.filter(p => p.isBestSelling)
+        const liveNewArrivals = products.filter(p => p.isNewArrival)
+        if (liveMostSelling.length > 0) setMostSelling(liveMostSelling.slice(0, 4))
+        if (liveNewArrivals.length > 0) setNewArrivals(liveNewArrivals.slice(0, 4))
+      }
+    }
+    loadJewellery()
+  }, [])
+
   return (
     <div style={{ backgroundColor: '#f5eee1' }}>
       <JewelleryHero />
@@ -166,7 +188,7 @@ export function Jewellery() {
         <ProductSection
           title="Most Selling"
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
-          products={mostSellingJewelry}
+          products={mostSelling}
           viewAllLabel="View All Most Selling"
           viewAllTo="/products?category=jewellery"
         />
@@ -174,7 +196,7 @@ export function Jewellery() {
         <ProductSection
           title="New Arrivals"
           subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
-          products={newArrivalJewelry}
+          products={newArrivals}
           viewAllLabel="View All New Arrivals"
           viewAllTo="/products?category=jewellery"
         />
