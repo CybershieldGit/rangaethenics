@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 const companyLinks = [
-  { label: 'About Us', to: '/#about' },
+  { label: 'About Us', to: '/about' },
   { label: 'Clothing', to: '/clothing' },
   { label: 'Jewellery', to: '/jewellery' },
   { label: 'Contact', to: '/#contact' },
