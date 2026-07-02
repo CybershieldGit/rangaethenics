@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom'
 import { Search, ShoppingBag, Heart, Menu, X, CircleUserRound, LogOut } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { useAuth } from '../../context/AuthContext'
+import { useWishlist } from '../../context/WishlistContext'
+import { useCart } from '../../context/CartContext'
 
 const navLinks = [
   { label: 'Clothing', to: '/clothing' },
@@ -20,6 +22,8 @@ export function Header() {
   const profileRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
   const { isAuthenticated, user, logout } = useAuth()
+  const { count: wishlistCount } = useWishlist()
+  const { count: cartCount } = useCart()
 
   useEffect(() => {
     if (!profileOpen) return
@@ -77,12 +81,30 @@ export function Header() {
           <button type="button" aria-label="Search" className="text-[#1a1a1a] hover:text-maroon">
             <Search size={20} strokeWidth={1.5} />
           </button>
-          <button type="button" aria-label="Cart" className="hidden text-[#1a1a1a] hover:text-maroon sm:block">
+          <Link
+            to="/cart"
+            aria-label="Cart"
+            className="relative hidden text-[#1a1a1a] hover:text-maroon sm:block"
+          >
             <ShoppingBag size={20} strokeWidth={1.5} />
-          </button>
-          <button type="button" aria-label="Wishlist" className="hidden text-[#1a1a1a] hover:text-maroon sm:block">
+            {cartCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-inter text-[10px] font-semibold leading-none text-white">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+          <Link
+            to="/wishlist"
+            aria-label="Wishlist"
+            className="relative hidden text-[#1a1a1a] hover:text-maroon sm:block"
+          >
             <Heart size={20} strokeWidth={1.5} />
-          </button>
+            {wishlistCount > 0 && (
+              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-inter text-[10px] font-semibold leading-none text-white">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
           {isAuthenticated ? (
             <div ref={profileRef} className="relative hidden md:block">
               <button
@@ -160,6 +182,36 @@ export function Header() {
               </Link>
             )
           })}
+          <Link
+            to="/cart"
+            onClick={() => setMobileOpen(false)}
+            className={`flex items-center gap-2 py-2 ${navLinkBase} ${
+              location.pathname === '/cart' ? 'text-maroon' : 'text-[#717171] hover:text-maroon'
+            }`}
+          >
+            <ShoppingBag size={18} strokeWidth={1.5} />
+            Cart
+            {cartCount > 0 && (
+              <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-inter text-[10px] font-semibold leading-none text-white">
+                {cartCount}
+              </span>
+            )}
+          </Link>
+          <Link
+            to="/wishlist"
+            onClick={() => setMobileOpen(false)}
+            className={`flex items-center gap-2 py-2 ${navLinkBase} ${
+              location.pathname === '/wishlist' ? 'text-maroon' : 'text-[#717171] hover:text-maroon'
+            }`}
+          >
+            <Heart size={18} strokeWidth={1.5} />
+            Wishlist
+            {wishlistCount > 0 && (
+              <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-inter text-[10px] font-semibold leading-none text-white">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
           <div className="mt-3 flex gap-3">
             {isAuthenticated ? (
               <Button variant="outline" className="flex-1" onClick={logout}>

@@ -4,6 +4,8 @@ import { Home } from './pages/Home'
 import { Clothing } from './pages/Clothing'
 import { Jewellery } from './pages/Jewellery'
 import { Products } from './pages/Products'
+import { Wishlist } from './pages/Wishlist'
+import { Cart } from './pages/Cart'
 import { About } from './pages/About'
 import { Login } from './pages/auth/Login'
 import { SignUp } from './pages/auth/SignUp'
@@ -19,6 +21,8 @@ function App() {
         <Route path="/clothing" element={<Clothing />} />
         <Route path="/jewellery" element={<Jewellery />} />
         <Route path="/products" element={<Products />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
