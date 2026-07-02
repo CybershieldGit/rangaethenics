@@ -47,7 +47,7 @@ export function ForgotPassword() {
             required
           />
 
-          <AuthButton type="submit" disabled={loading}>
+          <AuthButton type="submit" loading={loading}>
             {loading ? 'Sending OTP...' : 'Send OTP'}
           </AuthButton>
         </form>

@@ -88,7 +88,7 @@ export function SignUp() {
           </p>
 
           <div className="mt-4">
-            <AuthButton type="submit" disabled={loading}>
+            <AuthButton type="submit" loading={loading}>
               {loading ? 'Sending OTP...' : 'Register'}
             </AuthButton>
           </div>

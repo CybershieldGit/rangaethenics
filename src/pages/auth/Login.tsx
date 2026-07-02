@@ -81,7 +81,7 @@ export function Login() {
           </div>
 
           <div className="mt-5">
-            <AuthButton type="submit" disabled={loading}>
+            <AuthButton type="submit" loading={loading}>
               {loading ? 'Logging in...' : 'Login'}
             </AuthButton>
           </div>

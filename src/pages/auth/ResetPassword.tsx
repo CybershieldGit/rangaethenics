@@ -111,7 +111,7 @@ export function ResetPassword() {
           />
 
           <div className="pt-2">
-            <AuthButton type="submit" disabled={loading || !resetToken}>
+            <AuthButton type="submit" loading={loading} disabled={!resetToken}>
               {loading ? 'Resetting...' : 'Reset Password'}
             </AuthButton>
           </div>

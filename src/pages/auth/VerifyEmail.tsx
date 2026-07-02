@@ -5,6 +5,7 @@ import { AuthCard } from '../../components/auth/AuthCard'
 import { OtpInput } from '../../components/auth/OtpInput'
 import { AlertMessage } from '../../components/auth/AlertMessage'
 import { AuthButton } from '../../components/auth/AuthButton'
+import { Spinner } from '../../components/ui/Spinner'
 import { useAuth } from '../../context/AuthContext'
 import {
   OTP_RESEND_TIME,
@@ -133,14 +134,15 @@ export function VerifyEmail() {
                 type="button"
                 onClick={handleResend}
                 disabled={resendLoading}
-                className="font-inter text-sm font-semibold text-maroon hover:underline disabled:opacity-60"
+                className="inline-flex items-center gap-1.5 font-inter text-sm font-semibold text-maroon hover:underline disabled:opacity-60"
               >
+                {resendLoading && <Spinner size={14} />}
                 {resendLoading ? 'Sending...' : 'Resend OTP'}
               </button>
             )}
           </div>
 
-          <AuthButton type="submit" disabled={loading}>
+          <AuthButton type="submit" loading={loading}>
             {loading ? 'Verifying...' : 'Confirm OTP'}
           </AuthButton>
         </form>

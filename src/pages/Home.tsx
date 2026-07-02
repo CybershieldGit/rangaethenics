@@ -23,9 +23,9 @@ export function Home() {
     async function loadHomeProducts() {
       const { products } = await getProducts({ pageSize: 100 })
       if (products && products.length > 0) {
-        const liveNewArrival = products.filter(p => p.isNewArrival && p.type === 'jewellery')
-        const liveMostSelling = products.filter(p => p.isBestSelling && p.type === 'clothing')
-        
+        const liveNewArrival = products.filter(p => p.isNewArrival)
+        const liveMostSelling = products.filter(p => p.isBestSelling)
+
         if (liveNewArrival.length > 0) setNewArrivals(liveNewArrival.slice(0, 4))
         if (liveMostSelling.length > 0) setMostSelling(liveMostSelling.slice(0, 4))
       }
