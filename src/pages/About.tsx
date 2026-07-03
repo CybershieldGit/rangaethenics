@@ -66,7 +66,7 @@ function OurStoryIntro() {
   return (
     <section className="bg-[#fffaf3] py-10 md:py-14">
       <div className="mx-auto flex min-h-[226px] max-w-7xl flex-col items-center gap-4 px-4 text-center md:px-8">
-        <SectionHeading title="Our Story" align="center" />
+        <SectionHeading title="Our Story" align="center" showDivider={false} />
         <p className="w-full text-base leading-relaxed text-text-dark md:text-lg">
           Rang Ethnics began with a simple belief—to keep our heritage alive through craftsmanship
           and creativity. From intricately handcrafted oxidised jewellery to thoughtfully designed
@@ -74,6 +74,7 @@ function OurStoryIntro() {
           and comfort. Each creation reflects our passion for authenticity, quality, and the
           artisans who bring our vision to life.
         </p>
+        <img src="/historical_seperator.svg" alt="" className="mx-auto h-4 w-auto" />
       </div>
     </section>
   )
@@ -84,14 +85,16 @@ function AboutCategories() {
     <section className="mx-auto max-w-7xl px-4 pb-6 md:px-8 md:pb-16">
       <div className="grid gap-5 md:grid-cols-2 ">
         {categories.map((category) => (
-          <div key={category.title} className="text-center md:text-start">
-            <h3 className="font-serif text-2xl font-bold text-maroon md:text-3xl">
-              {category.title}
-            </h3>
-            <FlourishDivider className="mt-3 justify-center md:justify-start" />
-            <p className="mt-5 text-sm leading-relaxed text-text md:text-base">
-              {category.description}
-            </p>
+          <div key={category.title} className="text-center md:text-start bg-[#F4E8D7]">
+            <div className="px-[30px] py-[30px] pb-[26px]">
+              <h3 className="font-serif text-2xl font-bold text-maroon md:text-3xl">
+                {category.title}
+              </h3>
+              <FlourishDivider className="mt-3 justify-center md:justify-start" />
+              <p className="mt-5 text-sm leading-relaxed text-text md:text-base">
+                {category.description}
+              </p>
+            </div>
             <div className="mt-8 overflow-hidden">
               <img
                 src={category.image}

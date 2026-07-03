@@ -71,8 +71,8 @@ export function Products() {
   const [category, setCategory] = useState<CategoryFilter>(
     ['all', 'clothing', 'jewellery'].includes(initialCategory) ? initialCategory : 'all',
   )
-  const [newArrivalsOnly, setNewArrivalsOnly] = useState(true)
-  const [bestSellingOnly, setBestSellingOnly] = useState(true)
+  const [newArrivalsOnly, setNewArrivalsOnly] = useState(false)
+  const [bestSellingOnly, setBestSellingOnly] = useState(false)
   const [maxPrice, setMaxPrice] = useState(PRICE_MAX)
   const [sortBy, setSortBy] = useState<SortOption>('featured')
   const [selectedColors, setSelectedColors] = useState<string[]>([])

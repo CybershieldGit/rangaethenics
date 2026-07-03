@@ -7,7 +7,7 @@ interface FlourishDividerProps {
 export function FlourishDivider({
   className = '',
   iconClassName = 'h-5 w-auto',
-  lineClassName = 'w-14 sm:w-20',
+  lineClassName = 'w-7 sm:w-10',
 }: FlourishDividerProps) {
   return (
     <div className={`flex items-center gap-1.5 ${className}`}>

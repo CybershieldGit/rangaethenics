@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Heart } from 'lucide-react'
 import type { Product } from '../../data/products'
 import { formatPrice, getDiscount } from '../../data/products'
@@ -62,7 +62,10 @@ export function ProductCard({ product, onAddedToCart }: ProductCardProps) {
 
   return (
     <article className="group mx-auto flex w-full max-w-[310px] flex-col gap-3">
-      <div className="aspect-[310/420] border border-[#BD8A3C] bg-transparent p-2.5">
+      <Link
+        to={`/product/${product.id}`}
+        className="block aspect-[310/420] border border-[#BD8A3C] bg-transparent p-2.5"
+      >
         <div className="h-full w-full overflow-hidden">
           <img
             src={product.image}
@@ -70,13 +73,15 @@ export function ProductCard({ product, onAddedToCart }: ProductCardProps) {
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         </div>
-      </div>
+      </Link>
 
       <div>
-        <h3 className="font-serif text-base leading-snug">
-          <span className="block text-text">{product.category}</span>
-          <span className="block text-text-dark">{product.subtitle ?? product.name}</span>
-        </h3>
+        <Link to={`/product/${product.id}`} className="block">
+          <h3 className="font-serif text-base leading-snug transition-colors hover:text-maroon">
+            <span className="block text-text">{product.category}</span>
+            <span className="block text-text-dark">{product.subtitle ?? product.name}</span>
+          </h3>
+        </Link>
 
         <div className="mt-2.5 flex flex-wrap items-baseline gap-2">
           <span className="text-lg font-semibold text-maroon">

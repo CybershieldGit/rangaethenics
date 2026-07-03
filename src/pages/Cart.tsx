@@ -236,12 +236,12 @@ export function Cart() {
                     </span>
                   </div>
 
-                  <button
-                    type="button"
-                    className="mt-2 w-full border border-maroon bg-maroon px-6 py-3.5 font-serif text-base tracking-wide text-white transition-colors hover:bg-transparent hover:text-maroon"
+                  <Link
+                    to="/checkout"
+                    className="mt-2 block w-full border border-maroon bg-maroon px-6 py-3.5 text-center font-serif text-base tracking-wide text-white transition-colors hover:bg-transparent hover:text-maroon"
                   >
                     Proceed to Checkout
-                  </button>
+                  </Link>
                 </div>
               </div>
             </aside>

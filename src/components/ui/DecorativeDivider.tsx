@@ -4,10 +4,10 @@ interface DecorativeDividerProps {
 
 export function DecorativeDivider({ className = '' }: DecorativeDividerProps) {
   return (
-    <div className={`mx-auto flex max-w-7xl items-center px-4 md:px-8 ${className}`}>
+    <div className={`mx-auto flex max-w-7xl items-center ${className}`}>
       <span
         className="h-px min-w-0 flex-1"
-        style={{ background: 'linear-gradient(to right, transparent, #BD8A3C 75%)' }}
+        style={{ background: '#BD8A3C' }}
       />
       <img
         src="/seperator_square1.svg"
@@ -16,7 +16,7 @@ export function DecorativeDivider({ className = '' }: DecorativeDividerProps) {
       />
       <span
         className="h-px min-w-0 flex-1"
-        style={{ background: 'linear-gradient(to left, transparent, #BD8A3C 75%)' }}
+        style={{ background: '#BD8A3C' }}
       />
     </div>
   )
