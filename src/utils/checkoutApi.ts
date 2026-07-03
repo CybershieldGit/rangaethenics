@@ -178,3 +178,43 @@ export async function verifyPayment(
     body: JSON.stringify(payment),
   })
 }
+
+export interface SavedAddress extends ShippingAddress {
+  id: string
+  label: string
+  isDefault: boolean
+}
+
+export type AddressInput = Omit<SavedAddress, 'id'>
+
+/** Fetch the logged-in user's saved delivery addresses. */
+export async function getAddresses(token: string): Promise<SavedAddress[]> {
+  return request<SavedAddress[]>('/api/users/addresses', token)
+}
+
+/** Add a new saved address. Returns the full updated list. */
+export async function addAddress(token: string, address: AddressInput): Promise<SavedAddress[]> {
+  return request<SavedAddress[]>('/api/users/addresses', token, {
+    method: 'POST',
+    body: JSON.stringify(address),
+  })
+}
+
+/** Update an existing saved address. Returns the full updated list. */
+export async function updateAddress(
+  token: string,
+  id: string,
+  address: AddressInput,
+): Promise<SavedAddress[]> {
+  return request<SavedAddress[]>(`/api/users/addresses/${id}`, token, {
+    method: 'PUT',
+    body: JSON.stringify(address),
+  })
+}
+
+/** Delete a saved address. Returns the full updated list. */
+export async function deleteAddress(token: string, id: string): Promise<SavedAddress[]> {
+  return request<SavedAddress[]>(`/api/users/addresses/${id}`, token, {
+    method: 'DELETE',
+  })
+}
