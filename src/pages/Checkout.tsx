@@ -20,12 +20,18 @@ import { useCart } from '../context/CartContext'
 import { getProducts } from '../utils/api'
 import { formatPrice, type Product } from '../data/products'
 import {
+  addAddress,
   createOrder,
+  deleteAddress,
+  getAddresses,
   getShippingConfig,
   getShippingRates,
+  updateAddress,
   validateCoupon,
   verifyPayment,
+  type AddressInput,
   type AppliedCoupon,
+  type SavedAddress,
   type ShippingAddress,
   type ShippingRate,
 } from '../utils/checkoutApi'
@@ -44,42 +50,13 @@ const emptyAddress: ShippingAddress = {
   country: 'India',
 }
 
-interface SavedAddress extends ShippingAddress {
-  id: string
-  label: string
-  isDefault: boolean
-}
-
 function blankForm(): SavedAddress {
   return { ...emptyAddress, id: '', label: '', isDefault: false }
 }
 
-function genId(): string {
-  return typeof crypto !== 'undefined' && crypto.randomUUID
-    ? crypto.randomUUID()
-    : `addr_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
-}
-
-function addressKey(email?: string): string {
-  return `rangethnics_addresses_${email ?? 'guest'}`
-}
-
-function loadAddresses(email?: string): SavedAddress[] {
-  try {
-    const raw = localStorage.getItem(addressKey(email))
-    const parsed = raw ? (JSON.parse(raw) as SavedAddress[]) : []
-    return Array.isArray(parsed) ? parsed : []
-  } catch {
-    return []
-  }
-}
-
-function saveAddresses(email: string | undefined, list: SavedAddress[]) {
-  try {
-    localStorage.setItem(addressKey(email), JSON.stringify(list))
-  } catch {
-    /* ignore quota / serialization errors */
-  }
+function toAddressInput(a: SavedAddress): AddressInput {
+  const { id: _id, ...rest } = a
+  return rest
 }
 
 function validateAddressForm(a: SavedAddress): string {
@@ -184,11 +161,13 @@ export function Checkout() {
   const { items, count, clearCart } = useCart()
 
   const [products, setProducts] = useState<Product[]>([])
-  const [addresses, setAddresses] = useState<SavedAddress[]>(() => loadAddresses(user?.email))
+  const [addresses, setAddresses] = useState<SavedAddress[]>([])
+  const [addressesLoading, setAddressesLoading] = useState(true)
   const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null)
   const [editingId, setEditingId] = useState<string | null>(null) // 'new' | address id | null
   const [form, setForm] = useState<SavedAddress>(blankForm())
   const [formError, setFormError] = useState('')
+  const [savingAddress, setSavingAddress] = useState(false)
   const [paymentOption, setPaymentOption] = useState<PaymentOption>('online')
   const [summaryOpen, setSummaryOpen] = useState(true)
 
@@ -217,18 +196,30 @@ export function Checkout() {
     if (!isAuthenticated) navigate('/login')
   }, [isAuthenticated, navigate])
 
-  // Persist the address book per user.
+  // Load saved addresses from the backend.
   useEffect(() => {
-    saveAddresses(user?.email, addresses)
-  }, [addresses, user?.email])
-
-  // Default the selection to the default (or first) saved address.
-  useEffect(() => {
-    if (!selectedAddressId && addresses.length > 0) {
-      const preferred = addresses.find((a) => a.isDefault) ?? addresses[0]
-      setSelectedAddressId(preferred.id)
+    if (!token) return
+    let cancelled = false
+    setAddressesLoading(true)
+    getAddresses(token)
+      .then((list) => {
+        if (cancelled) return
+        setAddresses(list)
+        const preferred = list.find((a) => a.isDefault) ?? list[0]
+        if (preferred) setSelectedAddressId(preferred.id)
+        // First-time users start with the add form open.
+        if (list.length === 0) setEditingId('new')
+      })
+      .catch(() => {
+        if (!cancelled) setEditingId('new')
+      })
+      .finally(() => {
+        if (!cancelled) setAddressesLoading(false)
+      })
+    return () => {
+      cancelled = true
     }
-  }, [addresses, selectedAddressId])
+  }, [token])
 
   const openAddAddress = () => {
     setForm(blankForm())
@@ -242,31 +233,61 @@ export function Checkout() {
     setEditingId(addr.id)
   }
 
-  const handleSaveAddress = () => {
+  const handleSaveAddress = async () => {
+    if (savingAddress) return
     const err = validateAddressForm(form)
     if (err) {
       setFormError(err)
       return
     }
-    const id = editingId && editingId !== 'new' ? editingId : genId()
+    if (!token) {
+      navigate('/login')
+      return
+    }
 
-    setAddresses((prev) => {
-      const exists = prev.some((a) => a.id === id)
-      let next = exists
-        ? prev.map((a) => (a.id === id ? { ...form, id } : a))
-        : [...prev, { ...form, id }]
-
-      if (form.isDefault) {
-        next = next.map((a) => ({ ...a, isDefault: a.id === id }))
-      } else if (!next.some((a) => a.isDefault) && next.length > 0) {
-        next = next.map((a, i) => ({ ...a, isDefault: i === 0 }))
-      }
-      return next
-    })
-
-    setSelectedAddressId(id)
-    setEditingId(null)
+    setSavingAddress(true)
     setFormError('')
+    try {
+      const isEdit = Boolean(editingId && editingId !== 'new')
+      const payload = toAddressInput(form)
+      const list = isEdit
+        ? await updateAddress(token, editingId as string, payload)
+        : await addAddress(token, payload)
+
+      setAddresses(list)
+
+      // Keep the just-saved address selected.
+      const saved = isEdit
+        ? list.find((a) => a.id === editingId)
+        : list.find(
+            (a) =>
+              a.label === payload.label &&
+              a.phone === payload.phone &&
+              a.postalCode === payload.postalCode,
+          ) ?? list[list.length - 1]
+      if (saved) setSelectedAddressId(saved.id)
+
+      setEditingId(null)
+    } catch (e) {
+      setFormError(e instanceof Error ? e.message : 'Could not save address. Please try again.')
+    } finally {
+      setSavingAddress(false)
+    }
+  }
+
+  const handleDeleteAddress = async (id: string) => {
+    if (!token) return
+    try {
+      const list = await deleteAddress(token, id)
+      setAddresses(list)
+      if (selectedAddressId === id) {
+        const preferred = list.find((a) => a.isDefault) ?? list[0]
+        setSelectedAddressId(preferred ? preferred.id : null)
+      }
+      if (list.length === 0) setEditingId('new')
+    } catch {
+      /* ignore delete failure */
+    }
   }
 
   useEffect(() => {
@@ -516,7 +537,7 @@ export function Checkout() {
 
               <div className="mb-4 flex items-center justify-between">
                 <span className="text-sm font-semibold text-text-dark">Delivery Address</span>
-                {editingId === null && (
+                {editingId === null && !addressesLoading && (
                   <button
                     type="button"
                     onClick={openAddAddress}
@@ -527,7 +548,11 @@ export function Checkout() {
                 )}
               </div>
 
-              {editingId !== null || addresses.length === 0 ? (
+              {addressesLoading ? (
+                <div className="flex items-center justify-center py-10">
+                  <Spinner size={22} />
+                </div>
+              ) : editingId !== null || addresses.length === 0 ? (
                 <div className="border border-[#BD8A3C]/40 bg-white p-4 md:p-5">
                   <p className="mb-4 font-serif text-base text-text-dark">
                     {editingId && editingId !== 'new' ? 'Edit Address' : 'Add New Address'}
@@ -557,13 +582,15 @@ export function Checkout() {
 
                   {formError && <p className="mt-3 text-sm text-red-600">{formError}</p>}
 
-                  <div className="mt-5 flex gap-3">
+                  <div className="mt-5 flex flex-wrap items-center gap-3">
                     <button
                       type="button"
                       onClick={handleSaveAddress}
-                      className="border border-maroon bg-maroon px-6 py-2.5 font-serif text-sm tracking-wide text-white transition-colors hover:bg-transparent hover:text-maroon"
+                      disabled={savingAddress}
+                      className="flex items-center gap-2 border border-maroon bg-maroon px-6 py-2.5 font-serif text-sm tracking-wide text-white transition-colors hover:bg-transparent hover:text-maroon disabled:cursor-not-allowed disabled:opacity-60"
                     >
-                      Save Address
+                      {savingAddress && <Spinner size={16} />}
+                      {savingAddress ? 'Saving...' : 'Save Address'}
                     </button>
                     {addresses.length > 0 && (
                       <button
@@ -575,6 +602,15 @@ export function Checkout() {
                         className="border border-[#BD8A3C]/50 px-6 py-2.5 font-serif text-sm text-text-dark transition-colors hover:border-maroon hover:text-maroon"
                       >
                         Cancel
+                      </button>
+                    )}
+                    {editingId && editingId !== 'new' && (
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteAddress(editingId)}
+                        className="ml-auto text-sm font-medium text-red-600 hover:underline"
+                      >
+                        Delete
                       </button>
                     )}
                   </div>
