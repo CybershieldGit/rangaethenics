@@ -7,14 +7,22 @@ interface SectionHeadingProps {
   title: string
   align?: 'left' | 'center'
   className?: string
+  showDivider?: boolean
 }
 
-export function SectionHeading({ title, align = 'left', className = '' }: SectionHeadingProps) {
+export function SectionHeading({
+  title,
+  align = 'left',
+  className = '',
+  showDivider = true,
+}: SectionHeadingProps) {
   if (align === 'center') {
     return (
       <div className={`text-center ${className}`}>
         <h2 className="font-serif text-3xl font-bold text-maroon md:text-4xl">{title}</h2>
-        <img src="/historical_seperator.svg" alt="" className="mx-auto mt-4 h-4 w-auto" />
+        {showDivider && (
+          <img src="/historical_seperator.svg" alt="" className="mx-auto mt-4 h-4 w-auto" />
+        )}
       </div>
     )
   }

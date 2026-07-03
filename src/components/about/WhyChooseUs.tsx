@@ -42,19 +42,25 @@ export function WhyChooseUs() {
       </div>
 
       <div className="relative mt-14 border border-[#BD8A3C]/40">
-        <div className="absolute inset-x-0 top-0 hidden h-px -translate-y-1/2 bg-[#BD8A3C]/40 md:block" />
+        <div className="absolute inset-x-0 top-0 hidden h-px -translate-y-1/2 bg-[#BD8A3C]/40 md:block hidden" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
           {features.map((feature, idx) => (
             <div
               key={feature.title}
-              className={`relative px-4 py-10 text-center ${
+              className={`relative px-4 pb-10 pt-16 text-center ${
                 idx < features.length - 1 ? 'lg:border-r lg:border-[#BD8A3C]/40' : ''
               } ${idx % 2 === 0 && idx < features.length - 1 ? 'sm:border-r sm:border-[#BD8A3C]/40 lg:border-r' : ''}`}
             >
-              <div className="mx-auto -mt-[52px] mb-6 flex h-[72px] w-[72px] items-center justify-center rounded-full border border-[#BD8A3C]/50 bg-[#fffaf3] md:-mt-[60px]">
+              {/* Circle is centered on the cell's top edge (the connecting line) */}
+              <div className="absolute left-1/2 top-0 flex h-[72px] w-[72px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#BD8A3C]/50 bg-[#fffaf3]">
                 <img src={feature.icon} alt="" className="h-10 w-10" />
               </div>
+
+              {/* Diamond marker where the section divider meets the top line */}
+              {idx < features.length - 1 && (
+                <span className="absolute right-0 top-0 hidden h-2 w-2 -translate-y-1/2 translate-x-1/2 rotate-45 border border-[#BD8A3C]/50 bg-[#fffaf3] lg:block" />
+              )}
               <h3 className="font-serif text-base font-bold text-maroon md:text-lg">
                 {feature.title}
               </h3>

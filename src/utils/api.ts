@@ -35,6 +35,75 @@ export function mapProduct(p: any): Product {
   }
 }
 
+export interface ProductDetail extends Product {
+  /** Full descriptive text shown on the detail page. */
+  description: string
+  /** Brief summary shown under the price. */
+  shortDescription: string
+  /** Detailed text shown inside the "Product Details" dropdown. */
+  longDescription: string
+  /** All gallery images (falls back to the single `image`). */
+  images: string[]
+  /** The top-level category (e.g. "clothing"), independent of the display label. */
+  mainCategory: string
+  sizes: string[]
+  /** Raw color values, stored as "Name|#hex" by the admin panel. */
+  colors: string[]
+  fabrics: string[]
+  works: string[]
+  countInStock: number
+  rating: number
+  numReviews: number
+  isCODAllowed: boolean
+  video?: string
+  sku?: string
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function mapProductDetail(p: any): ProductDetail {
+  const base = mapProduct(p)
+  const images: string[] =
+    Array.isArray(p.images) && p.images.length > 0
+      ? p.images
+      : base.image
+        ? [base.image]
+        : []
+
+  return {
+    ...base,
+    description: p.description ?? '',
+    shortDescription: p.shortDescription ?? p.description ?? '',
+    longDescription: p.longDescription ?? p.description ?? '',
+    images,
+    mainCategory: (p.category ?? '').toString().trim(),
+    sizes: Array.isArray(p.sizes) ? p.sizes : [],
+    colors: Array.isArray(p.colors) ? p.colors : [],
+    fabrics: Array.isArray(p.fabrics) ? p.fabrics : [],
+    works: Array.isArray(p.works) ? p.works : [],
+    countInStock: Number(p.countInStock) || 0,
+    rating: Number(p.rating) || 0,
+    numReviews: Number(p.numReviews) || 0,
+    isCODAllowed: Boolean(p.isCODAllowed),
+    video: p.video || undefined,
+    sku: p.sku || undefined,
+  }
+}
+
+export async function getProductDetail(id: string): Promise<ProductDetail | null> {
+  const url = `${API_BASE_URL}/api/products/${id}`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) {
+      throw new Error(`API error: ${res.statusText}`)
+    }
+    const data = await res.json()
+    return mapProductDetail(data)
+  } catch (error) {
+    console.error('Failed to fetch product detail:', error)
+    return null
+  }
+}
+
 export async function getProducts(params?: {
   category?: string
   keyword?: string
