@@ -123,26 +123,29 @@ function CollectionGrid() {
     <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
       <div className="flex items-center gap-3 md:gap-4">
         <h2
-          className="font-serif whitespace-nowrap text-maroon"
-          style={{
-            fontWeight: 700,
-            fontSize: '40px',
-            lineHeight: '100%',
-            letterSpacing: '0px',
-          }}
+          className="font-serif whitespace-nowrap text-maroon text-[28px] font-bold leading-none tracking-normal sm:text-4xl md:text-[48px]"
         >
           Oxidised Jewellery Collection
         </h2>
-        <img
-          src="/square_straight.svg"
-          alt=""
-          className="h-px min-w-0 flex-1 object-fill"
-          style={{ filter: GOLD_TINT }}
-        />
-        <span className="flex shrink-0 items-center gap-2">
-          <img src="/flower.svg" alt="" className="h-5 w-auto" />
-          <span className="block h-px w-12" style={{ backgroundColor: '#BD8A3C' }} />
-        </span>
+        <div className="hidden md:flex items-center flex-1">
+          <img
+            src="/square_straight.svg"
+            alt=""
+            className="h-px min-w-0 flex-1 object-fill"
+            style={{ filter: GOLD_TINT }}
+          />
+
+          <span className="flex shrink-0 items-center gap-2">
+            <img src="/flower.svg" alt="" className="h-5 w-auto" />
+            <span
+              className="block h-px w-12"
+              style={{
+                background:
+                  'linear-gradient(to right, transparent, #BD8A3C 50%, transparent)',
+              }}
+            />
+          </span>
+        </div>
       </div>
       <p className="mt-3 max-w-xl text-sm text-text md:text-base">
         Handcrafted pieces that blend heritage craftsmanship with contemporary style.
@@ -182,9 +185,9 @@ export function Jewellery() {
     <div style={{ backgroundColor: '#f5eee1' }}>
       <JewelleryHero />
       <CollectionGrid />
-      <div style={{ backgroundColor: '#f0e7d6' }}>
-        <ArtisanBanner image="/images/ourstory.png" />
-        <DecorativeDivider className="py-6" />
+      <ArtisanBanner image="/images/ourstory.png" />
+      <div style={{ backgroundColor: '#f0e7d6', position: 'relative' }}>
+        <DecorativeDivider className="py-6 absolute top-[-38px] left-0 w-full" />
         <ProductSection
           title="Most Selling"
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
@@ -200,6 +203,7 @@ export function Jewellery() {
           viewAllLabel="View All New Arrivals"
           viewAllTo="/products?category=jewellery"
         />
+        <DecorativeDivider className="py-6 absolute bottom-[-38px] left-0 w-full" />
       </div>
       <FestiveSpecial />
       <ValueProposition />
