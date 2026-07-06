@@ -1,11 +1,28 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5005'
 
+export interface Address {
+  fullName: string
+  phone: string
+  houseFlatNo: string
+  streetArea: string
+  landmark: string
+  addressLine: string
+  city: string
+  state: string
+  postalCode: string
+  country: string
+}
+
 export interface AuthUser {
   _id: string
   name: string
   email: string
   isAdmin: boolean
   token: string
+  phone?: string
+  dateOfBirth?: string
+  gender?: string
+  address?: Address
 }
 
 interface ApiError {
@@ -79,6 +96,97 @@ export function resetPassword(payload: { resetToken: string; password: string })
   return request<AuthUser & { message: string }>('/api/auth/reset-password', {
     method: 'POST',
     body: JSON.stringify(payload),
+  })
+}
+
+export function getUserProfileApi(token: string) {
+  return request<AuthUser>('/api/users/profile', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+export function updateUserProfileApi(
+  payload: { name?: string; email?: string; phone?: string; dateOfBirth?: string; gender?: string; address?: Partial<Address> },
+  token: string
+) {
+  return request<AuthUser>('/api/users/profile', {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  })
+}
+
+export interface OrderItem {
+  product: {
+    _id: string
+    name: string
+    image: string
+    price: number
+    category: string
+  } | null
+  name: string
+  quantity: number
+  price: number
+}
+
+export interface Order {
+  _id: string
+  orderItems: OrderItem[]
+  totalPrice: number
+  isPaid: boolean
+  paidAt?: string
+  paymentMethod: string
+  paymentStatus: string
+  createdAt: string
+  shippingAddress: Address
+  shippingStatus?: string
+}
+
+export function getUserOrdersApi(token: string) {
+  return request<Order[]>('/api/orders/myorders', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+export function cancelOrderApi(orderId: string, token: string) {
+  return request<{ message: string }>(`/api/orders/${orderId}/cancel`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+export function getUserWishlistApi(token: string) {
+  return request<any[]>('/api/users/wishlist', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+}
+
+export function addToWishlistApi(productId: string, token: string) {
+  return request<any[]>('/api/users/wishlist', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ productId }),
+  })
+}
+
+export function removeFromWishlistApi(productId: string, token: string) {
+  return request<any[]>(`/api/users/wishlist/${productId}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   })
 }
 

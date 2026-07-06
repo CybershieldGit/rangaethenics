@@ -41,7 +41,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F7E7DA]">
+    <header className="sticky top-0 z-50 bg-[#F8F0E5]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center">
@@ -102,13 +102,21 @@ export function Header() {
                     </p>
                     <p className="truncate font-inter text-xs text-[#717171]">{user?.email}</p>
                   </div>
+                  <Link
+                    to="/profile"
+                    onClick={() => setProfileOpen(false)}
+                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white"
+                  >
+                    <CircleUserRound size={16} strokeWidth={1.5} />
+                    Profile Details
+                  </Link>
                   <button
                     type="button"
                     onClick={() => {
                       logout()
                       setProfileOpen(false)
                     }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white"
+                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/20"
                   >
                     <LogOut size={16} strokeWidth={1.5} />
                     Log Out
@@ -144,7 +152,7 @@ export function Header() {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <nav className="border-t border-maroon/10 bg-[#F7E7DA] px-4 py-4 lg:hidden">
+        <nav className="border-t border-maroon/10 bg-[#F8F0E5] px-4 py-4 lg:hidden">
           {navLinks.map((link) => {
             const active = isLinkActive(link.to)
             return (
