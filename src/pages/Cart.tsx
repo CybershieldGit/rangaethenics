@@ -145,12 +145,12 @@ export function Cart() {
 
                         <div className="mt-1 flex flex-wrap items-baseline gap-2">
                           <span className="text-lg font-semibold text-maroon">
-                            {formatPrice(product.price)}
+                            {formatPrice(product.price * qty)}
                           </span>
                           {discount > 0 && (
                             <>
                               <span className="text-sm text-text line-through">
-                                {formatPrice(product.originalPrice)}
+                                {formatPrice(product.originalPrice * qty)}
                               </span>
                               <span className="text-sm font-medium text-[#BD8A3C]">
                                 {discount}% OFF
@@ -184,10 +184,6 @@ export function Cart() {
                               <Plus size={15} strokeWidth={2} />
                             </button>
                           </div>
-
-                          <span className="text-base font-semibold text-maroon sm:text-lg">
-                            {formatPrice(product.price * qty)}
-                          </span>
                         </div>
                       </div>
                     </li>
