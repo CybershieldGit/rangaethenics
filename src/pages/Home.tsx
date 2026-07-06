@@ -36,9 +36,9 @@ export function Home() {
   return (
     <>
       <HeroCarousel />
-      <DecorativeDivider className="py-6" />
+      <DecorativeDivider className="py-6 mx-auto px-4 md:px-8" type="flower" />
       <CategoryCards />
-      <DecorativeDivider className="py-6" />
+      <DecorativeDivider className="py-6" type="flower" />
       <ValueProposition />
       <PromoBanner />
       <ProductSection
@@ -55,7 +55,7 @@ export function Home() {
         viewAllLabel="View All Most Selling"
       />
       <GallerySection />
-      <OurStory />
+      <OurStory background="" />
     </>
   )
 }

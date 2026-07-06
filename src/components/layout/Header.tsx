@@ -45,7 +45,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F7E7DA]">
+    <header className="sticky top-0 z-50 bg-[#F8F0E5]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
         {/* Logo */}
         <Link to="/" className="flex items-center">

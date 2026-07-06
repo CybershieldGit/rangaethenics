@@ -153,28 +153,31 @@ function ArchCard({ name, image }: { name: string; image: string }) {
 function CollectionsGrid() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
-      <div className="flex items-center gap-3 md:gap-4 mb-12">
+      <div className="flex items-center gap-3 md:gap-4 mb-15">
         <h2
-          className="font-serif whitespace-nowrap text-maroon"
-          style={{
-            fontWeight: 700,
-            fontSize: '40px',
-            lineHeight: '100%',
-            letterSpacing: '0px',
-          }}
+          className="font-serif whitespace-nowrap text-maroon text-[28px] font-bold leading-none tracking-normal sm:text-4xl md:text-[48px]"
         >
           Our Signature Collections
         </h2>
-        <img
-          src="/square_straight.svg"
-          alt=""
-          className="h-px min-w-0 flex-1 object-fill"
-          style={{ filter: GOLD_TINT }}
-        />
-        <span className="flex shrink-0 items-center gap-2">
-          <img src="/flower.svg" alt="" className="h-5 w-auto" />
-          <span className="block h-px w-12" style={{ backgroundColor: '#BD8A3C' }} />
-        </span>
+        <div className="hidden md:flex items-center flex-1">
+          <img
+            src="/square_straight.svg"
+            alt=""
+            className="h-px min-w-0 flex-1 object-fill"
+            style={{ filter: GOLD_TINT }}
+          />
+
+          <span className="flex shrink-0 items-center gap-2">
+            <img src="/flower.svg" alt="" className="h-5 w-auto" />
+            <span
+              className="block h-px w-12"
+              style={{
+                background:
+                  'linear-gradient(to right, transparent, #BD8A3C 50%, transparent)',
+              }}
+            />
+          </span>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
@@ -208,8 +211,8 @@ export function Clothing() {
       <ClothingHero />
       <CollectionsGrid />
       <ArtisanBanner image="/images/ourstory.png" />
-      <div style={{ backgroundColor: '#f0e7d6' }}>
-        <DecorativeDivider className="py-6" />
+      <div style={{ backgroundColor: '#f0e7d6', position: 'relative' }}>
+        <DecorativeDivider className="py-6 absolute top-[-38px] left-0 w-full" />
         <ProductSection
           title="Most Selling"
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
@@ -225,6 +228,7 @@ export function Clothing() {
           viewAllLabel="View All New Arrivals"
           viewAllTo="/products?category=clothing"
         />
+        <DecorativeDivider className="py-6 absolute bottom-[-38px] left-0 w-full" />
       </div>
       <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" />
       <ValueProposition />

@@ -30,9 +30,9 @@ const features = [
 
 export function ValueProposition() {
   return (
-    <section className="pb-10">
+    <section className="pb-0 md:pb-10">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="flex flex-col gap-6 md:flex-row md:items-center py-8 border-y border-[#BD8A3C]/30">
+        <div className="flex flex-col gap-4 md:gap-6 flex-row md:items-center py-8">
           {features.map((feature, idx) => (
             <div
               key={feature.title}
@@ -43,7 +43,7 @@ export function ValueProposition() {
                 strokeWidth={1.2}
                 className="text-[#BD8A3C]"
               />
-              <div className="text-left">
+              <div className="text-left hidden md:block">
                 <p className="text-sm font-semibold uppercase tracking-wider text-text-dark">
                   {feature.title}
                 </p>
