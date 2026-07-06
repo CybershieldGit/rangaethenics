@@ -14,6 +14,7 @@ import { SignUp } from './pages/auth/SignUp'
 import { ForgotPassword } from './pages/auth/ForgotPassword'
 import { VerifyEmail } from './pages/auth/VerifyEmail'
 import { ResetPassword } from './pages/auth/ResetPassword'
+import { Profile } from './pages/Profile'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/profile" element={<Profile />} />
       </Route>
     </Routes>
   )

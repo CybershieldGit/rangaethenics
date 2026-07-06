@@ -1,28 +1,27 @@
-import { ShieldCheck, Sparkles, Package, RotateCcw, Headphones } from 'lucide-react'
 
 const features = [
   {
-    icon: ShieldCheck,
+    img: '/authentic_gold.png',
     title: 'Authentic',
     description: '100% Original',
   },
   {
-    icon: Sparkles,
+    img: '/handcrafted_gold.png',
     title: 'Handcrafted',
     description: 'With Love',
   },
   {
-    icon: Package,
+    img: '/secure_packaging_gold.png',
     title: 'Secure Packaging',
     description: 'Delivered Safe',
   },
   {
-    icon: RotateCcw,
+    img: '/easy_returns_gold.png',
     title: 'Easy Returns',
     description: 'Hassle-Free',
   },
   {
-    icon: Headphones,
+    img: '/support_gold.png',
     title: 'Support',
     description: "We're Here For You",
   },
@@ -38,10 +37,10 @@ export function ValueProposition() {
               key={feature.title}
               className="flex flex-1 items-center justify-center gap-4 px-4 relative"
             >
-              <feature.icon
-                size={32}
-                strokeWidth={1.2}
-                className="text-[#BD8A3C]"
+              <img
+                src={feature.img}
+                alt={feature.title}
+                className="h-10 w-auto object-contain shrink-0"
               />
               <div className="text-left hidden md:block">
                 <p className="text-sm font-semibold uppercase tracking-wider text-text-dark">
