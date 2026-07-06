@@ -34,11 +34,11 @@ export function Profile() {
 
   const [orders, setOrders] = useState<Order[]>([])
   const [wishlist, setWishlist] = useState<any[]>([])
-  
+
   // Single shipping address object (matches user.address in schema)
   const [address, setAddress] = useState<Address | null>(null)
   const [showAddressForm, setShowAddressForm] = useState(false)
-  
+
   // Addresses form states
   const [shippingFullName, setShippingFullName] = useState('')
   const [shippingPhone, setShippingPhone] = useState('')
@@ -80,7 +80,7 @@ export function Profile() {
         setPhone(profile.phone || '')
         setDateOfBirth(profile.dateOfBirth || '')
         setGender(profile.gender || '')
-        
+
         // Load shipping address details if they exist in the profile
         if (profile.address) {
           setAddress(profile.address)
@@ -142,10 +142,10 @@ export function Profile() {
   const handleUpdateAddress = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!user?.token) return
-    
+
     setErrorMessage('')
     setSuccess('')
-    
+
     if (!shippingFullName.trim()) {
       setErrorMessage('Please enter Full Name')
       return
@@ -174,7 +174,7 @@ export function Profile() {
       setErrorMessage('Please enter a valid 6-digit Pincode')
       return
     }
-    
+
     setSaving(true)
     try {
       const updated = await updateUserProfileApi(
@@ -193,12 +193,12 @@ export function Profile() {
         },
         user.token
       )
-      
+
       login({
         ...user,
         address: updated.address
       })
-      
+
       setAddress(updated.address || null)
       setSuccess('Address updated successfully!')
       setShowAddressForm(false)
@@ -413,7 +413,7 @@ export function Profile() {
                   <Heart size={18} strokeWidth={1.5} />
                   Wishlist
                 </button>
-                 <button
+                <button
                   type="button"
                   onClick={() => setCurrentView('logout')}
                   className={`flex w-full items-center gap-3 px-[30px] py-3.5 text-left text-[16px] font-sans font-medium cursor-pointer border-t border-[#BD8A3C]/10 transition-colors ${currentView === 'logout'
@@ -428,7 +428,7 @@ export function Profile() {
             </div>
 
             {/* Need Help? Box */}
-            <div className="w-full max-w-[420px] h-[218px] border border-[#BD8A3C]/30 bg-[#BD8A3C0F] p-[30px] flex flex-col justify-between text-left shadow-sm">
+            <div className="w-full max-w-[420px] h-[218px]  bg-[#BD8A3C0F] p-[30px] flex flex-col justify-between text-left shadow-sm">
               <div className="flex flex-col gap-[10px]">
                 <h4 className="font-serif text-[20px] font-bold text-[#420001] leading-none">Need Help?</h4>
                 <p className="text-[16px] text-[#717171] font-sans leading-none">We are here fpr you</p>
@@ -1067,59 +1067,92 @@ export function Profile() {
 
             {currentView === 'logout' && (
               // Logout Card Outer container (First Image specs: 860x712, border-width 1, bg #BD8A3C05, border #BD8A3C1A)
-              <div className="relative w-full lg:w-[860px] lg:h-[712px] border border-[#BD8A3C1A] bg-[#BD8A3C05] flex items-center justify-center shrink-0 mt-[62px] shadow-sm">
-                
+              <div className="relative w-full lg:w-[860px] lg:h-auto border border-[#BD8A3C1A] bg-[#BD8A3C05] flex items-center justify-center shrink-0 p-[10px] md:p-[20px] lg:p-[28px] shadow-sm">
+
                 {/* Inner Wrapper (Second Image specs: 820x672, border border-[#BD8A3C1A]) */}
-                <div className="relative w-full lg:w-[820px] lg:h-[672px] border border-[#BD8A3C80] flex items-center justify-center p-[20px] shrink-0">
-                  
-                  {/* Elegant corner scrollwork flourishes centered exactly on the inner border corners */}
-                  <div className="absolute -top-6 -left-6 text-[#BD8A3C] pointer-events-none">
-                    <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M 10 90 C 10 50, 50 10, 90 10" strokeLinecap="round" />
-                      <path d="M 20 90 C 20 60, 60 20, 90 20" strokeLinecap="round" />
-                      <path d="M 10 90 C 10 70, 30 50, 40 40 C 45 35, 45 25, 40 20 C 35 15, 25 15, 20 20 C 15 25, 15 35, 20 40 C 25 45, 35 45, 40 40" strokeLinecap="round" />
-                      <path d="M 90 10 C 70 10, 50 30, 40 40 C 35 45, 25 45, 20 40 C 15 35, 15 25, 20 20 C 25 15, 35 15, 40 20 C 45 25, 45 35, 40 40" strokeLinecap="round" />
-                      <path d="M 40 40 L 15 15" strokeLinecap="round" />
-                      <circle cx="15" cy="15" r="2" fill="currentColor" />
-                      <circle cx="30" cy="30" r="1.5" fill="currentColor" />
-                    </svg>
-                  </div>
-                  <div className="absolute -top-6 -right-6 text-[#BD8A3C] pointer-events-none rotate-90">
-                    <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M 10 90 C 10 50, 50 10, 90 10" strokeLinecap="round" />
-                      <path d="M 20 90 C 20 60, 60 20, 90 20" strokeLinecap="round" />
-                      <path d="M 10 90 C 10 70, 30 50, 40 40 C 45 35, 45 25, 40 20 C 35 15, 25 15, 20 20 C 15 25, 15 35, 20 40 C 25 45, 35 45, 40 40" strokeLinecap="round" />
-                      <path d="M 90 10 C 70 10, 50 30, 40 40 C 35 45, 25 45, 20 40 C 15 35, 15 25, 20 20 C 25 15, 35 15, 40 20 C 45 25, 45 35, 40 40" strokeLinecap="round" />
-                      <path d="M 40 40 L 15 15" strokeLinecap="round" />
-                      <circle cx="15" cy="15" r="2" fill="currentColor" />
-                      <circle cx="30" cy="30" r="1.5" fill="currentColor" />
-                    </svg>
-                  </div>
-                  <div className="absolute -bottom-6 -left-6 text-[#BD8A3C] pointer-events-none -rotate-90">
-                    <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M 10 90 C 10 50, 50 10, 90 10" strokeLinecap="round" />
-                      <path d="M 20 90 C 20 60, 60 20, 90 20" strokeLinecap="round" />
-                      <path d="M 10 90 C 10 70, 30 50, 40 40 C 45 35, 45 25, 40 20 C 35 15, 25 15, 20 20 C 15 25, 15 35, 20 40 C 25 45, 35 45, 40 40" strokeLinecap="round" />
-                      <path d="M 90 10 C 70 10, 50 30, 40 40 C 35 45, 25 45, 20 40 C 15 35, 15 25, 20 20 C 25 15, 35 15, 40 20 C 45 25, 45 35, 40 40" strokeLinecap="round" />
-                      <path d="M 40 40 L 15 15" strokeLinecap="round" />
-                      <circle cx="15" cy="15" r="2" fill="currentColor" />
-                      <circle cx="30" cy="30" r="1.5" fill="currentColor" />
-                    </svg>
-                  </div>
-                  <div className="absolute -bottom-6 -right-6 text-[#BD8A3C] pointer-events-none rotate-180">
-                    <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <path d="M 10 90 C 10 50, 50 10, 90 10" strokeLinecap="round" />
-                      <path d="M 20 90 C 20 60, 60 20, 90 20" strokeLinecap="round" />
-                      <path d="M 10 90 C 10 70, 30 50, 40 40 C 45 35, 45 25, 40 20 C 35 15, 25 15, 20 20 C 15 25, 15 35, 20 40 C 25 45, 35 45, 40 40" strokeLinecap="round" />
-                      <path d="M 90 10 C 70 10, 50 30, 40 40 C 35 45, 25 45, 20 40 C 15 35, 15 25, 20 20 C 25 15, 35 15, 40 20 C 45 25, 45 35, 40 40" strokeLinecap="round" />
-                      <path d="M 40 40 L 15 15" strokeLinecap="round" />
-                      <circle cx="15" cy="15" r="2" fill="currentColor" />
-                      <circle cx="30" cy="30" r="1.5" fill="currentColor" />
-                    </svg>
-                  </div>
+                <div className="relative w-full lg:w-[820px] lg:h-auto flex items-center justify-center px-4 py-[45px] md:p-5 shrink-0">
+                  <span
+                    aria-hidden="true"
+                    className="absolute top-1 left-[100px] right-[100px] h-px bg-[#BD8A3C]"
+                  />
+
+                  {/* Bottom Line */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute bottom-1 left-[100px] right-[100px] h-px bg-[#BD8A3C]"
+                  />
+
+                  {/* Left Line */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-1 top-[100px] bottom-[100px] w-px bg-[#BD8A3C]"
+                  />
+
+                  {/* Right Line */}
+                  <span
+                    aria-hidden="true"
+                    className="absolute right-1 top-[100px] bottom-[100px] w-px bg-[#BD8A3C]"
+                  />
+
+                  {/* corner_sqare.svg corners — top-left */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-[1px] -left-[1px] h-[50px] w-[50px] md:h-[83px] md:w-[83px]"
+                    style={{
+                      backgroundColor: '#420001',
+                      WebkitMaskImage: 'url(/corner_sqare.svg)',
+                      maskImage: 'url(/corner_sqare.svg)',
+                      WebkitMaskRepeat: 'no-repeat',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskSize: 'contain',
+                      maskSize: 'contain',
+                    }}
+                  />
+                  {/* corner_sqare.svg corners — top-right */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-[1px] -right-[1px] h-[50px] w-[50px] md:h-[83px] md:w-[83px] -scale-x-100"
+                    style={{
+                      backgroundColor: '#420001',
+                      WebkitMaskImage: 'url(/corner_sqare.svg)',
+                      maskImage: 'url(/corner_sqare.svg)',
+                      WebkitMaskRepeat: 'no-repeat',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskSize: 'contain',
+                      maskSize: 'contain',
+                    }}
+                  />
+                  {/* corner_sqare.svg corners — bottom-left */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -bottom-[1px] -left-[1px] h-[50px] w-[50px] md:h-[83px] md:w-[83px] -scale-y-100"
+                    style={{
+                      backgroundColor: '#420001',
+                      WebkitMaskImage: 'url(/corner_sqare.svg)',
+                      maskImage: 'url(/corner_sqare.svg)',
+                      WebkitMaskRepeat: 'no-repeat',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskSize: 'contain',
+                      maskSize: 'contain',
+                    }}
+                  />
+                  {/* corner_sqare.svg corners — bottom-right */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -bottom-[1px] -right-[1px] h-[50px] w-[50px] md:h-[83px] md:w-[83px] -scale-100"
+                    style={{
+                      backgroundColor: '#420001',
+                      WebkitMaskImage: 'url(/corner_sqare.svg)',
+                      maskImage: 'url(/corner_sqare.svg)',
+                      WebkitMaskRepeat: 'no-repeat',
+                      maskRepeat: 'no-repeat',
+                      WebkitMaskSize: 'contain',
+                      maskSize: 'contain',
+                    }}
+                  />
                   {/* Content Wrapper (Third Image specs: 696x570, gap 70) */}
                   <div className="w-full lg:w-[696px] lg:h-[570px] flex flex-col justify-between items-center shrink-0">
-                    
+
                     {/* Header Block (Fourth Image specs: 696x136, gap 20) */}
                     <div className="flex flex-col items-center text-center gap-[20px] w-full lg:w-[696px] lg:h-[136px] shrink-0">
                       <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#BD8A3C0F]">
@@ -1136,7 +1169,7 @@ export function Profile() {
                     </div>
 
                     {/* Reasons List (Fifth Image specs: 696x238, gap 38 via layout) */}
-                    <div className="w-full lg:w-[696px] lg:h-[238px] flex flex-col justify-between shrink-0 text-left font-sans">
+                    <div className="w-full lg:w-[696px] lg:h-[238px] flex flex-col justify-between shrink-0 text-left font-sans gap-[20px] my-5 ">
                       {/* Secure Account */}
                       <div className="flex items-center gap-4">
                         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#BD8A3C0F]">
@@ -1178,7 +1211,7 @@ export function Profile() {
                     </div>
 
                     {/* Action Buttons (width 696px, height 54px, gap 20px) */}
-                    <div className="flex items-center gap-[20px] w-full lg:w-[696px] lg:h-[54px] shrink-0 font-sans">
+                    <div className="flex items-center gap-[20px] w-full lg:w-[696px] lg:h-[54px] shrink-0 font-sans mb-[15px]">
                       <button
                         type="button"
                         onClick={logout}
