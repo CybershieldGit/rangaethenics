@@ -235,7 +235,7 @@ export function Clothing() {
         />
         <DecorativeDivider className="py-6 absolute bottom-[-38px] left-0 w-full" />
       </div>
-      <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" />
+      <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" category="clothing" />
       <ValueProposition />
       <OurStory background="transparent" />
     </div>

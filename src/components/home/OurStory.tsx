@@ -1,4 +1,5 @@
 import { Button } from '../ui/Button'
+import { Link } from 'react-router-dom'
 
 function Corner({ className }: { className: string }) {
   return (
@@ -48,8 +49,10 @@ export function OurStory({ background = '#fffaf3' }: { background?: string }) {
                 intricate craftsmanship and elegant designs. Every piece we create is a
                 reflection of our passion for authenticity, quality, and timeless beauty.
               </p>
-              <div className="mt-8">
-                <Button>Know More About Us</Button>
+              <div className="mt-8 cursor-pointer">
+                <Link to="/about">
+                  <Button>Know More About Us</Button>
+                </Link>
               </div>
             </div>
 
