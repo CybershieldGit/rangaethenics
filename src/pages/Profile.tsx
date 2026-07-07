@@ -16,9 +16,15 @@ import {
   getUserOrdersApi,
   cancelOrderApi,
   getUserWishlistApi,
-  Address,
   Order
 } from '../utils/authApi'
+import {
+  getAddresses,
+  addAddress,
+  updateAddress,
+  deleteAddress,
+  type SavedAddress
+} from '../utils/checkoutApi'
 import { ValueProposition } from '../components/home/ValueProposition'
 import { DatePicker } from '../components/ui/DatePicker'
 
@@ -83,8 +89,9 @@ export function Profile() {
   const [orders, setOrders] = useState<Order[]>([])
   const [wishlist, setWishlist] = useState<any[]>([])
 
-  // Single shipping address object (matches user.address in schema)
-  const [address, setAddress] = useState<Address | null>(null)
+  // Saved addresses list from the backend address API
+  const [addresses, setAddresses] = useState<SavedAddress[]>([])
+  const [editingAddressId, setEditingAddressId] = useState<string | null>(null)
   const [showAddressForm, setShowAddressForm] = useState(false)
 
   // Addresses form states
@@ -147,19 +154,12 @@ export function Profile() {
         setDateOfBirth(profile.dateOfBirth || '')
         setGender(profile.gender || '')
 
-        // Load shipping address details if they exist in the profile
-        if (profile.address) {
-          setAddress(profile.address)
-          setShippingLabel(profile.address.label || '')
-          setShippingFullName(profile.address.fullName || '')
-          setShippingPhone(profile.address.phone || '')
-          setShippingHouseFlatNo(profile.address.houseFlatNo || '')
-          setShippingStreetArea(profile.address.streetArea || '')
-          setShippingLandmark(profile.address.landmark || '')
-          setShippingCity(profile.address.city || '')
-          setShippingState(profile.address.state || '')
-          setShippingPostalCode(profile.address.postalCode || '')
-          setShippingCountry(profile.address.country || 'India')
+        // Fetch Saved Addresses
+        try {
+          const userAddresses = await getAddresses(user.token)
+          setAddresses(userAddresses || [])
+        } catch (addrErr) {
+          console.error('Failed to fetch user addresses:', addrErr)
         }
 
         // Fetch Orders
@@ -229,7 +229,8 @@ export function Profile() {
       setErrorMessage('Please enter Full Name')
       return
     }
-    if (!shippingPhone.trim() || !/^\d{10}$/.test(shippingPhone.trim())) {
+    const sanitizedPhone = shippingPhone.replace(/\D/g, '')
+    if (!/^\d{10}$/.test(sanitizedPhone.slice(-10))) {
       setErrorMessage('Please enter a valid 10-digit Phone Number')
       return
     }
@@ -256,35 +257,47 @@ export function Profile() {
 
     setSaving(true)
     try {
-      const updated = await updateUserProfileApi(
-        {
-          address: {
-            label: shippingLabel,
-            fullName: shippingFullName,
-            phone: shippingPhone,
-            houseFlatNo: shippingHouseFlatNo,
-            streetArea: shippingStreetArea,
-            landmark: shippingLandmark,
-            city: shippingCity,
-            state: shippingState,
-            postalCode: shippingPostalCode,
-            country: shippingCountry,
-          }
-        },
-        user.token
-      )
+      const addressPayload = {
+        label: shippingLabel,
+        fullName: shippingFullName,
+        phone: shippingPhone,
+        houseFlatNo: shippingHouseFlatNo,
+        streetArea: shippingStreetArea,
+        landmark: shippingLandmark,
+        addressLine: `${shippingHouseFlatNo}, ${shippingStreetArea}, ${shippingLandmark}`.trim(),
+        city: shippingCity,
+        state: shippingState,
+        postalCode: shippingPostalCode,
+        country: shippingCountry,
+        isDefault: editingAddressId ? (addresses.find(a => a.id === editingAddressId)?.isDefault || false) : false,
+      }
 
-      login({
-        ...user,
-        address: updated.address
-      })
+      const updatedList = editingAddressId
+        ? await updateAddress(user.token, editingAddressId, addressPayload)
+        : await addAddress(user.token, addressPayload)
 
-      setAddress(updated.address || null)
-      setSuccess('Address updated successfully!')
+      setAddresses(updatedList || [])
+      setSuccess(editingAddressId ? 'Address updated successfully!' : 'Address saved successfully!')
+      
+      // Clear fields
+      setShippingLabel('')
+      setShippingFullName('')
+      setShippingPhone('')
+      setShippingHouseFlatNo('')
+      setShippingStreetArea('')
+      setShippingLandmark('')
+      setShippingCity('')
+      setShippingState('')
+      setShippingPostalCode('')
+      setShippingCountry('India')
+
+      // Reset form states
+      setEditingAddressId(null)
       setShowAddressForm(false)
+
       setTimeout(() => setSuccess(''), 5000)
     } catch (err) {
-      setErrorMessage(err instanceof Error ? err.message : 'Failed to update address')
+      setErrorMessage(err instanceof Error ? err.message : 'Failed to save address')
     } finally {
       setSaving(false)
     }
@@ -434,7 +447,6 @@ export function Profile() {
         address: updated.address
       })
 
-      setAddress(updated.address || null)
       setSuccess('Profile updated successfully!')
       setIsEditingProfile(false)
     } catch (err) {
@@ -496,11 +508,11 @@ export function Profile() {
 
       {/* Main Grid */}
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
           {/* Left Column */}
-          <div className="lg:col-span-4 flex flex-col gap-6">
+          <div className="md:col-span-4 lg:col-span-4 flex flex-col gap-6">
             {/* Profile Avatar Card */}
-            <div className="w-full max-w-[420px] h-[96px] border border-[#BD8A3C]/30 bg-[#F8F0E5] p-5 flex items-center gap-4 shadow-sm shrink-0">
+            <div className="w-full lg:max-w-[420px] h-[96px] border border-[#BD8A3C]/30 bg-[#F8F0E5] p-5 flex items-center gap-4 shadow-sm shrink-0">
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#420001] text-white">
                 <CircleUserRound size={32} className="text-white" strokeWidth={1.5} />
               </div>
@@ -513,15 +525,15 @@ export function Profile() {
             </div>
 
             {/* Sidebar Navigation */}
-            <div className="w-full max-w-[420px] h-fit border border-[#BD8A3C80] bg-[#F8F0E5] pt-[30px] pb-[30px] px-[1px] flex flex-col gap-[10px] shadow-sm">
-              <div className="px-[30px] mb-1">
+            <div className="w-full lg:max-w-[420px] h-fit border border-[#BD8A3C80] bg-[#F8F0E5] pt-[30px] pb-[30px] px-[1px] flex flex-col gap-[10px] shadow-sm">
+              <div className="px-4 md:px-5 lg:px-[30px] mb-1">
                 <h3 className="font-serif text-[20px] font-bold text-[#7a6e67]">My Account</h3>
               </div>
               <nav className="flex flex-col gap-0 overflow-y-auto text-[16px]">
                 <button
                   type="button"
                   onClick={() => setCurrentView('profile')}
-                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer ${currentView === 'profile'
+                  className={`flex items-center gap-3 px-4 md:px-5 lg:px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer ${currentView === 'profile'
                     ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
                     : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon'
                     }`}
@@ -532,7 +544,7 @@ export function Profile() {
                 <button
                   type="button"
                   onClick={() => setCurrentView('orders')}
-                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer ${currentView === 'orders'
+                  className={`flex items-center gap-3 px-4 md:px-5 lg:px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer ${currentView === 'orders'
                     ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
                     : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon'
                     }`}
@@ -543,7 +555,7 @@ export function Profile() {
                 <button
                   type="button"
                   onClick={() => setCurrentView('addresses')}
-                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer w-full ${currentView === 'addresses'
+                  className={`flex items-center gap-3 px-4 md:px-5 lg:px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer w-full ${currentView === 'addresses'
                     ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
                     : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon border-t border-[#BD8A3C]/10'
                     }`}
@@ -554,7 +566,7 @@ export function Profile() {
                 <button
                   type="button"
                   onClick={() => setCurrentView('wishlist')}
-                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer w-full ${currentView === 'wishlist'
+                  className={`flex items-center gap-3 px-4 md:px-5 lg:px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer w-full ${currentView === 'wishlist'
                     ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
                     : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon border-t border-[#BD8A3C]/10'
                     }`}
@@ -565,7 +577,7 @@ export function Profile() {
                 <button
                   type="button"
                   onClick={() => setCurrentView('logout')}
-                  className={`flex w-full items-center gap-3 px-[30px] py-3.5 text-left text-[16px] font-sans font-medium cursor-pointer transition-colors ${currentView === 'logout'
+                  className={`flex w-full items-center gap-3 px-4 md:px-5 lg:px-[30px] py-3.5 text-left text-[16px] font-sans font-medium cursor-pointer transition-colors ${currentView === 'logout'
                     ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
                     : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon border-t border-[#BD8A3C]/10'
                     }`}
@@ -577,7 +589,7 @@ export function Profile() {
             </div>
 
             {/* Need Help? Box */}
-            <div className="w-full max-w-[420px] h-[218px]  bg-[#BD8A3C0F] p-[30px] flex flex-col justify-between text-left shadow-sm">
+            <div className="w-full lg:max-w-[420px] h-[218px]  bg-[#BD8A3C0F] p-[30px] flex flex-col justify-between text-left shadow-sm">
               <div className="flex flex-col gap-[10px]">
                 <h4 className="font-serif text-[20px] font-bold text-[#420001] leading-none">Need Help?</h4>
                 <p className="text-[16px] text-[#717171] font-sans leading-none">We are here fpr you</p>
@@ -592,7 +604,7 @@ export function Profile() {
           </div>
 
           {/* Right Column */}
-          <div className="lg:col-span-8">
+          <div className="md:col-span-8 lg:col-span-8">
             {currentView === 'profile' && (
               <div className="flex flex-col w-full lg:w-[860px]">
                 {/* Header section (Second Image specs: 528x58, gap 12) */}
@@ -603,7 +615,7 @@ export function Profile() {
                   </p>
                 </div>
 
-                <div className="w-full lg:w-[860px] h-[650px] border border-[#BD8A3C80] bg-[#F8F0E5] p-[30px] flex flex-col shadow-sm mt-[62px]">
+                <div className="w-full lg:w-[860px] h-auto lg:h-[650px] border border-[#BD8A3C80] bg-[#F8F0E5] p-[30px] flex flex-col shadow-sm mt-[62px]">
                   {errorMessage && (
                     <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-[16px]">
                       {errorMessage}
@@ -643,7 +655,7 @@ export function Profile() {
                       </div>
 
                       {/* Form Fields Grid */}
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-[39px] gap-y-[24px]">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-[39px] gap-y-[24px]">
                         {/* First Name */}
                         <div>
                           <label className="block text-[16px] font-medium text-[#717171] mb-1.5 font-sans">
@@ -873,19 +885,19 @@ export function Profile() {
                         year: 'numeric'
                       });
                       return (
-                        <div key={order._id} className="w-full lg:w-[860px] lg:h-[200px] border border-[#BD8A3C1A] bg-[#BD8A3C05] p-[20px] flex items-center shadow-sm">
-                          <div className="w-full lg:w-[820px] lg:h-[160px] flex flex-col lg:flex-row items-center gap-[38px]">
+                        <div key={order._id} className="w-full lg:w-[860px] h-auto border border-[#BD8A3C1A] bg-[#BD8A3C05] p-[20px] flex items-center shadow-sm">
+                          <div className="w-full lg:w-[820px] flex flex-col lg:flex-row items-stretch lg:items-center gap-[20px] lg:gap-[38px]">
                             {/* Product Image */}
                             <img
                               src={firstItem.product?.image || '/images/Lehengas.png'}
                               alt={firstItem.name}
-                              className="w-[160px] h-[160px] object-cover shrink-0"
+                              className="w-[160px] h-[160px] object-cover shrink-0 mx-auto lg:mx-0"
                             />
 
                             {/* Details Column */}
-                            <div className="w-[178px] h-[124px] flex flex-col gap-[20px] shrink-0 text-left">
+                            <div className="w-full lg:flex-1 flex flex-col gap-[20px] text-left">
                               <div className="flex flex-col gap-1">
-                                <h4 className="font-sans text-[16px] font-bold text-[#420001] leading-none truncate w-[178px]">
+                                <h4 className="font-sans text-[16px] font-bold text-[#420001] leading-none truncate max-w-[200px]">
                                   Order #{order._id.substring(order._id.length - 8).toUpperCase()}
                                 </h4>
                                 <p className="text-[16px] text-[#717171] font-sans leading-none">{orderDate} • {order.orderItems.length} Item{order.orderItems.length > 1 ? 's' : ''}</p>
@@ -900,7 +912,7 @@ export function Profile() {
                             </div>
 
                             {/* Status Column */}
-                            <div className="w-full lg:w-[188px] h-[124px] flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-[#BD8A3C1A] lg:pl-[38px] shrink-0 text-left">
+                            <div className="w-full lg:w-[188px] flex flex-col justify-between gap-4 border-t lg:border-t-0 lg:border-l border-[#BD8A3C1A] pt-4 lg:pt-0 lg:pl-[38px] shrink-0 text-left">
                               <div>
                                 <p className="text-[16px] text-[#717171] uppercase tracking-wider mb-1 font-sans">Order Status</p>
                                 {order.paymentStatus?.toLowerCase() === 'cancelled' || order.shippingStatus?.toLowerCase() === 'cancelled' ? (
@@ -927,7 +939,7 @@ export function Profile() {
                             </div>
 
                             {/* Actions Column */}
-                            <div className="w-full lg:w-[180px] h-[160px] flex flex-col justify-center gap-2.5 shrink-0 font-sans">
+                            <div className="w-full lg:w-[180px] flex flex-col justify-center gap-2.5 shrink-0 font-sans mt-4 lg:mt-0">
                               <button className="w-full py-2 border border-[#BD8A3C]/50 text-text-dark text-[16px] font-semibold bg-white hover:bg-black/5 rounded-none transition-all cursor-pointer">
                                 View Details
                               </button>
@@ -963,83 +975,95 @@ export function Profile() {
                   </p>
                 </div>
 
+                {errorMessage && (
+                  <div className="mt-4 w-full lg:w-[860px] bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-none text-left font-sans text-sm">
+                    {errorMessage}
+                  </div>
+                )}
+                {success && (
+                  <div className="mt-4 w-full lg:w-[860px] bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-none text-left font-sans text-sm">
+                    {success}
+                  </div>
+                )}
+
                 {/* Main Card List Container (Third Image specs: 860x648, gap 28) */}
                 <div className="flex flex-col gap-[28px] w-full lg:w-[860px] lg:h-auto shrink-0 mt-[62px]">
-                  {/* Existing Addresses Card (Fourth Image specs: 860x332, border: 1px solid #717171) */}
-                  <div className="w-full lg:w-[860px] lg:h-[332px] border border-[#717171] bg-[#F8F0E5] shadow-sm flex flex-col justify-between shrink-0">
-                    {address && (address.fullName || address.houseFlatNo || address.city || address.streetArea) ? (
-                      <div className="w-full lg:h-[166px] p-[20px] flex flex-col justify-between text-left shrink-0">
-                        <div className="flex items-center justify-between">
-                          <span className="inline-flex items-center justify-center px-3 py-1 bg-[#BD8A3C1A] text-[#BD8A3C] text-xs font-semibold uppercase tracking-wider font-sans">
-                            Default Shipping Address
-                          </span>
-                          <div className="flex items-center gap-3">
-                            <button
-                              onClick={async () => {
-                                if (!user?.token) return
-                                if (window.confirm('Are you sure you want to clear this address?')) {
-                                  try {
-                                    setSaving(true)
-                                    const updated = await updateUserProfileApi({
-                                      address: {
-                                        label: '',
-                                        fullName: '',
-                                        phone: '',
-                                        houseFlatNo: '',
-                                        streetArea: '',
-                                        landmark: '',
-                                        city: '',
-                                        state: '',
-                                        postalCode: '',
-                                        country: 'India',
-                                      }
-                                    }, user.token)
-                                    login({ ...user, address: updated.address })
-                                    setAddress(null)
-                                    setShippingLabel('')
-                                    setShippingFullName('')
-                                    setShippingPhone('')
-                                    setShippingHouseFlatNo('')
-                                    setShippingStreetArea('')
-                                    setShippingLandmark('')
-                                    setShippingCity('')
-                                    setShippingState('')
-                                    setShippingPostalCode('')
-                                    setSuccess('Address cleared successfully!')
-                                    setTimeout(() => setSuccess(''), 5000)
-                                  } catch (err) {
-                                    setErrorMessage('Failed to clear address')
-                                  } finally {
-                                    setSaving(false)
+                  {/* Existing Addresses Cards */}
+                  <div className="w-full lg:w-[860px] flex flex-col gap-4">
+                    {addresses.length > 0 ? (
+                      addresses.map((addr) => (
+                        <div key={addr.id} className="w-full p-[20px] border border-[#717171] bg-[#F8F0E5] shadow-sm flex flex-col justify-between text-left shrink-0">
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                              {addr.label && (
+                                <span className="inline-flex items-center justify-center px-3 py-1 bg-[#BD8A3C1A] text-[#BD8A3C] text-xs font-semibold uppercase tracking-wider font-sans">
+                                  {addr.label}
+                                </span>
+                              )}
+                              {addr.isDefault && (
+                                <span className="inline-flex items-center justify-center px-3 py-1 bg-[#420001]/10 text-maroon text-xs font-semibold uppercase tracking-wider font-sans">
+                                  Default
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  if (!user?.token || !addr.id) return
+                                  if (window.confirm('Are you sure you want to delete this address?')) {
+                                    try {
+                                      setSaving(true)
+                                      const updatedList = await deleteAddress(user.token, addr.id)
+                                      setAddresses(updatedList || [])
+                                      setSuccess('Address deleted successfully!')
+                                      setTimeout(() => setSuccess(''), 5000)
+                                    } catch (err) {
+                                      setErrorMessage('Failed to delete address')
+                                    } finally {
+                                      setSaving(false)
+                                    }
                                   }
-                                }
-                              }}
-                              className="flex items-center gap-1.5 px-3 py-1.5 border border-[#BD8A3C]/50 text-[#BD8A3C] text-xs font-semibold hover:bg-black/5 rounded-none transition-all font-sans cursor-pointer"
-                            >
-                              Delete
-                            </button>
-                            <button
-                              onClick={() => {
-                                setShowAddressForm(true)
-                              }}
-                              className="flex items-center gap-1.5 px-3 py-1.5 border border-[#BD8A3C]/50 text-[#BD8A3C] text-xs font-semibold hover:bg-black/5 rounded-none transition-all font-sans cursor-pointer"
-                            >
-                              Edit
-                            </button>
+                                }}
+                                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#BD8A3C]/50 text-[#BD8A3C] text-xs font-semibold hover:bg-black/5 rounded-none transition-all font-sans cursor-pointer"
+                              >
+                                Delete
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setEditingAddressId(addr.id || null)
+                                  setShippingLabel(addr.label || '')
+                                  setShippingFullName(addr.fullName || '')
+                                  setShippingPhone(addr.phone || '')
+                                  setShippingHouseFlatNo(addr.houseFlatNo || '')
+                                  setShippingStreetArea(addr.streetArea || '')
+                                  setShippingLandmark(addr.landmark || '')
+                                  setShippingCity(addr.city || '')
+                                  setShippingState(addr.state || '')
+                                  setShippingPostalCode(addr.postalCode || '')
+                                  setShippingCountry(addr.country || 'India')
+                                  setShowAddressForm(true)
+                                }}
+                                className="flex items-center gap-1.5 px-3 py-1.5 border border-[#BD8A3C]/50 text-[#BD8A3C] text-xs font-semibold hover:bg-black/5 rounded-none transition-all font-sans cursor-pointer"
+                              >
+                                Edit
+                              </button>
+                            </div>
+                          </div>
+                          <div className="space-y-1 text-left font-sans mt-2">
+                            <div className="flex items-center gap-4">
+                              <span className="text-[16px] font-bold text-text-dark">{addr.fullName}</span>
+                              <span className="text-[16px] font-bold text-text-dark">{addr.phone}</span>
+                            </div>
+                            <p className="text-[16px] text-[#717171] leading-relaxed">
+                              {addr.houseFlatNo}, {addr.streetArea}, {addr.landmark ? addr.landmark + ', ' : ''}{addr.city}, {addr.state} - {addr.postalCode}, {addr.country}
+                            </p>
                           </div>
                         </div>
-                        <div className="space-y-1 text-left font-sans mt-2">
-                          <div className="flex items-center gap-4">
-                            <span className="text-[16px] font-bold text-text-dark">{address.fullName}</span>
-                            <span className="text-[16px] font-bold text-text-dark">{address.phone}</span>
-                          </div>
-                          <p className="text-[16px] text-[#717171] leading-relaxed">
-                            {address.houseFlatNo}, {address.streetArea}, {address.landmark ? address.landmark + ', ' : ''}{address.city}, {address.state} - {address.postalCode}, {address.country}
-                          </p>
-                        </div>
-                      </div>
+                      ))
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-[#717171] font-sans text-[16px] p-6 text-center">
+                      <div className="w-full lg:h-[150px] border border-[#717171] bg-[#F8F0E5] flex items-center justify-center text-[#717171] font-sans text-[16px] p-6 text-center">
                         No address saved. Use the form below to add a shipping address.
                       </div>
                     )}
@@ -1048,7 +1072,7 @@ export function Profile() {
                   {/* Add New Address Card / Form (Fifth Image Outer specs: 860x288, border 1, padding, gap 10) */}
                   {showAddressForm ? (
                     <form onSubmit={handleUpdateAddress} className="w-full lg:w-[860px] border border-[#BD8A3C80] bg-[#BD8A3C05] p-[20px] md:p-[30px] flex flex-col gap-5 shrink-0 font-sans">
-                      <p className="text-left font-serif text-lg text-text-dark font-medium">Add New Address</p>
+                      <p className="text-left font-serif text-lg text-text-dark font-medium">{editingAddressId ? 'Edit Address' : 'Add New Address'}</p>
 
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-left">
                         <Field
@@ -1120,7 +1144,20 @@ export function Profile() {
                       <div className="flex items-center justify-start gap-3 mt-3">
                         <button
                           type="button"
-                          onClick={() => setShowAddressForm(false)}
+                          onClick={() => {
+                            setEditingAddressId(null)
+                            setShowAddressForm(false)
+                            setShippingLabel('')
+                            setShippingFullName('')
+                            setShippingPhone('')
+                            setShippingHouseFlatNo('')
+                            setShippingStreetArea('')
+                            setShippingLandmark('')
+                            setShippingCity('')
+                            setShippingState('')
+                            setShippingPostalCode('')
+                            setShippingCountry('India')
+                          }}
                           className="px-6 py-2.5 border border-[#BD8A3C]/50 text-text-dark text-sm font-semibold bg-white hover:bg-black/5 rounded-none transition-all cursor-pointer font-serif"
                         >
                           Cancel
@@ -1130,7 +1167,7 @@ export function Profile() {
                           disabled={saving}
                           className="px-6 py-2.5 bg-[#420001] border border-[#420001] text-white text-sm font-serif font-semibold hover:bg-transparent hover:text-[#420001] rounded-none transition-all cursor-pointer"
                         >
-                          {saving ? 'Saving...' : 'Save Address'}
+                          {saving ? 'Saving...' : (editingAddressId ? 'Update Address' : 'Save Address')}
                         </button>
                       </div>
                     </form>
