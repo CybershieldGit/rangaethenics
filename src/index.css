@@ -21,8 +21,11 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
   font-family: var(--font-sans);
   color: var(--color-text-dark);
   background-color: #fffaf3;
@@ -31,6 +34,8 @@ body {
 
 #root {
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   background-color: #bd8a3c0f;
 }
 

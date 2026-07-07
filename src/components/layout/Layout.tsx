@@ -18,7 +18,7 @@ export function Layout() {
       <ScrollToTop />
       <AnnouncementBar />
       <Header />
-      <main>
+      <main className="w-full overflow-x-hidden">
         <Outlet />
       </main>
       <Footer />
