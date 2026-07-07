@@ -6,9 +6,10 @@ interface DatePickerProps {
   onChange: (value: string) => void
   placeholder?: string
   className?: string
+  disabled?: boolean
 }
 
-export function DatePicker({ value, onChange, placeholder = 'DD/MM/YYYY', className = '' }: DatePickerProps) {
+export function DatePicker({ value, onChange, placeholder = 'DD/MM/YYYY', className = '', disabled = false }: DatePickerProps) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -169,13 +170,15 @@ export function DatePicker({ value, onChange, placeholder = 'DD/MM/YYYY', classN
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          onClick={() => setIsOpen(true)}
+          onClick={() => !disabled && setIsOpen(true)}
+          disabled={disabled}
           className={`${className} pr-10`}
         />
         <button
           type="button"
-          onClick={() => setIsOpen(!isOpen)}
-          className="absolute right-3 text-[#717171] hover:text-maroon focus:outline-none cursor-pointer"
+          onClick={() => !disabled && setIsOpen(!isOpen)}
+          disabled={disabled}
+          className="absolute right-3 text-[#717171] hover:text-maroon focus:outline-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <CalendarIcon size={18} strokeWidth={1.5} />
         </button>

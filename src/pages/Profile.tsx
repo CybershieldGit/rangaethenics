@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import {
   CircleUserRound,
   Package,
@@ -58,17 +58,27 @@ function Field({
 
 export function Profile() {
   const navigate = useNavigate()
+  const location = useLocation()
   const { user, logout, login } = useAuth()
   const { addToCart } = useCart()
   const { items: wishlistIds, removeFromWishlist, clearWishlist } = useWishlist()
 
   const [currentView, setCurrentView] = useState<'profile' | 'orders' | 'addresses' | 'wishlist' | 'logout'>('profile')
+
+  useEffect(() => {
+    if (location.state && (location.state as any).view) {
+      setCurrentView((location.state as any).view)
+      // Clear location state to prevent sticky behavior on reload
+      navigate(location.pathname, { replace: true, state: {} })
+    }
+  }, [location.state, location.pathname, navigate])
   const [firstName, setFirstName] = useState('')
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [dateOfBirth, setDateOfBirth] = useState('')
   const [gender, setGender] = useState('')
+  const [isEditingProfile, setIsEditingProfile] = useState(false)
 
   const [orders, setOrders] = useState<Order[]>([])
   const [wishlist, setWishlist] = useState<any[]>([])
@@ -409,6 +419,7 @@ export function Profile() {
 
       setAddress(updated.address || null)
       setSuccess('Profile updated successfully!')
+      setIsEditingProfile(false)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to update profile')
     } finally {
@@ -485,16 +496,16 @@ export function Profile() {
             </div>
 
             {/* Sidebar Navigation */}
-            <div className="w-full max-w-[420px] h-[440px] border border-[#BD8A3C80] bg-[#F8F0E5] pt-[30px] pb-[30px] px-[1px] flex flex-col gap-[10px] shadow-sm">
+            <div className="w-full max-w-[420px] h-fit border border-[#BD8A3C80] bg-[#F8F0E5] pt-[30px] pb-[30px] px-[1px] flex flex-col gap-[10px] shadow-sm">
               <div className="px-[30px] mb-1">
                 <h3 className="font-serif text-[20px] font-bold text-[#7a6e67]">My Account</h3>
               </div>
-              <nav className="flex flex-col gap-[10px] overflow-y-auto text-[16px]">
+              <nav className="flex flex-col gap-0 overflow-y-auto text-[16px]">
                 <button
                   type="button"
                   onClick={() => setCurrentView('profile')}
                   className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer ${currentView === 'profile'
-                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001]'
+                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
                     : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon'
                     }`}
                 >
@@ -505,7 +516,7 @@ export function Profile() {
                   type="button"
                   onClick={() => setCurrentView('orders')}
                   className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer ${currentView === 'orders'
-                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001]'
+                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
                     : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon'
                     }`}
                 >
@@ -515,9 +526,9 @@ export function Profile() {
                 <button
                   type="button"
                   onClick={() => setCurrentView('addresses')}
-                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer border-t border-[#BD8A3C]/10 w-full ${currentView === 'addresses'
-                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001]'
-                    : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon'
+                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer w-full ${currentView === 'addresses'
+                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
+                    : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon border-t border-[#BD8A3C]/10'
                     }`}
                 >
                   <MapPin size={18} strokeWidth={1.5} />
@@ -526,9 +537,9 @@ export function Profile() {
                 <button
                   type="button"
                   onClick={() => setCurrentView('wishlist')}
-                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer border-t border-[#BD8A3C]/10 w-full ${currentView === 'wishlist'
-                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001]'
-                    : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon'
+                  className={`flex items-center gap-3 px-[30px] py-3.5 text-[16px] text-left transition-colors font-sans font-medium cursor-pointer w-full ${currentView === 'wishlist'
+                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
+                    : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon border-t border-[#BD8A3C]/10'
                     }`}
                 >
                   <Heart size={18} strokeWidth={1.5} />
@@ -537,9 +548,9 @@ export function Profile() {
                 <button
                   type="button"
                   onClick={() => setCurrentView('logout')}
-                  className={`flex w-full items-center gap-3 px-[30px] py-3.5 text-left text-[16px] font-sans font-medium cursor-pointer border-t border-[#BD8A3C]/10 transition-colors ${currentView === 'logout'
-                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001]'
-                    : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon'
+                  className={`flex w-full items-center gap-3 px-[30px] py-3.5 text-left text-[16px] font-sans font-medium cursor-pointer transition-colors ${currentView === 'logout'
+                    ? 'font-semibold text-maroon bg-[#F5ECE3] border-b border-[#420001] relative z-10'
+                    : 'text-[#222222] hover:bg-[#FAF6F0] hover:text-maroon border-t border-[#BD8A3C]/10'
                     }`}
                 >
                   <LogOut size={18} strokeWidth={1.5} />
@@ -602,24 +613,14 @@ export function Profile() {
                           <button
                             type="button"
                             onClick={() => {
-                              document.getElementById('firstNameInput')?.focus()
+                              setIsEditingProfile(!isEditingProfile)
+                              if (!isEditingProfile) {
+                                setTimeout(() => document.getElementById('firstNameInput')?.focus(), 50)
+                              }
                             }}
-                            className="flex items-center gap-1 text-[16px] font-serif font-bold text-maroon hover:underline transition-colors cursor-pointer"
+                            className="flex items-center gap-1 text-[16px] font-serif font-bold text-maroon underline transition-colors cursor-pointer"
                           >
-                            Edit
-                            <svg
-                              className="w-4 h-4"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth="2"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                              <polyline points="15 3 21 3 21 9"></polyline>
-                              <line x1="10" y1="14" x2="21" y2="3"></line>
-                            </svg>
+                            {isEditingProfile ? 'Cancel' : 'Edit'}
                           </button>
                         </div>
                       </div>
@@ -640,7 +641,8 @@ export function Profile() {
                               setErrorMessage('')
                               setSuccess('')
                             }}
-                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors"
+                            disabled={!isEditingProfile}
+                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
                           />
                         </div>
 
@@ -657,7 +659,8 @@ export function Profile() {
                               setErrorMessage('')
                               setSuccess('')
                             }}
-                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors"
+                            disabled={!isEditingProfile}
+                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
                           />
                         </div>
 
@@ -674,7 +677,8 @@ export function Profile() {
                               setErrorMessage('')
                               setSuccess('')
                             }}
-                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors"
+                            disabled={!isEditingProfile}
+                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
                           />
                         </div>
 
@@ -683,11 +687,12 @@ export function Profile() {
                           <label className="block text-[16px] font-medium text-[#717171] mb-1.5 font-sans">
                             Phone Number
                           </label>
-                          <div className="flex items-center w-full h-11 px-3 bg-[#F5ECE3]/50 focus-within:bg-[#BD8A3C0F] focus-within:ring-1 focus-within:ring-maroon transition-colors rounded-none">
+                          <div className={`flex items-center w-full h-11 px-3 bg-[#F5ECE3]/50 focus-within:bg-[#BD8A3C0F] focus-within:ring-1 focus-within:ring-maroon transition-colors rounded-none ${!isEditingProfile ? 'opacity-75 cursor-not-allowed' : ''}`}>
                             <span className="font-sans text-[16px] font-medium text-[#717171] mr-1.5 select-none">+91</span>
                             <input
                               type="text"
                               value={phone}
+                              disabled={!isEditingProfile}
                               onChange={(e) => {
                                 const validation = e.target.value
                                 if (validation.length <= 10 && !isNaN(Number(validation))) {
@@ -697,7 +702,7 @@ export function Profile() {
                                 setSuccess('')
                               }}
                               placeholder="5545 625 425"
-                              className="w-full h-full bg-transparent focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark p-0"
+                              className="w-full h-full bg-transparent focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark p-0 disabled:cursor-not-allowed"
                             />
                           </div>
                         </div>
@@ -715,7 +720,8 @@ export function Profile() {
                               setSuccess('')
                             }}
                             placeholder="DD/MM/YYYY"
-                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors"
+                            disabled={!isEditingProfile}
+                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
                           />
                         </div>
 
@@ -726,16 +732,19 @@ export function Profile() {
                           </label>
                           <div className="flex items-center gap-6 h-11">
                             {['Male', 'Female', 'Others'].map((option) => (
-                              <label key={option} className="flex items-center gap-2 cursor-pointer select-none">
+                              <label key={option} className={`flex items-center gap-2 select-none ${isEditingProfile ? 'cursor-pointer' : 'cursor-not-allowed opacity-75'}`}>
                                 <input
                                   type="radio"
                                   name="gender"
                                   value={option}
                                   checked={gender?.toLowerCase() === option.toLowerCase()}
+                                  disabled={!isEditingProfile}
                                   onChange={() => {
-                                    setGender(option)
-                                    setErrorMessage('')
-                                    setSuccess('')
+                                    if (isEditingProfile) {
+                                      setGender(option)
+                                      setErrorMessage('')
+                                      setSuccess('')
+                                    }
                                   }}
                                   className="sr-only"
                                 />
@@ -761,10 +770,13 @@ export function Profile() {
                     <div className="flex justify-center">
                       <button
                         type="submit"
-                        disabled={saving}
-                        className="px-16 py-3.5 bg-[#A37A74] text-white text-[16px] font-sans font-semibold hover:bg-[#8D645E] transition-all rounded-none tracking-wide"
+                        disabled={saving || !isEditingProfile}
+                        className={`px-16 py-3.5 text-white text-[16px] font-sans font-semibold transition-all rounded-none tracking-wide ${!isEditingProfile
+                          ? 'bg-gray-400 cursor-not-allowed opacity-75'
+                          : 'bg-[#A37A74] hover:bg-[#8D645E] cursor-pointer'
+                          }`}
                       >
-                        {saving ? 'Saving...' : 'Update Profile'}
+                        {saving ? 'Saving...' : 'Saved Changes'}
                       </button>
                     </div>
                   </form>
@@ -983,7 +995,7 @@ export function Profile() {
                   {showAddressForm ? (
                     <form onSubmit={handleUpdateAddress} className="w-full lg:w-[860px] border border-[#BD8A3C80] bg-[#BD8A3C05] p-[20px] md:p-[30px] flex flex-col gap-5 shrink-0 font-sans">
                       <p className="text-left font-serif text-lg text-text-dark font-medium">Add New Address</p>
-                      
+
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-left">
                         <Field
                           label="Address Label"
