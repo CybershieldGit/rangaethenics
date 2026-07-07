@@ -1,4 +1,5 @@
 import { Button } from '../ui/Button'
+import { Link } from 'react-router-dom'
 
 interface ArtisanBannerProps {
   image?: string
@@ -29,7 +30,9 @@ export function ArtisanBanner({ image = '/images/ourstory.png' }: ArtisanBannerP
             techniques passed through generations.
           </p>
           <div className="mt-7">
-            <Button className="rounded-lg !px-8 !py-3">Discover Our Story</Button>
+            <Link to="/about">
+              <Button className="rounded-lg !px-8 !py-3 cursor-pointer">Discover Our Story</Button>
+            </Link>
           </div>
         </div>
       </div>

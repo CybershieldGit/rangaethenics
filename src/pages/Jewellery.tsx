@@ -8,6 +8,7 @@ import { ValueProposition } from '../components/home/ValueProposition'
 import { OurStory } from '../components/home/OurStory'
 import { FestiveSpecial } from '../components/jewellery/FestiveSpecial'
 import { getProducts } from '../utils/api'
+import { Link } from 'react-router-dom'
 import {
   Product,
   mostSellingJewelry as fallbackMostSelling,
@@ -106,10 +107,14 @@ function JewelleryHero() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Button className="!px-8 !py-3">Get Now</Button>
-              <Button variant="ghost" className="!px-8 !py-3">
-                Explore Collections
-              </Button>
+              <Link to="/about">
+                <Button className="!px-8 !py-3 cursor-pointer">Our Story</Button>
+              </Link>
+              <Link to="/products?category=jewellery">
+                <Button variant="ghost" className="!px-8 !py-3 cursor-pointer">
+                  Explore Collections
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -193,7 +198,7 @@ export function Jewellery() {
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
           products={mostSelling}
           viewAllLabel="View All Most Selling"
-          viewAllTo="/products?category=jewellery"
+          viewAllTo="/products?category=jewellery&bestSelling=true"
         />
         <OccasionSection />
         <ProductSection
@@ -201,7 +206,7 @@ export function Jewellery() {
           subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
           products={newArrivals}
           viewAllLabel="View All New Arrivals"
-          viewAllTo="/products?category=jewellery"
+          viewAllTo="/products?category=jewellery&newArrival=true"
         />
         <DecorativeDivider className="py-6 absolute bottom-[-38px] left-0 w-full" />
       </div>
