@@ -88,12 +88,29 @@ export function Profile() {
   const [shippingState, setShippingState] = useState('')
   const [shippingPostalCode, setShippingPostalCode] = useState('')
   const [shippingCountry, setShippingCountry] = useState('India')
+  const [selectedTab, setSelectedTab] = useState<'all' | 'Placed' | 'Shipped' | 'Delivered' | 'Cancelled'>('all');
 
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+
+  const filteredOrders = orders.filter((order: Order) => {
+    switch (selectedTab) {
+      case 'Placed':
+        return (order as any).deliveryStatus === 'Placed';
+
+      case 'Delivered':
+        return (order as any).deliveryStatus === 'Delivered';
+
+      case 'Cancelled':
+        return (order as any).deliveryStatus === 'Cancelled';
+
+      default:
+        return true;
+    }
+  });
 
   // Redirect if not logged in
   useEffect(() => {
@@ -485,11 +502,11 @@ export function Profile() {
             </div>
 
             {/* Sidebar Navigation */}
-            <div className="w-full max-w-[420px] h-[440px] border border-[#BD8A3C80] bg-[#F8F0E5] pt-[30px] pb-[30px] px-[1px] flex flex-col gap-[10px] shadow-sm">
+            <div className="w-full max-w-[420px] border border-[#BD8A3C80] bg-[#F8F0E5] pt-[30px] px-[1px] flex flex-col gap-[10px] shadow-sm">
               <div className="px-[30px] mb-1">
                 <h3 className="font-serif text-[20px] font-bold text-[#7a6e67]">My Account</h3>
               </div>
-              <nav className="flex flex-col gap-[10px] overflow-y-auto text-[16px]">
+              <nav className="flex flex-col overflow-y-auto text-[16px]">
                 <button
                   type="button"
                   onClick={() => setCurrentView('profile')}
@@ -784,11 +801,48 @@ export function Profile() {
                 </div>
 
                 {/* Filters Row */}
-                <div className="flex items-center gap-6 border-b border-[#BD8A3C]/20 pb-2 text-[16px] font-sans font-semibold text-[#717171] mt-[62px]">
-                  <span className="text-maroon border-b-2 border-maroon pb-2 cursor-pointer font-bold font-sans">All Orders ({orders.length})</span>
-                  <span className="hover:text-maroon cursor-pointer pb-2 font-sans">Shipped (0)</span>
-                  <span className="hover:text-maroon cursor-pointer pb-2 font-sans">Delivered (0)</span>
-                  <span className="hover:text-maroon cursor-pointer pb-2 font-sans">Cancelled (0)</span>
+                <div className="flex items-center gap-6 border-b border-[#BD8A3C]/20 pb-2 text-[16px] font-sans font-semibold">
+
+                  <span
+                    onClick={() => setSelectedTab('all')}
+                    className={`cursor-pointer pb-2 ${selectedTab === 'all'
+                        ? 'text-maroon border-b-2 border-maroon font-bold'
+                        : 'text-[#717171] hover:text-maroon'
+                      }`}
+                  >
+                    All Orders ({orders.length})
+                  </span>
+
+                  <span
+                    onClick={() => setSelectedTab('Placed')}
+                    className={`cursor-pointer pb-2 ${selectedTab === 'Placed'
+                        ? 'text-maroon border-b-2 border-maroon font-bold'
+                        : 'text-[#717171] hover:text-maroon'
+                      }`}
+                  >
+                    Placed ({orders.filter((order: Order) => (order as any).deliveryStatus === 'Placed').length})
+                  </span>
+
+                  <span
+                    onClick={() => setSelectedTab('Delivered')}
+                    className={`cursor-pointer pb-2 ${selectedTab === 'Delivered'
+                        ? 'text-maroon border-b-2 border-maroon font-bold'
+                        : 'text-[#717171] hover:text-maroon'
+                      }`}
+                  >
+                    Delivered ({orders.filter((order: Order) => (order as any).deliveryStatus === 'Delivered').length})
+                  </span>
+
+                  <span
+                    onClick={() => setSelectedTab('Cancelled')}
+                    className={`cursor-pointer pb-2 ${selectedTab === 'Cancelled'
+                        ? 'text-maroon border-b-2 border-maroon font-bold'
+                        : 'text-[#717171] hover:text-maroon'
+                      }`}
+                  >
+                    Cancelled ({orders.filter((order: Order) => (order as any).deliveryStatus === 'Cancelled').length})
+                  </span>
+
                 </div>
 
                 {/* Orders List Container */}
@@ -798,7 +852,7 @@ export function Profile() {
                       No orders found in your account.
                     </div>
                   ) : (
-                    orders.map((order) => {
+                    filteredOrders.map((order) => {
                       const firstItem = order.orderItems[0];
                       if (!firstItem) return null;
                       const orderDate = new Date(order.createdAt).toLocaleDateString('en-IN', {
@@ -841,13 +895,13 @@ export function Profile() {
                                   <span className="inline-flex items-center justify-center w-[97px] h-[26px] bg-[#7171711A] text-[#717171] text-[16px] leading-none font-semibold rounded-none tracking-wide uppercase font-sans">
                                     Cancelled
                                   </span>
-                                ) : order.isPaid || order.paymentMethod === 'COD' ? (
+                                ) : (order as any).deliveryStatus === 'Delivered' ? (
                                   <span className="inline-flex items-center justify-center w-[97px] h-[26px] bg-[#4200011A] text-[#420001] text-[16px] leading-none font-semibold rounded-none tracking-wide uppercase font-sans">
                                     Delivered
                                   </span>
                                 ) : (
                                   <span className="inline-flex items-center justify-center w-[97px] h-[26px] bg-[#BD8A3C1A] text-[#BD8A3C] text-[16px] leading-none font-semibold rounded-none tracking-wide uppercase font-sans">
-                                    Processing
+                                    Placed
                                   </span>
                                 )}
                               </div>
@@ -983,7 +1037,7 @@ export function Profile() {
                   {showAddressForm ? (
                     <form onSubmit={handleUpdateAddress} className="w-full lg:w-[860px] border border-[#BD8A3C80] bg-[#BD8A3C05] p-[20px] md:p-[30px] flex flex-col gap-5 shrink-0 font-sans">
                       <p className="text-left font-serif text-lg text-text-dark font-medium">Add New Address</p>
-                      
+
                       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-left">
                         <Field
                           label="Address Label"
