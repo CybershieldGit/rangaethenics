@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
-import { Search, ShoppingBag, Heart, Menu, X, CircleUserRound, LogOut } from 'lucide-react'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Search, ShoppingBag, Heart, Menu, X, CircleUserRound, LogOut, Package, MapPin } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { useAuth } from '../../context/AuthContext'
 import { useWishlist } from '../../context/WishlistContext'
@@ -21,7 +21,8 @@ export function Header() {
   const [profileOpen, setProfileOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
-  const { isAuthenticated, user, logout } = useAuth()
+  const navigate = useNavigate()
+  const { isAuthenticated, user } = useAuth()
   const { count: wishlistCount } = useWishlist()
   const { count: cartCount } = useCart()
 
@@ -124,21 +125,57 @@ export function Header() {
                     </p>
                     <p className="truncate font-inter text-xs text-[#717171]">{user?.email}</p>
                   </div>
-                  <Link
-                    to="/profile"
-                    onClick={() => setProfileOpen(false)}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white"
-                  >
-                    <CircleUserRound size={16} strokeWidth={1.5} />
-                    Profile Details
-                  </Link>
                   <button
                     type="button"
                     onClick={() => {
-                      logout()
+                      navigate('/profile', { state: { view: 'profile' } })
                       setProfileOpen(false)
                     }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/20"
+                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white cursor-pointer"
+                  >
+                    <CircleUserRound size={16} strokeWidth={1.5} />
+                    Profile Details
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate('/profile', { state: { view: 'orders' } })
+                      setProfileOpen(false)
+                    }}
+                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
+                  >
+                    <Package size={16} strokeWidth={1.5} />
+                    My Order
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate('/profile', { state: { view: 'addresses' } })
+                      setProfileOpen(false)
+                    }}
+                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
+                  >
+                    <MapPin size={16} strokeWidth={1.5} />
+                    Manage Addresses
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate('/profile', { state: { view: 'wishlist' } })
+                      setProfileOpen(false)
+                    }}
+                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
+                  >
+                    <Heart size={16} strokeWidth={1.5} />
+                    Wishlist
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      navigate('/profile', { state: { view: 'logout' } })
+                      setProfileOpen(false)
+                    }}
+                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/20 cursor-pointer"
                   >
                     <LogOut size={16} strokeWidth={1.5} />
                     Log Out
@@ -222,7 +259,14 @@ export function Header() {
           </Link>
           <div className="mt-3 flex gap-3">
             {isAuthenticated ? (
-              <Button variant="outline" className="flex-1" onClick={logout}>
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={() => {
+                  navigate('/profile', { state: { view: 'logout' } })
+                  setMobileOpen(false)
+                }}
+              >
                 Log Out
               </Button>
             ) : (
