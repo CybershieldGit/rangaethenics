@@ -45,6 +45,7 @@ export function Home() {
         title="New Arrivals"
         subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
         products={newArrivals}
+        viewAllTo="/products?category=all&newArrival=true"
         viewAllLabel="View All New Arrivals"
       />
       <OccasionSection />
@@ -52,6 +53,7 @@ export function Home() {
         title="Most Selling"
         subtitle="Loved by our customers for their elegance, quality and timeless charm."
         products={mostSelling}
+        viewAllTo="/products?category=all&bestSelling=true"
         viewAllLabel="View All Most Selling"
       />
       <GallerySection />

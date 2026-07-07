@@ -8,6 +8,7 @@ import { ValueProposition } from '../components/home/ValueProposition'
 import { OurStory } from '../components/home/OurStory'
 import { FestiveSpecial } from '../components/jewellery/FestiveSpecial'
 import { getProducts } from '../utils/api'
+import { Link } from 'react-router-dom'
 import {
   Product,
   mostSellingClothing as fallbackMostSelling,
@@ -67,15 +68,19 @@ function ClothingHero() {
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <Button className="!px-8 !py-3.5 bg-maroon text-white border-maroon hover:bg-maroon-dark transition-all duration-300 font-semibold tracking-wide">
-                Our Story
-              </Button>
-              <Button
-                variant="outline"
-                className="!px-8 !py-3.5 border-[#BD8A3C] text-maroon hover:bg-[#BD8A3C] hover:text-white transition-all duration-300 font-semibold tracking-wide"
-              >
-                Explore Collections
-              </Button>
+              <Link to="/about">
+                <Button className="!px-8 !py-3.5 bg-maroon text-white border-maroon hover:bg-maroon-dark transition-all duration-300 font-semibold tracking-wide cursor-pointer">
+                  Our Story
+                </Button>
+              </Link>
+              <Link to="/products?category=clothing">
+                <Button
+                  variant="outline"
+                  className="!px-8 !py-3.5 border-[#BD8A3C] text-maroon hover:bg-[#BD8A3C] hover:text-white transition-all duration-300 font-semibold tracking-wide cursor-pointer"
+                >
+                  Explore Collections
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -218,7 +223,7 @@ export function Clothing() {
           subtitle="Loved by our customers for their elegance, quality and timeless charm."
           products={mostSelling}
           viewAllLabel="View All Most Selling"
-          viewAllTo="/products?category=clothing"
+          viewAllTo="/products?category=clothing&bestSelling=true"
         />
         <OccasionSection />
         <ProductSection
@@ -226,7 +231,7 @@ export function Clothing() {
           subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
           products={newArrivals}
           viewAllLabel="View All New Arrivals"
-          viewAllTo="/products?category=clothing"
+          viewAllTo="/products?category=clothing&newArrival=true"
         />
         <DecorativeDivider className="py-6 absolute bottom-[-38px] left-0 w-full" />
       </div>

@@ -33,11 +33,11 @@ export function ProductSection({
             ))}
           </div>
 
-          
+
         </div>
 
         {viewAllLabel && (
-          <div className="mt-10 md:mt-15 text-center">
+          <div className="mt-10 md:mt-15 text-center pb-14 md:pb-8">
             <Link to={viewAllTo}>
               <Button>{viewAllLabel}</Button>
             </Link>

@@ -45,11 +45,10 @@ function FilterCheckbox({
   return (
     <label className="flex cursor-pointer items-center gap-3 text-[16px] text-text-dark">
       <span
-        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-[1px] border-1 ${
-          checked
-            ? 'border-[#420001] bg-[#420001] text-white'
-            : 'border-[#BD8A3C]/60 bg-[#F8F0E5] text-transparent'
-        }`}
+        className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-[1px] border-1 ${checked
+          ? 'border-[#420001] bg-[#420001] text-white'
+          : 'border-[#BD8A3C]/60 bg-[#F8F0E5] text-transparent'
+          }`}
       >
         {checked && <Check size={13} strokeWidth={3} />}
         <input
@@ -67,12 +66,13 @@ function FilterCheckbox({
 export function Products() {
   const [searchParams, setSearchParams] = useSearchParams()
   const initialCategory = (searchParams.get('category') as CategoryFilter) || 'all'
-
+  const initialNewArrivalsOnly = searchParams.get('newArrival') === 'true'
+  const initialBestSellingOnly = searchParams.get('bestSelling') === 'true'
   const [category, setCategory] = useState<CategoryFilter>(
     ['all', 'clothing', 'jewellery'].includes(initialCategory) ? initialCategory : 'all',
   )
-  const [newArrivalsOnly, setNewArrivalsOnly] = useState(false)
-  const [bestSellingOnly, setBestSellingOnly] = useState(false)
+  const [newArrivalsOnly, setNewArrivalsOnly] = useState(initialNewArrivalsOnly)
+  const [bestSellingOnly, setBestSellingOnly] = useState(initialBestSellingOnly)
   const [maxPrice, setMaxPrice] = useState(PRICE_MAX)
   const [sortBy, setSortBy] = useState<SortOption>('featured')
   const [selectedColors, setSelectedColors] = useState<string[]>([])
@@ -219,13 +219,11 @@ export function Products() {
                   key={tab.value}
                   type="button"
                   onClick={() => handleCategoryChange(tab.value)}
-                  className={`flex flex-1 items-center justify-center px-2 py-2.5 text-center text-[16px] transition-colors ${
-                    i > 0 ? 'border-l border-[#BD8A3C]/50' : ''
-                  } ${
-                    category === tab.value
+                  className={`flex flex-1 items-center justify-center px-2 py-2.5 text-center text-[16px] transition-colors ${i > 0 ? 'border-l border-[#BD8A3C]/50' : ''
+                    } ${category === tab.value
                       ? 'bg-maroon text-white'
                       : 'bg-transparent text-text-dark hover:bg-maroon/5'
-                  }`}
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -260,11 +258,10 @@ export function Products() {
                 <label className="flex cursor-pointer items-center justify-between text-[16px] text-text-dark">
                   New Arrivals
                   <span
-                    className={`flex h-6 w-6 items-center justify-center rounded-[1px] border-2 ${
-                      newArrivalsOnly
-                        ? 'border-[#420001] bg-[#420001] text-white'
-                        : 'border-[#420001] bg-transparent text-transparent'
-                    }`}
+                    className={`flex h-6 w-6 items-center justify-center rounded-[1px] border-2 ${newArrivalsOnly
+                      ? 'border-[#420001] bg-[#420001] text-white'
+                      : 'border-[#420001] bg-transparent text-transparent'
+                      }`}
                   >
                     {newArrivalsOnly && <Check size={15} strokeWidth={3} />}
                     <input
@@ -278,11 +275,10 @@ export function Products() {
                 <label className="flex cursor-pointer items-center justify-between text-[16px] text-text-dark">
                   Best Selling
                   <span
-                    className={`flex h-6 w-6 items-center justify-center rounded-[1px] border-2 ${
-                      bestSellingOnly
-                        ? 'border-[#420001] bg-[#420001] text-white'
-                        : 'border-[#420001] bg-transparent text-transparent'
-                    }`}
+                    className={`flex h-6 w-6 items-center justify-center rounded-[1px] border-2 ${bestSellingOnly
+                      ? 'border-[#420001] bg-[#420001] text-white'
+                      : 'border-[#420001] bg-transparent text-transparent'
+                      }`}
                   >
                     {bestSellingOnly && <Check size={15} strokeWidth={3} />}
                     <input
@@ -318,22 +314,22 @@ export function Products() {
                 </div>
 
                 <div className="relative h-4">
-                <div className="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-full bg-[#d9d2c6]" />
-                <div
-                  className="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-maroon"
-                  style={{ left: 0, width: `${pricePercent}%` }}
-                />
-                <input
-                  type="range"
-                  min={PRICE_MIN}
-                  max={PRICE_MAX}
-                  step={100}
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="range-thumb"
-                  aria-label="Maximum price"
-                />
-              </div>
+                  <div className="absolute top-1/2 h-1 w-full -translate-y-1/2 rounded-full bg-[#d9d2c6]" />
+                  <div
+                    className="absolute top-1/2 h-1 -translate-y-1/2 rounded-full bg-maroon"
+                    style={{ left: 0, width: `${pricePercent}%` }}
+                  />
+                  <input
+                    type="range"
+                    min={PRICE_MIN}
+                    max={PRICE_MAX}
+                    step={100}
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(Number(e.target.value))}
+                    className="range-thumb"
+                    aria-label="Maximum price"
+                  />
+                </div>
                 <div className="mt-3 flex justify-between text-xs text-text">
                   <span>{formatPrice(PRICE_MIN)}</span>
                   <span>{formatPrice(PRICE_MAX)}+</span>
@@ -361,11 +357,10 @@ export function Products() {
                             aria-label={`Filter by color ${name}`}
                             aria-pressed={isSelected}
                             onClick={() => toggleItem(color, selectedColors, setSelectedColors)}
-                            className={`h-7 w-7 rounded-full border-2 transition-transform ${
-                              isSelected
-                                ? 'scale-110 border-maroon'
-                                : 'border-transparent hover:scale-105'
-                            }`}
+                            className={`h-7 w-7 rounded-full border-2 transition-transform ${isSelected
+                              ? 'scale-110 border-maroon'
+                              : 'border-transparent hover:scale-105'
+                              }`}
                             style={{ backgroundColor: hex }}
                           />
                         )
@@ -471,11 +466,10 @@ export function Products() {
                         type="button"
                         onClick={() => setCurrentPage(page)}
                         aria-current={currentPage === page ? 'page' : undefined}
-                        className={`flex h-10 w-10 items-center justify-center text-[16px] transition-colors ${
-                          currentPage === page
-                            ? 'bg-maroon text-white'
-                            : 'border border-[#BD8A3C]/50 text-text-dark hover:border-maroon hover:text-maroon'
-                        }`}
+                        className={`flex h-10 w-10 items-center justify-center text-[16px] transition-colors ${currentPage === page
+                          ? 'bg-maroon text-white'
+                          : 'border border-[#BD8A3C]/50 text-text-dark hover:border-maroon hover:text-maroon'
+                          }`}
                       >
                         {page}
                       </button>
