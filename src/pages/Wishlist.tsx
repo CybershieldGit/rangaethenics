@@ -5,13 +5,16 @@ import { Breadcrumb } from '../components/ui/Breadcrumb'
 import { Spinner } from '../components/ui/Spinner'
 import { ProductCard } from '../components/home/ProductCard'
 import { useWishlist } from '../context/WishlistContext'
+import { useCart } from '../context/CartContext'
 import { getProducts } from '../utils/api'
 import { allProducts, type Product } from '../data/products'
 
 export function Wishlist() {
   const { items, count, clearWishlist, removeFromWishlist } = useWishlist()
+  const { addToCart } = useCart()
   const [products, setProducts] = useState<Product[]>(allProducts)
   const [clearing, setClearing] = useState(false)
+  const [movingAll, setMovingAll] = useState(false)
 
   const handleClearWishlist = async () => {
     if (clearing) return
@@ -22,6 +25,21 @@ export function Wishlist() {
       console.error('Failed to clear wishlist:', error)
     } finally {
       setClearing(false)
+    }
+  }
+
+  const handleMoveAllToBag = async () => {
+    if (movingAll || wishlistedProducts.length === 0) return
+    setMovingAll(true)
+    try {
+      for (const product of wishlistedProducts) {
+        await addToCart(product.id, 1)
+        await removeFromWishlist(product.id)
+      }
+    } catch (error) {
+      console.error('Failed to move all to bag:', error)
+    } finally {
+      setMovingAll(false)
     }
   }
 
@@ -49,15 +67,24 @@ export function Wishlist() {
         <Breadcrumb items={[{ label: 'Wishlist' }]} />
         {count > 0 && (
           <div className="pointer-events-none absolute inset-0 flex items-center">
-            <div className="mx-auto flex w-full max-w-7xl justify-end px-4 md:px-8">
+            <div className="mx-auto flex w-full max-w-7xl justify-end px-4 md:px-8 gap-3">
               <button
                 type="button"
                 onClick={handleClearWishlist}
-                disabled={clearing}
-                className="pointer-events-auto inline-flex shrink-0 items-center gap-2 whitespace-nowrap border border-maroon px-4 py-2 font-serif text-sm text-maroon transition-colors hover:bg-maroon hover:text-white disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:py-2.5"
+                disabled={clearing || movingAll}
+                className="pointer-events-auto inline-flex shrink-0 items-center gap-2 whitespace-nowrap border border-maroon px-4 py-2 font-serif text-sm text-maroon transition-colors hover:bg-maroon hover:text-white disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:py-2.5 bg-transparent cursor-pointer"
               >
                 {clearing && <Spinner size={15} />}
                 {clearing ? 'Clearing...' : 'Clear Wishlist'}
+              </button>
+              <button
+                type="button"
+                onClick={handleMoveAllToBag}
+                disabled={clearing || movingAll}
+                className="pointer-events-auto inline-flex shrink-0 items-center gap-2 whitespace-nowrap border border-maroon bg-maroon px-4 py-2 font-serif text-sm text-white transition-colors hover:bg-transparent hover:text-maroon disabled:cursor-not-allowed disabled:opacity-60 sm:px-5 sm:py-2.5 cursor-pointer"
+              >
+                {movingAll && <Spinner size={15} />}
+                {movingAll ? 'Moving...' : 'Move All to Bag'}
               </button>
             </div>
           </div>

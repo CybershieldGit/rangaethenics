@@ -1,17 +1,36 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
+import { Heart, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
 import { Breadcrumb } from '../components/ui/Breadcrumb'
 import { Spinner } from '../components/ui/Spinner'
 import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import { getProducts } from '../utils/api'
 import { allProducts, formatPrice, getDiscount, type Product } from '../data/products'
 
 export function Cart() {
   const { items, count, updateQty, removeFromCart, clearCart } = useCart()
+  const { addToWishlist } = useWishlist()
   const [products, setProducts] = useState<Product[]>(allProducts)
   const [clearing, setClearing] = useState(false)
   const [busyId, setBusyId] = useState<string | null>(null)
+
+  const handleMoveToWishlist = async (id: string) => {
+    if (busyId) return
+    setBusyId(id)
+    try {
+      try {
+        await addToWishlist(id)
+      } catch (wishlistErr) {
+        console.warn('Wishlist update warning/error (item might already be wishlisted):', wishlistErr)
+      }
+      await removeFromCart(id)
+    } catch (error) {
+      console.error('Failed to move item to wishlist:', error)
+    } finally {
+      setBusyId(null)
+    }
+  }
 
   const handleClearCart = async () => {
     if (clearing) return
@@ -132,15 +151,26 @@ export function Cart() {
                               {product.subtitle ?? product.name}
                             </span>
                           </h3>
-                          <button
-                            type="button"
-                            aria-label={`Remove ${product.name}`}
-                            onClick={() => handleRemove(product.id)}
-                            disabled={busy}
-                            className="shrink-0 text-text transition-colors hover:text-maroon disabled:cursor-not-allowed disabled:opacity-50"
-                          >
-                            {busy ? <Spinner size={18} /> : <Trash2 size={18} strokeWidth={1.5} />}
-                          </button>
+                          <div className="flex items-center gap-3.5 shrink-0">
+                            <button
+                              type="button"
+                              aria-label={`Move ${product.name} to wishlist`}
+                              onClick={() => handleMoveToWishlist(product.id)}
+                              disabled={busy}
+                              className="text-text transition-colors hover:text-maroon disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                            >
+                              <Heart size={18} strokeWidth={1.5} />
+                            </button>
+                            <button
+                              type="button"
+                              aria-label={`Remove ${product.name}`}
+                              onClick={() => handleRemove(product.id)}
+                              disabled={busy}
+                              className="text-text transition-colors hover:text-maroon disabled:cursor-not-allowed disabled:opacity-50 cursor-pointer"
+                            >
+                              {busy ? <Spinner size={18} /> : <Trash2 size={18} strokeWidth={1.5} />}
+                            </button>
+                          </div>
                         </div>
 
                         <div className="mt-1 flex flex-wrap items-baseline gap-2">

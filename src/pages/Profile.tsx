@@ -8,21 +8,59 @@ import {
   LogOut
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
+import { useCart } from '../context/CartContext'
+import { useWishlist } from '../context/WishlistContext'
 import {
   getUserProfileApi,
   updateUserProfileApi,
   getUserOrdersApi,
   cancelOrderApi,
   getUserWishlistApi,
-  removeFromWishlistApi,
   Address,
   Order
 } from '../utils/authApi'
 import { ValueProposition } from '../components/home/ValueProposition'
+import { DatePicker } from '../components/ui/DatePicker'
+
+function Field({
+  label,
+  value,
+  onChange,
+  placeholder,
+  required = true,
+  type = 'text',
+  className = '',
+}: {
+  label: string
+  value: string
+  onChange: (v: string) => void
+  placeholder?: string
+  required?: boolean
+  type?: string
+  className?: string
+}) {
+  return (
+    <label className={`block ${className}`}>
+      <span className="mb-1.5 block text-sm text-text-dark font-sans font-medium text-left">
+        {label}
+        {required && <span className="text-maroon"> *</span>}
+      </span>
+      <input
+        type={type}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="h-11 w-full border border-[#BD8A3C]/50 bg-white px-3 text-sm text-text-dark outline-none transition-colors focus:border-maroon focus:bg-[#BD8A3C0F] rounded-none"
+      />
+    </label>
+  )
+}
 
 export function Profile() {
   const navigate = useNavigate()
   const { user, logout, login } = useAuth()
+  const { addToCart } = useCart()
+  const { items: wishlistIds, removeFromWishlist, clearWishlist } = useWishlist()
 
   const [currentView, setCurrentView] = useState<'profile' | 'orders' | 'addresses' | 'wishlist' | 'logout'>('profile')
   const [firstName, setFirstName] = useState('')
@@ -40,6 +78,7 @@ export function Profile() {
   const [showAddressForm, setShowAddressForm] = useState(false)
 
   // Addresses form states
+  const [shippingLabel, setShippingLabel] = useState('')
   const [shippingFullName, setShippingFullName] = useState('')
   const [shippingPhone, setShippingPhone] = useState('')
   const [shippingHouseFlatNo, setShippingHouseFlatNo] = useState('')
@@ -84,6 +123,7 @@ export function Profile() {
         // Load shipping address details if they exist in the profile
         if (profile.address) {
           setAddress(profile.address)
+          setShippingLabel(profile.address.label || '')
           setShippingFullName(profile.address.fullName || '')
           setShippingPhone(profile.address.phone || '')
           setShippingHouseFlatNo(profile.address.houseFlatNo || '')
@@ -102,14 +142,6 @@ export function Profile() {
         } catch (orderErr) {
           console.error('Failed to fetch user orders:', orderErr)
         }
-
-        // Fetch Wishlist
-        try {
-          const userWishlist = await getUserWishlistApi(user.token)
-          setWishlist(userWishlist || [])
-        } catch (wishlistErr) {
-          console.error('Failed to fetch user wishlist:', wishlistErr)
-        }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load profile details')
       } finally {
@@ -119,6 +151,22 @@ export function Profile() {
 
     fetchData()
   }, [user?.token])
+
+  // Sync full product wishlist items when global wishlist context updates
+  useEffect(() => {
+    console.log('Profile syncWishlist triggered. wishlistIds:', wishlistIds, 'userToken:', user?.token)
+    if (!user?.token) return
+    const syncWishlist = async () => {
+      try {
+        const userWishlist = await getUserWishlistApi(user.token)
+        console.log('Profile syncWishlist API response:', userWishlist)
+        setWishlist(userWishlist || [])
+      } catch (wishlistErr) {
+        console.error('Failed to fetch user wishlist:', wishlistErr)
+      }
+    }
+    syncWishlist()
+  }, [wishlistIds, user?.token])
 
   const handleCancelOrder = async (orderId: string) => {
     if (!user?.token) return
@@ -146,6 +194,10 @@ export function Profile() {
     setErrorMessage('')
     setSuccess('')
 
+    if (!shippingLabel.trim()) {
+      setErrorMessage('Please enter Address Label')
+      return
+    }
     if (!shippingFullName.trim()) {
       setErrorMessage('Please enter Full Name')
       return
@@ -180,6 +232,7 @@ export function Profile() {
       const updated = await updateUserProfileApi(
         {
           address: {
+            label: shippingLabel,
             fullName: shippingFullName,
             phone: shippingPhone,
             houseFlatNo: shippingHouseFlatNo,
@@ -210,13 +263,81 @@ export function Profile() {
     }
   }
 
-  const handleRemoveFromWishlist = async (productId: string) => {
-    if (!user?.token) return
+  const handleClearWishlist = async () => {
+    setSaving(true)
+    setErrorMessage('')
+    setSuccess('')
     try {
-      const updatedWishlist = await removeFromWishlistApi(productId, user.token)
-      setWishlist(updatedWishlist || [])
+      await clearWishlist()
+      setSuccess('Wishlist cleared successfully!')
+      setTimeout(() => setSuccess(''), 5000)
+    } catch (err) {
+      setErrorMessage('Failed to clear wishlist')
+      setTimeout(() => setErrorMessage(''), 5000)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleRemoveFromWishlist = async (productId: string) => {
+    try {
+      await removeFromWishlist(productId)
     } catch (err) {
       console.error('Failed to remove from wishlist:', err)
+    }
+  }
+
+  const handleMoveAllToBag = async () => {
+    if (!user?.token || wishlist.length === 0) return
+    setSaving(true)
+    setErrorMessage('')
+    setSuccess('')
+    try {
+      let count = 0
+      for (const item of wishlist) {
+        if (item.countInStock > 0) {
+          await addToCart(item._id, 1)
+          await removeFromWishlist(item._id)
+          count++
+        }
+      }
+      if (count > 0) {
+        setSuccess('All items moved to bag successfully!')
+      } else {
+        setErrorMessage('No items were moved (out of stock)')
+      }
+      setTimeout(() => {
+        setSuccess('')
+        setErrorMessage('')
+      }, 5000)
+    } catch (err) {
+      setErrorMessage('Failed to move items to bag')
+      setTimeout(() => setErrorMessage(''), 5000)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleAddProductToBag = async (item: any) => {
+    if (!user?.token) return
+    if (item.countInStock <= 0) {
+      setErrorMessage('Product is out of stock')
+      setTimeout(() => setErrorMessage(''), 5000)
+      return
+    }
+    setSaving(true)
+    setErrorMessage('')
+    setSuccess('')
+    try {
+      await addToCart(item._id, 1)
+      await removeFromWishlist(item._id)
+      setSuccess(`${item.name} moved to bag successfully!`)
+      setTimeout(() => setSuccess(''), 5000)
+    } catch (err) {
+      setErrorMessage('Failed to add item to bag')
+      setTimeout(() => setErrorMessage(''), 5000)
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -562,20 +683,23 @@ export function Profile() {
                           <label className="block text-[16px] font-medium text-[#717171] mb-1.5 font-sans">
                             Phone Number
                           </label>
-                          <input
-                            type="text"
-                            value={phone}
-                            onChange={(e) => {
-                              const validation = e.target.value
-                              if (validation.length <= 10 && !isNaN(Number(validation))) {
-                                setPhone(validation)
-                              }
-                              setErrorMessage('')
-                              setSuccess('')
-                            }}
-                            placeholder="+91 5545 625 425"
-                            className="w-full h-11 px-3 bg-[#F5ECE3]/50 focus:bg-[#BD8A3C0F] focus:border-maroon focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark rounded-none transition-colors"
-                          />
+                          <div className="flex items-center w-full h-11 px-3 bg-[#F5ECE3]/50 focus-within:bg-[#BD8A3C0F] focus-within:ring-1 focus-within:ring-maroon transition-colors rounded-none">
+                            <span className="font-sans text-[16px] font-medium text-[#717171] mr-1.5 select-none">+91</span>
+                            <input
+                              type="text"
+                              value={phone}
+                              onChange={(e) => {
+                                const validation = e.target.value
+                                if (validation.length <= 10 && !isNaN(Number(validation))) {
+                                  setPhone(validation)
+                                }
+                                setErrorMessage('')
+                                setSuccess('')
+                              }}
+                              placeholder="5545 625 425"
+                              className="w-full h-full bg-transparent focus:outline-none border-none font-sans text-[16px] font-medium text-text-dark p-0"
+                            />
+                          </div>
                         </div>
 
                         {/* DOB */}
@@ -583,11 +707,10 @@ export function Profile() {
                           <label className="block text-[16px] font-medium text-[#717171] mb-1.5 font-sans">
                             Date of Birth
                           </label>
-                          <input
-                            type="text"
+                          <DatePicker
                             value={dateOfBirth}
-                            onChange={(e) => {
-                              setDateOfBirth(e.target.value)
+                            onChange={(val) => {
+                              setDateOfBirth(val)
                               setErrorMessage('')
                               setSuccess('')
                             }}
@@ -775,10 +898,10 @@ export function Profile() {
                 </div>
 
                 {/* Main Card List Container (Third Image specs: 860x648, gap 28) */}
-                <div className="flex flex-col gap-[28px] w-full lg:w-[860px] lg:h-[648px] shrink-0 mt-[62px]">
+                <div className="flex flex-col gap-[28px] w-full lg:w-[860px] lg:h-auto shrink-0 mt-[62px]">
                   {/* Existing Addresses Card (Fourth Image specs: 860x332, border: 1px solid #717171) */}
                   <div className="w-full lg:w-[860px] lg:h-[332px] border border-[#717171] bg-[#F8F0E5] shadow-sm flex flex-col justify-between shrink-0">
-                    {address ? (
+                    {address && (address.fullName || address.houseFlatNo || address.city || address.streetArea) ? (
                       <div className="w-full lg:h-[166px] p-[20px] flex flex-col justify-between text-left shrink-0">
                         <div className="flex items-center justify-between">
                           <span className="inline-flex items-center justify-center px-3 py-1 bg-[#BD8A3C1A] text-[#BD8A3C] text-xs font-semibold uppercase tracking-wider font-sans">
@@ -793,6 +916,7 @@ export function Profile() {
                                     setSaving(true)
                                     const updated = await updateUserProfileApi({
                                       address: {
+                                        label: '',
                                         fullName: '',
                                         phone: '',
                                         houseFlatNo: '',
@@ -806,6 +930,7 @@ export function Profile() {
                                     }, user.token)
                                     login({ ...user, address: updated.address })
                                     setAddress(null)
+                                    setShippingLabel('')
                                     setShippingFullName('')
                                     setShippingPhone('')
                                     setShippingHouseFlatNo('')
@@ -856,102 +981,88 @@ export function Profile() {
 
                   {/* Add New Address Card / Form (Fifth Image Outer specs: 860x288, border 1, padding, gap 10) */}
                   {showAddressForm ? (
-                    <form onSubmit={handleUpdateAddress} className="w-full lg:w-[860px] lg:h-[288px] border border-[#BD8A3C80] bg-[#BD8A3C05] p-[20px] flex flex-col justify-between shrink-0 font-sans">
-                      <div className="grid grid-cols-3 gap-[10px] text-left">
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">Full Name</label>
-                          <input
-                            type="text"
-                            value={shippingFullName}
-                            onChange={(e) => setShippingFullName(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">Phone</label>
-                          <input
-                            type="text"
-                            value={shippingPhone}
-                            onChange={(e) => setShippingPhone(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">House/Flat No</label>
-                          <input
-                            type="text"
-                            value={shippingHouseFlatNo}
-                            onChange={(e) => setShippingHouseFlatNo(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">Street/Area</label>
-                          <input
-                            type="text"
-                            value={shippingStreetArea}
-                            onChange={(e) => setShippingStreetArea(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">Landmark</label>
-                          <input
-                            type="text"
-                            value={shippingLandmark}
-                            onChange={(e) => setShippingLandmark(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">City</label>
-                          <input
-                            type="text"
-                            value={shippingCity}
-                            onChange={(e) => setShippingCity(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">State</label>
-                          <input
-                            type="text"
-                            value={shippingState}
-                            onChange={(e) => setShippingState(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">Pincode</label>
-                          <input
-                            type="text"
-                            value={shippingPostalCode}
-                            onChange={(e) => setShippingPostalCode(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-xs font-semibold text-[#717171] mb-1">Country</label>
-                          <input
-                            type="text"
-                            value={shippingCountry}
-                            onChange={(e) => setShippingCountry(e.target.value)}
-                            className="w-full h-8 px-2 bg-white border border-[#BD8A3C]/30 text-text-dark text-xs focus:bg-[#BD8A3C0F] focus:outline-none"
-                          />
-                        </div>
+                    <form onSubmit={handleUpdateAddress} className="w-full lg:w-[860px] border border-[#BD8A3C80] bg-[#BD8A3C05] p-[20px] md:p-[30px] flex flex-col gap-5 shrink-0 font-sans">
+                      <p className="text-left font-serif text-lg text-text-dark font-medium">Add New Address</p>
+                      
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 text-left">
+                        <Field
+                          label="Address Label"
+                          value={shippingLabel}
+                          onChange={setShippingLabel}
+                          placeholder="e.g. Home, Work"
+                          className="sm:col-span-2"
+                        />
+                        <Field
+                          label="Full Name"
+                          value={shippingFullName}
+                          onChange={setShippingFullName}
+                          placeholder="Recipient name"
+                        />
+                        <Field
+                          label="Phone Number"
+                          value={shippingPhone}
+                          onChange={setShippingPhone}
+                          placeholder="10-digit mobile number"
+                          type="tel"
+                        />
+                        <Field
+                          label="House / Flat No."
+                          value={shippingHouseFlatNo}
+                          onChange={setShippingHouseFlatNo}
+                          placeholder="e.g. A-101"
+                        />
+                        <Field
+                          label="Street / Area"
+                          value={shippingStreetArea}
+                          onChange={setShippingStreetArea}
+                          placeholder="Street, locality"
+                        />
+                        <Field
+                          label="Landmark"
+                          value={shippingLandmark}
+                          onChange={setShippingLandmark}
+                          placeholder="Nearby landmark (optional)"
+                          required={false}
+                          className="sm:col-span-2"
+                        />
+                        <Field
+                          label="City"
+                          value={shippingCity}
+                          onChange={setShippingCity}
+                          placeholder="City"
+                        />
+                        <Field
+                          label="State"
+                          value={shippingState}
+                          onChange={setShippingState}
+                          placeholder="State"
+                        />
+                        <Field
+                          label="Pincode"
+                          value={shippingPostalCode}
+                          onChange={setShippingPostalCode}
+                          placeholder="6-digit pincode"
+                        />
+                        <Field
+                          label="Country"
+                          value={shippingCountry}
+                          onChange={setShippingCountry}
+                          placeholder="Country"
+                        />
                       </div>
-                      <div className="flex items-center justify-end gap-3 mt-2">
+
+                      <div className="flex items-center justify-start gap-3 mt-3">
                         <button
                           type="button"
                           onClick={() => setShowAddressForm(false)}
-                          className="px-6 py-2 border border-[#BD8A3C]/50 text-text-dark text-[16px] font-semibold bg-white hover:bg-black/5 rounded-none transition-all cursor-pointer"
+                          className="px-6 py-2.5 border border-[#BD8A3C]/50 text-text-dark text-sm font-semibold bg-white hover:bg-black/5 rounded-none transition-all cursor-pointer font-serif"
                         >
                           Cancel
                         </button>
                         <button
                           type="submit"
                           disabled={saving}
-                          className="px-6 py-2 bg-[#420001] text-white text-[16px] font-semibold hover:opacity-90 rounded-none transition-all cursor-pointer"
+                          className="px-6 py-2.5 bg-[#420001] border border-[#420001] text-white text-sm font-serif font-semibold hover:bg-transparent hover:text-[#420001] rounded-none transition-all cursor-pointer"
                         >
                           {saving ? 'Saving...' : 'Save Address'}
                         </button>
@@ -996,9 +1107,22 @@ export function Profile() {
                       Your saved favorites - handpicked for you.
                     </p>
                   </div>
-                  <button className="px-6 py-2.5 bg-[#420001] text-white text-[16px] font-semibold hover:opacity-90 transition-all rounded-none cursor-pointer font-sans">
-                    Move All to Bag
-                  </button>
+                  {wishlist.length > 0 && (
+                    <div className="flex items-center gap-3">
+                      <button
+                        onClick={handleClearWishlist}
+                        className="px-6 py-2.5 border border-[#BD8A3C]/50 text-text-dark text-[16px] font-semibold bg-white hover:bg-black/5 rounded-none transition-all cursor-pointer font-sans"
+                      >
+                        Clear Wishlist
+                      </button>
+                      <button
+                        onClick={handleMoveAllToBag}
+                        className="px-6 py-2.5 bg-[#420001] border border-[#420001] text-white text-[16px] font-semibold hover:bg-transparent hover:text-[#420001] rounded-none transition-all cursor-pointer font-sans"
+                      >
+                        Move All to Bag
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 {/* Wishlist Items List Container (gap 62px via mt-[62px]) */}
@@ -1040,7 +1164,10 @@ export function Profile() {
 
                           {/* Action Buttons (Fifth Image specs: 156x79, gap 11) */}
                           <div className="w-[156px] h-[79px] flex flex-col justify-between shrink-0 font-sans">
-                            <button className="w-[156px] h-[34px] bg-[#420001] text-white text-[16px] font-semibold hover:opacity-90 rounded-none flex items-center justify-center gap-1.5 transition-all cursor-pointer">
+                            <button
+                              onClick={() => handleAddProductToBag(item)}
+                              className="w-[156px] h-[34px] bg-[#420001] text-white text-[16px] font-semibold hover:opacity-90 rounded-none flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                            >
                               <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
                               </svg>
