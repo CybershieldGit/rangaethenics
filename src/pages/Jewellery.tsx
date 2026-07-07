@@ -210,7 +210,7 @@ export function Jewellery() {
         />
         <DecorativeDivider className="py-6 absolute bottom-[-38px] left-0 w-full" />
       </div>
-      <FestiveSpecial />
+      <FestiveSpecial category="jewellery" />
       <ValueProposition />
       <OurStory background="transparent" />
     </div>

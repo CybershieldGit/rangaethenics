@@ -1,4 +1,5 @@
 import { Button } from '../ui/Button'
+import { Link } from 'react-router-dom'
 
 export function PromoBanner() {
   return (
@@ -62,7 +63,9 @@ export function PromoBanner() {
               Discover handcrafted pieces in limited quantities.
             </p>
             <div className="mt-6">
-              <Button variant="white">Shop New Arrivals</Button>
+              <Link to="/products?category=all&newArrival=true">
+                <Button variant="white">Shop New Arrivals</Button>
+              </Link>
             </div>
           </div>
         </div>

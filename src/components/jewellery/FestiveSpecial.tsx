@@ -1,15 +1,18 @@
 import { Button } from '../ui/Button'
+import { Link } from 'react-router-dom'
 
 interface FestiveSpecialProps {
   eyebrow?: string
   note?: string
   image?: string
+  category?: string
 }
 
 export function FestiveSpecial({
   eyebrow = 'Flat 15% Off',
   note = 'On all jewellery',
   image = '/images/festive_jewellery.png',
+  category = 'all',
 }: FestiveSpecialProps) {
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 md:px-8">
@@ -32,7 +35,9 @@ export function FestiveSpecial({
             <p className="mt-1 text-sm text-white/80 md:text-base">{note}</p>
 
             <div className="mt-8">
-              <Button className="!px-8 !py-3">Shop Now</Button>
+              <Link to={`/products?category=${category}`}>
+                <Button className="!px-8 !py-3 cursor-pointer">Shop Now</Button>
+              </Link>
             </div>
           </div>
         </div>
