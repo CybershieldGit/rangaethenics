@@ -18,7 +18,7 @@ steps:
       key: ${{ secrets.VPS_SSH_KEY }}
 
       script: |
-        cd /var/www/rangethenics-frontend
+        cd ${{ secrets.VPS_FRONTEND_PATH }}
 
         git pull origin main
 
