@@ -14,6 +14,13 @@ const quickLinks = [
   { label: 'Home', to: '/' },
 ]
 
+const policyLinks = [
+  { label: 'Shipping & Delivery Policy', to: '/shipping-policy' },
+  { label: 'Return & Exchange Policy', to: '/return-policy' },
+  { label: 'Privacy Policy', to: '/privacy-policy' },
+  { label: 'Terms of Service', to: '/terms-of-service' },
+]
+
 const socialLinks = [
   { label: 'Facebook', path: 'M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z' },
   { label: 'Instagram', path: 'M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z M17.5 6.5h.01 M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5z' },
@@ -57,27 +64,29 @@ export function Footer() {
           {/* Contact blocks */}
           <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
             <div>
-              <p className="text-sm text-white/60">Send message</p>
+              <p className="text-sm text-white/60">Email Us</p>
               <a
-                href="mailto:hello@rangethnic.com"
+                href="mailto:aditibhatt2@gmail.com"
                 className="mt-1.5 block text-base font-semibold text-white transition-colors hover:text-gold-light"
               >
-                hello@rangethnic.com
+                aditibhatt2@gmail.com
               </a>
             </div>
             <div>
-              <p className="text-sm text-white/60">Say Hello!!</p>
+              <p className="text-sm text-white/60">WhatsApp</p>
               <a
-                href="tel:+919555233111"
+                href="https://wa.me/917984037909"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-1.5 block text-base font-semibold text-white transition-colors hover:text-gold-light"
               >
-                +91 9555 233 111
+                7984037909
               </a>
             </div>
           </div>
 
           {/* Link columns */}
-          <div className="flex gap-16">
+          <div className="flex flex-wrap gap-12 sm:gap-16">
             <div>
               <h4 className="mb-3 text-sm font-semibold text-gold">Company</h4>
               <ul className="space-y-2.5">
@@ -108,6 +117,21 @@ export function Footer() {
                 ))}
               </ul>
             </div>
+            <div>
+              <h4 className="mb-3 text-sm font-semibold text-gold">Policies</h4>
+              <ul className="space-y-2.5">
+                {policyLinks.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      to={link.to}
+                      className="text-sm text-white/70 transition-colors hover:text-white"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -115,20 +139,11 @@ export function Footer() {
         <div className="my-8 h-px w-full bg-[#BD8A3C]/50" />
 
         {/* Bottom row */}
-        <div className="flex flex-col items-start justify-between gap-3 text-xs text-white/55 sm:flex-row sm:items-center">
+        <div className="flex flex-col items-center justify-center gap-3 text-xs text-white/55 text-center">
           <p>
             © {new Date().getFullYear()} All rights reserved to Adlyngo. A unit of
             Cybershield Tecnologies Private Limited.
           </p>
-          <div className="flex items-center gap-4">
-            <Link to="/" className="transition-colors hover:text-white">
-              Privacy Policy
-            </Link>
-            <span className="h-3 w-px bg-white/30" />
-            <Link to="/" className="transition-colors hover:text-white">
-              Terms &amp; Conditions
-            </Link>
-          </div>
         </div>
       </div>
     </footer>

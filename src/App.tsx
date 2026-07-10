@@ -15,6 +15,11 @@ import { ForgotPassword } from './pages/auth/ForgotPassword'
 import { VerifyEmail } from './pages/auth/VerifyEmail'
 import { ResetPassword } from './pages/auth/ResetPassword'
 import { Profile } from './pages/Profile'
+import { ShippingPolicy } from './pages/ShippingPolicy'
+import { ReturnPolicy } from './pages/ReturnPolicy'
+import { PrivacyPolicy } from './pages/PrivacyPolicy'
+import { TermsOfService } from './pages/TermsOfService'
+
 
 function App() {
   return (
@@ -35,6 +40,10 @@ function App() {
         <Route path="/verify-email" element={<VerifyEmail />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/shipping-policy" element={<ShippingPolicy />} />
+        <Route path="/return-policy" element={<ReturnPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
       </Route>
     </Routes>
   )
