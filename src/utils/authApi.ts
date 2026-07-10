@@ -33,6 +33,7 @@ interface ApiError {
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE_URL}${path}`, {
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
       ...options?.headers,
@@ -188,6 +189,18 @@ export function removeFromWishlistApi(productId: string, token: string) {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+  })
+}
+
+export function refreshAccessTokenApi() {
+  return request<{ token: string }>('/api/auth/refresh', {
+    method: 'POST',
+  })
+}
+
+export function logoutUserApi() {
+  return request<{ message: string }>('/api/auth/logout', {
+    method: 'POST',
   })
 }
 
