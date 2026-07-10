@@ -1,6 +1,5 @@
 import { Fragment } from 'react'
 import { MapPin, Phone, Mail, Clock } from 'lucide-react'
-import { Button } from '../components/ui/Button'
 import { OurStory } from '../components/home/OurStory'
 
 // SVG Corner flourish adapted from corner_sqare.svg with currentColor maroon fill
