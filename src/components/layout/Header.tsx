@@ -10,7 +10,7 @@ const navLinks = [
   { label: 'Clothing', to: '/clothing' },
   { label: 'Jewellery', to: '/jewellery' },
   { label: 'About Us', to: '/about' },
-  { label: 'Contact Us', to: '/#contact' },
+  { label: 'Contact Us', to: '/contact' },
 ]
 
 const navLinkBase =
