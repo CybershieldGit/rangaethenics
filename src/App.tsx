@@ -23,7 +23,7 @@ import { TermsOfService } from './pages/TermsOfService'
 import { Maintenance } from './pages/Maintenance'
 
 function App() {
-  const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE === 'true'
+  const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE !== 'false'
 
   if (isMaintenanceMode) {
     return <Maintenance />
