@@ -1,17 +1,17 @@
 import { Link } from 'react-router-dom'
 
 const companyLinks = [
-  { label: 'About Us', to: '/about' },
-  { label: 'Clothing', to: '/clothing' },
-  { label: 'Jewellery', to: '/jewellery' },
-  { label: 'Contact', to: '/#contact' },
+  { label: 'Portfolio', to: '#' },
+  { label: 'Services', to: '#' },
+  { label: 'Career', to: '#' },
+  { label: 'Contact', to: '/contact' },
 ]
 
 const quickLinks = [
-  { label: 'All Products', to: '/products' },
-  { label: 'Shop Clothing', to: '/clothing' },
-  { label: 'Shop Jewellery', to: '/jewellery' },
-  { label: 'Home', to: '/' },
+  { label: 'Video Gallery', to: '#' },
+  { label: 'Creative Gallery', to: '#' },
+  { label: 'Case Studies', to: '#' },
+  { label: 'Testimonials', to: '#' },
 ]
 
 const policyLinks = [

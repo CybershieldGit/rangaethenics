@@ -9,6 +9,7 @@ import { Wishlist } from './pages/Wishlist'
 import { Cart } from './pages/Cart'
 import { Checkout } from './pages/Checkout'
 import { About } from './pages/About'
+import { Contact } from './pages/Contact'
 import { Login } from './pages/auth/Login'
 import { SignUp } from './pages/auth/SignUp'
 import { ForgotPassword } from './pages/auth/ForgotPassword'
@@ -19,9 +20,15 @@ import { ShippingPolicy } from './pages/ShippingPolicy'
 import { ReturnPolicy } from './pages/ReturnPolicy'
 import { PrivacyPolicy } from './pages/PrivacyPolicy'
 import { TermsOfService } from './pages/TermsOfService'
-
+import { Maintenance } from './pages/Maintenance'
 
 function App() {
+  const isMaintenanceMode = import.meta.env.VITE_MAINTENANCE_MODE === 'true'
+
+  if (isMaintenanceMode) {
+    return <Maintenance />
+  }
+
   return (
     <Routes>
       <Route element={<Layout />}>
@@ -34,6 +41,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
