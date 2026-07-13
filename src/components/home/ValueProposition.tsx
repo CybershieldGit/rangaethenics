@@ -35,7 +35,7 @@ export function ValueProposition() {
           {features.map((feature, idx) => (
             <div
               key={feature.title}
-              className="flex flex-1 items-center justify-center gap-4 px-4 relative"
+              className="flex flex-1 items-center justify-center px-4 relative"
             >
               <img
                 src={feature.img}

@@ -32,16 +32,16 @@ export function GallerySection() {
       </svg>
 
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-  <div className="house-elegance__row">
-    <div className="house-elegance__track">
-      {[...items, ...items].map((src, i) => (
-        <div key={i} className="house-elegance__cell">
-          <img src={src} alt={`Gallery ${i + 1}`} />
+        <div className="house-elegance__row">
+          <div className="house-elegance__track">
+            {[...items, ...items].map((src, i) => (
+              <div key={i} className="house-elegance__cell">
+                <img src={src} alt={`Gallery ${i + 1}`} />
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</div>
+      </div>
     </section>
   )
 }

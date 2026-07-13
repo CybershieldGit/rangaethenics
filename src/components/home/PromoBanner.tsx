@@ -16,7 +16,7 @@ export function PromoBanner() {
         <div className="pointer-events-none absolute inset-3 md:inset-6">
           {/* Edge lines */}
           <span
-              className="absolute top-0 left-16 right-16 h-[0.2px] bg-[#BD8A3C]/50 md:left-[40px] md:right-[40px] mt-[2.5px]"
+              className="absolute top-0 left-16 right-16 md:h-[0.2px] h-[1px] bg-[#BD8A3C]/50 md:left-[40px] md:right-[40px] mt-[2.5px]"
               style={{
                 background: `linear-gradient(
                   to right,
