@@ -182,3 +182,29 @@ export async function getBestSellers(): Promise<Product[]> {
     return []
   }
 }
+
+export interface GalleryVideo {
+  id: string
+  url: string
+  title?: string
+}
+
+export async function getGalleryVideos(): Promise<GalleryVideo[]> {
+  const url = `${API_BASE_URL}/api/gallery-videos`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) {
+      throw new Error(`API error: ${res.statusText}`)
+    }
+    const data = await res.json()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (data || []).map((v: any) => ({
+      id: v._id,
+      url: v.url,
+      title: v.title,
+    }))
+  } catch (error) {
+    console.error('Failed to fetch gallery videos:', error)
+    return []
+  }
+}
