@@ -31,16 +31,16 @@ export function ValueProposition() {
   return (
     <section className="pb-0 md:pb-10">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="flex flex-col gap-4 md:gap-6 flex-row md:items-center py-8">
+        <div className="flex flex-col flex-row md:items-center pt-8">
           {features.map((feature, idx) => (
             <div
               key={feature.title}
-              className="flex flex-1 items-center justify-center px-4 relative"
+              className="flex flex-1 items-center justify-center px-1 relative"
             >
               <img
                 src={feature.img}
                 alt={feature.title}
-                className="h-10 w-auto object-contain shrink-0"
+                className="h-15 w-auto object-contain shrink-0"
               />
               <div className="text-left hidden md:block">
                 <p className="text-sm font-semibold uppercase tracking-wider text-text-dark">
