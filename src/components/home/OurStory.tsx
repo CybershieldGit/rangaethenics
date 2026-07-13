@@ -99,7 +99,7 @@ export function OurStory({ background = '#fffaf3' }: { background?: string }) {
               </p>
               <div className="mt-8 cursor-pointer">
                 <Link to="/about">
-                  <Button>Know More About Us</Button>
+                  <Button>Explore Collections</Button>
                 </Link>
               </div>
             </div>
