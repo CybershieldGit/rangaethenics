@@ -106,6 +106,7 @@ export function ProductDetail() {
   const [addingToCart, setAddingToCart] = useState(false)
   const [buyingNow, setBuyingNow] = useState(false)
   const [togglingWishlist, setTogglingWishlist] = useState(false)
+  const [isZoomOpen, setIsZoomOpen] = useState(false)
 
   useEffect(() => {
     if (!id) return
@@ -263,7 +264,7 @@ export function ProductDetail() {
                     }`}
                     aria-label={`View image ${i + 1}`}
                   >
-                    <img src={img} alt="" className="h-full w-full object-cover" />
+                    <img src={img} alt="" className="h-full w-full object-cover object-top" />
                   </button>
                 ))}
               </div>
@@ -292,7 +293,7 @@ export function ProductDetail() {
                 <img
                   src={gallery[activeImage]}
                   alt={product.name}
-                  className="aspect-[3/4] w-full object-cover"
+                  className="aspect-[3/4] w-full object-cover object-top"
                 />
 
                 {product.video && (
@@ -307,9 +308,14 @@ export function ProductDetail() {
                   </a>
                 )}
 
-                <span className="absolute bottom-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-maroon shadow-sm">
+                <button
+                  type="button"
+                  onClick={() => setIsZoomOpen(true)}
+                  aria-label="Zoom image"
+                  className="absolute bottom-4 right-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-maroon shadow-sm hover:scale-105 transition-transform"
+                >
                   <ZoomIn size={18} />
-                </span>
+                </button>
               </div>
             </div>
           </div>
@@ -578,6 +584,33 @@ export function ProductDetail() {
           ))}
         </div>
       </div>
+
+      {isZoomOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-sm transition-opacity duration-300 animate-fade-in"
+          onClick={() => setIsZoomOpen(false)}
+        >
+          <button
+            type="button"
+            className="absolute top-6 right-6 text-white hover:text-[#BD8A3C] transition-colors p-2 z-50 cursor-pointer"
+            onClick={() => setIsZoomOpen(false)}
+            aria-label="Close zoom view"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          </button>
+          
+          <div 
+            className="relative max-w-[90vw] max-h-[85vh] p-2 border border-[#BD8A3C]/40 bg-[#fffaf3]/10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={gallery[activeImage]}
+              alt={product.name}
+              className="max-w-full max-h-[80vh] object-contain shadow-2xl"
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
