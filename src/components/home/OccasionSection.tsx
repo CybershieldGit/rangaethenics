@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 // Tints the white square_straight.svg to the gold brand color (#BD8A3C)
 const GOLD_TINT =
   'brightness(0) saturate(100%) invert(63%) sepia(42%) saturate(523%) hue-rotate(358deg) brightness(89%) contrast(86%)'
@@ -66,9 +68,9 @@ export function OccasionSection() {
       {/* Bento grid */}
       <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 md:[height:600px]">
         {occasions.map((occasion) => (
-          <a
+          <Link
             key={occasion.name}
-            href="#"
+            to={`/products?category=all&occasion=${encodeURIComponent(occasion.name)}`}
             className={`group relative block overflow-hidden ${occasion.className} min-h-[200px]`}
           >
             <img
@@ -80,7 +82,7 @@ export function OccasionSection() {
             <h3 className="absolute bottom-5 left-5 font-serif text-xl text-white md:text-2xl">
               {occasion.name}
             </h3>
-          </a>
+          </Link>
         ))}
       </div>
     </section>

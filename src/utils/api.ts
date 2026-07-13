@@ -32,6 +32,7 @@ export function mapProduct(p: any): Product {
     // "New Arrivals" are driven by the backend `isFeatured` flag.
     isNewArrival: Boolean(p.isFeatured),
     isBestSelling: Boolean(p.isBestSeller),
+    occasion: p.occasion || '',
   }
 }
 

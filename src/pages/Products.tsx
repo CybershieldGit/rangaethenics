@@ -68,6 +68,7 @@ export function Products() {
   const initialCategory = (searchParams.get('category') as CategoryFilter) || 'all'
   const initialNewArrivalsOnly = searchParams.get('newArrival') === 'true'
   const initialBestSellingOnly = searchParams.get('bestSelling') === 'true'
+  const occasionFilter = searchParams.get('occasion') || ''
   const [category, setCategory] = useState<CategoryFilter>(
     ['all', 'clothing', 'jewellery'].includes(initialCategory) ? initialCategory : 'all',
   )
@@ -120,6 +121,7 @@ export function Products() {
         return false
       }
       if (product.price > maxPrice) return false
+      if (occasionFilter && product.occasion !== occasionFilter) return false
       return true
     })
 
@@ -140,7 +142,7 @@ export function Products() {
     }
 
     return results
-  }, [products, category, newArrivalsOnly, bestSellingOnly, maxPrice, sortBy])
+  }, [products, category, newArrivalsOnly, bestSellingOnly, maxPrice, sortBy, occasionFilter])
 
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE))
   const paginatedProducts = filteredProducts.slice(
@@ -160,6 +162,7 @@ export function Products() {
     selectedSizes,
     selectedFabrics,
     selectedWorks,
+    occasionFilter,
   ])
 
   useEffect(() => {

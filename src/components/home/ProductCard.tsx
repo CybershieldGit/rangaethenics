@@ -64,13 +64,13 @@ export function ProductCard({ product, onAddedToCart }: ProductCardProps) {
     <article className="group mx-auto flex w-full max-w-[310px] flex-col gap-3">
       <Link
         to={`/product/${product.id}`}
-        className="block aspect-[310/420] border border-[#BD8A3C] bg-transparent p-2.5"
+        className="relative block aspect-[310/420] border border-[#BD8A3C] bg-transparent"
       >
-        <div className="h-full w-full overflow-hidden">
+        <div className="absolute inset-2.5 overflow-hidden">
           <img
             src={product.image}
             alt={`${product.category} ${product.name}`}
-            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
           />
         </div>
       </Link>

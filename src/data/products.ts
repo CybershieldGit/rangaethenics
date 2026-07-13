@@ -13,6 +13,7 @@ export interface Product {
   aspectRatio: 'square' | 'portrait'
   isNewArrival?: boolean
   isBestSelling?: boolean
+  occasion?: string
 }
 
 // Product data is served exclusively from the backend API. These arrays remain as
