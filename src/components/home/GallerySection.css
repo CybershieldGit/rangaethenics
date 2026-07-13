@@ -12,12 +12,21 @@
   gap: 20px;
   width: 1440px;
   max-width: 100%;
-  aspect-ratio: 1440 / 520;
+  aspect-ratio: 16/9;
   margin: 0 auto;
   clip-path: url(#galleryArc);
   -webkit-clip-path: url(#galleryArc);
 }
 
+@media (max-width: 768px) {
+  .house-elegance__row {
+    width: 300px;
+    aspect-ratio: 9/16;
+    object-fit: cover;
+    -webkit-clip-path: none;
+    clip-path: none;
+  }
+}
 .house-elegance__cell {
   flex: 1 1 0;
   height: 100%;
