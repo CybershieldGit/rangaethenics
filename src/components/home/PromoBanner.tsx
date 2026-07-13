@@ -15,18 +15,50 @@ export function PromoBanner() {
         {/* Decorative frame: corners + connecting lines */}
         <div className="pointer-events-none absolute inset-3 md:inset-6">
           {/* Edge lines */}
-          <img
-            src="/square_straight.svg"
-            alt=""
-            className="absolute left-7 right-7 top-0 h-px w-[calc(100%-3.5rem)] object-fill md:left-10 md:right-10 md:w-[calc(100%-5rem)]"
-          />
-          <img
-            src="/square_straight.svg"
-            alt=""
-            className="absolute bottom-0 left-7 right-7 h-px w-[calc(100%-3.5rem)] object-fill md:left-10 md:right-10 md:w-[calc(100%-5rem)]"
-          />
-          <div className="absolute top-7 bottom-7 left-0 w-px bg-white/80 md:top-10 md:bottom-10" />
-          <div className="absolute top-7 bottom-7 right-0 w-px bg-white/80 md:top-10 md:bottom-10" />
+          <span
+              className="absolute top-0 left-16 right-16 h-[0.2px] bg-[#BD8A3C]/50 md:left-[40px] md:right-[40px] mt-[2.5px]"
+              style={{
+                background: `linear-gradient(
+                  to right,
+                  transparent 0%,
+                  #ffffff 8%,
+                  #ffffff 92%,
+                  transparent 100%
+                )`,
+              }}
+            />
+            <span
+              className="absolute bottom-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[40px] md:right-[40px] mb-[2.5px]"
+              style={{
+                background: `linear-gradient(
+                to right,
+                transparent 0%,
+                #ffffff 8%,
+                #ffffff 92%,
+                transparent 100%
+              )`,
+              }}
+            />
+          <div className="absolute top-7 bottom-7 left-[2.5px] w-px bg-white/80 md:top-10 md:bottom-10"
+           style={{
+            background: `linear-gradient(
+              to bottom,
+              transparent 0%,
+              #ffffff 8%,
+              #ffffff 92%,
+              transparent 100%
+            )`,
+          }} />
+          <div className="absolute top-7 bottom-7 right-[2px] w-px bg-white/80 md:top-10 md:bottom-10"
+           style={{
+            background: `linear-gradient(
+              to bottom,
+              transparent 0%,
+              #ffffff 8%,
+              #ffffff 92%,
+              transparent 100%
+            )`,
+          }} />
 
           {/* Corners */}
           <img

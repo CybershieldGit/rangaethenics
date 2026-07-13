@@ -35,3 +35,28 @@
 .house-elegance__cell img:hover {
   transform: scale(1.05);
 }
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 10px));
+  }
+}
+
+.house-elegance__track {
+  display: flex;
+  gap: 20px;
+  width: max-content;
+  height: 100%;
+  animation: marquee 25s linear infinite;
+}
+
+.house-elegance__track:hover {
+  animation-play-state: paused;
+}
+
+.house-elegance__cell {
+  flex: 0 0 calc((1440px - 80px) / 5);
+}

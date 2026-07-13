@@ -42,7 +42,7 @@ export function WhyChooseUs() {
       </div>
 
       <div className="relative mt-14 border border-[#BD8A3C]/40">
-        <div className="absolute inset-x-0 top-0 hidden h-px -translate-y-1/2 bg-[#BD8A3C]/40 md:block hidden" />
+        <div className="absolute inset-x-0 top-0 hidden h-px -translate-y-1/2  md:block hidden" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
           {features.map((feature, idx) => (

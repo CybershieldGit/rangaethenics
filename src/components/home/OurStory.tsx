@@ -35,10 +35,58 @@ export function OurStory({ background = '#fffaf3' }: { background?: string }) {
             <Corner className="right-0 bottom-0 -scale-100" />
 
             {/* Top & bottom gold rules, aligned just past the corner flourish */}
-            <span className="absolute top-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px] mt-1" />
-            <span className="absolute bottom-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[104px] md:right-[104px] mb-1" />
-          </div>
+            <span
+              className="absolute top-0 left-16 right-16 h-[0.2px] bg-[#BD8A3C]/50 md:left-[75px] md:right-[75px] mt-[4.5px]"
+              style={{
+                background: `linear-gradient(
+                  to right,
+                  transparent 0%,
+                  #BD8A3C 8%,
+                  #BD8A3C 92%,
+                  transparent 100%
+                )`,
+              }}
+            />
+            <span
+              className="absolute bottom-0 left-16 right-16 h-px bg-[#BD8A3C]/50 md:left-[75px] md:right-[75px] mb-[4.5px]"
+              style={{
+                background: `linear-gradient(
+                to right,
+                transparent 0%,
+                #BD8A3C 8%,
+                #BD8A3C 92%,
+                transparent 100%
+              )`,
+              }}
+            />
+            {/* Left */}
+            <span
+              className="absolute left-0 top-16 bottom-16 w-px ml-[4px] md:ml-[4.5px] md:top-[75px] md:bottom-[75px]"
+              style={{
+                background: `linear-gradient(
+                              to bottom,
+                              transparent 0%,
+                              #BD8A3C 8%,
+                              #BD8A3C 92%,
+                              transparent 100%
+                            )`,
+              }}
+            />
 
+            {/* Right */}
+            <span
+              className="absolute right-0 top-16 bottom-16 w-px md:mr-[4.5px] mr-[4px]  md:top-[75px] md:bottom-[75px]"
+              style={{
+                background: `linear-gradient(
+                              to bottom,
+                              transparent 0%,
+                              #BD8A3C 8%,
+                              #BD8A3C 92%,
+                              transparent 100%
+                            )`,
+              }}
+            />
+          </div>
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
             <div className="flex flex-col justify-center">
               <h2 className="font-serif font-bold leading-tight text-maroon text-3xl md:text-[40px]">
