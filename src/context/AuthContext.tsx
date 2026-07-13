@@ -31,14 +31,19 @@ function readStoredUser(): AuthUser | null {
 }
 
 let isRefreshing = false
-let refreshSubscribers: ((token: string) => void)[] = []
+let refreshSubscribers: { resolve: (token: string) => void; reject: (err: any) => void }[] = []
 
-const subscribeTokenRefresh = (cb: (token: string) => void) => {
-  refreshSubscribers.push(cb)
+const subscribeTokenRefresh = (resolve: (token: string) => void, reject: (err: any) => void) => {
+  refreshSubscribers.push({ resolve, reject })
 }
 
 const onRefreshed = (token: string) => {
-  refreshSubscribers.forEach((cb) => cb(token))
+  refreshSubscribers.forEach((sub) => sub.resolve(token))
+  refreshSubscribers = []
+}
+
+const onRefreshFailed = (err: any) => {
+  refreshSubscribers.forEach((sub) => sub.reject(err))
   refreshSubscribers = []
 }
 
@@ -64,6 +69,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.warn('Logout API failed or cookie already cleared:', err)
     } finally {
       setUser(null)
+      localStorage.removeItem(STORAGE_KEY)
+      window.location.href = '/login'
     }
   }, [])
 
@@ -96,25 +103,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             onRefreshed(newToken)
           } catch (refreshErr) {
             isRefreshing = false
+            onRefreshFailed(refreshErr)
             setUser(null)
             localStorage.removeItem(STORAGE_KEY)
+            window.location.href = '/login'
             return res
           }
         }
 
         // Wait for token refresh to complete and retry request
-        return new Promise((resolve) => {
-          subscribeTokenRefresh((newToken) => {
-            // Clone headers and replace Authorization token
-            const headers = new Headers(config?.headers || {})
-            headers.set('Authorization', `Bearer ${newToken}`)
-            resolve(
-              originalFetch(resource, {
-                ...config,
-                headers,
-              })
-            )
-          })
+        return new Promise((resolve, reject) => {
+          subscribeTokenRefresh(
+            (newToken) => {
+              // Clone headers and replace Authorization token
+              const headers = new Headers(config?.headers || {})
+              headers.set('Authorization', `Bearer ${newToken}`)
+              resolve(
+                originalFetch(resource, {
+                  ...config,
+                  headers,
+                })
+              )
+            },
+            (err) => {
+              reject(err)
+            }
+          )
         })
       }
 
