@@ -36,9 +36,9 @@ export function Home() {
   return (
     <>
       <HeroCarousel />
-      <DecorativeDivider className="py-6 mx-auto px-4 md:px-8" type="flower" />
+      <DecorativeDivider className="my-[70px] pb-[50px] mx-auto px-4 md:px-8" type="flower" />
       <CategoryCards />
-      <DecorativeDivider className="py-6" type="flower" />
+      <DecorativeDivider className="pt-[50px] pb-6" type="flower" />
       <ValueProposition />
       <PromoBanner />
       <ProductSection

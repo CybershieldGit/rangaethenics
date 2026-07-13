@@ -5,6 +5,8 @@ import { Button } from '../ui/Button'
 import { useAuth } from '../../context/AuthContext'
 import { useWishlist } from '../../context/WishlistContext'
 import { useCart } from '../../context/CartContext'
+import { getProducts } from '../../utils/api'
+import { formatPrice, type Product } from '../../data/products'
 
 const navLinks = [
   { label: 'Clothing', to: '/clothing' },
@@ -20,22 +22,54 @@ export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [profileOpen, setProfileOpen] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
+  const searchRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
   const { count: wishlistCount } = useWishlist()
   const { count: cartCount } = useCart()
 
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<Product[]>([])
+  const [searchLoading, setSearchLoading] = useState(false)
+
   useEffect(() => {
-    if (!profileOpen) return
+    if (!searchQuery.trim()) {
+      setSearchResults([])
+      setSearchLoading(false)
+      return
+    }
+
+    setSearchLoading(true)
+    const delayDebounceFn = setTimeout(async () => {
+      try {
+        const { products } = await getProducts({ keyword: searchQuery, pageSize: 10 })
+        setSearchResults(products)
+      } catch (err) {
+        console.error('Error searching products:', err)
+      } finally {
+        setSearchLoading(false)
+      }
+    }, 400)
+
+    return () => clearTimeout(delayDebounceFn)
+  }, [searchQuery])
+
+  useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+      if (profileOpen && profileRef.current && !profileRef.current.contains(event.target as Node)) {
         setProfileOpen(false)
+      }
+      if (searchOpen && searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setSearchOpen(false)
+        setSearchQuery('')
+        setSearchResults([])
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [profileOpen])
+  }, [profileOpen, searchOpen])
 
   const isLinkActive = (to: string) => {
     if (to.includes('#')) {
@@ -48,8 +82,12 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#F8F0E5]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
-        {/* Logo */}
-        <Link to="/" className="flex items-center">
+        <Link
+          to="/"
+          className={`flex items-center shrink-0 transition-all duration-300 ${
+            searchOpen ? 'hidden sm:flex' : 'flex'
+          }`}
+        >
           <img
             src="/ranga_logo_header.svg"
             alt="Rangethnics"
@@ -58,7 +96,7 @@ export function Header() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className={`hidden items-center gap-8 lg:flex ${searchOpen ? 'lg:!hidden' : ''}`}>
           {navLinks.map((link) => {
             const active = isLinkActive(link.to)
             return (
@@ -78,10 +116,84 @@ export function Header() {
         </nav>
 
         {/* Actions */}
-        <div className="flex items-center gap-3 md:gap-4">
-          <button type="button" aria-label="Search" className="text-[#1a1a1a] hover:text-maroon">
-            <Search size={20} strokeWidth={1.5} />
-          </button>
+        <div className={`flex items-center gap-3 md:gap-4 ${searchOpen ? 'flex-1 justify-end' : ''}`}>
+          <div ref={searchRef} className={`relative flex items-center ${searchOpen ? 'flex-1 max-w-[450px]' : ''}`}>
+            {searchOpen ? (
+              <div className="flex items-center gap-2 border-b border-[#BD8A3C]/40 pb-1 w-full transition-all duration-300">
+                <Search size={16} className="text-[#1a1a1a] shrink-0" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  autoFocus
+                  className="w-full bg-transparent font-serif text-sm text-text-dark placeholder-[#717171]/50 outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchOpen(false)
+                    setSearchQuery('')
+                    setSearchResults([])
+                  }}
+                  className="text-[#1a1a1a] hover:text-maroon cursor-pointer"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                aria-label="Search"
+                onClick={() => setSearchOpen(true)}
+                className="text-[#1a1a1a] hover:text-maroon cursor-pointer"
+              >
+                <Search size={20} strokeWidth={1.5} />
+              </button>
+            )}
+
+            {searchOpen && searchQuery.trim() !== '' && (
+              <div className="absolute right-0 top-full mt-2 w-full min-w-[280px] max-w-[450px] bg-[#FFFDF9] border border-[#BD8A3C]/30 shadow-2xl rounded-xl overflow-hidden z-50 divide-y divide-[#BD8A3C]/20 max-h-[300px] overflow-y-auto">
+                {searchLoading && (
+                  <div className="p-4 text-center text-[#BD8A3C] text-sm italic font-serif">
+                    Searching...
+                  </div>
+                )}
+                {!searchLoading && searchResults.length === 0 && (
+                  <div className="p-4 text-center text-text text-sm font-serif">
+                    No products found
+                  </div>
+                )}
+                {!searchLoading && searchResults.length > 0 && searchResults.map((product) => (
+                  <Link
+                    key={product.id}
+                    to={`/product/${product.id}`}
+                    onClick={() => {
+                      setSearchOpen(false)
+                      setSearchQuery('')
+                      setSearchResults([])
+                    }}
+                    className="flex items-center gap-3 p-3 transition-colors hover:bg-maroon/[0.02]"
+                  >
+                    <div className="h-10 w-8 shrink-0 overflow-hidden border border-[#BD8A3C]/40 bg-[#F8F0E5] rounded">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="h-full w-full object-cover object-top"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="block text-[9px] text-[#BD8A3C] font-serif uppercase tracking-wider">{product.category}</span>
+                      <span className="block text-xs text-text-dark font-serif font-medium truncate">{product.subtitle ?? product.name}</span>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <span className="block text-xs font-serif font-semibold text-maroon">{formatPrice(product.price)}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
           <Link
             to="/cart"
             aria-label="Cart"

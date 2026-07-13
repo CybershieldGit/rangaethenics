@@ -27,13 +27,15 @@
     clip-path: none;
   }
 }
+
 .house-elegance__cell {
   flex: 1 1 0;
   height: 100%;
   overflow: hidden;
 }
 
-.house-elegance__cell img {
+.house-elegance__cell img,
+.house-elegance__cell video {
   display: block;
   width: 100%;
   height: 100%;
@@ -41,7 +43,8 @@
   transition: transform 0.5s ease;
 }
 
-.house-elegance__cell img:hover {
+.house-elegance__cell img:hover,
+.house-elegance__cell video:hover {
   transform: scale(1.05);
 }
 
@@ -49,6 +52,7 @@
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(calc(-50% - 10px));
   }
