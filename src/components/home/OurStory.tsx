@@ -36,7 +36,7 @@ export function OurStory({ background = '#fffaf3' }: { background?: string }) {
 
             {/* Top & bottom gold rules, aligned just past the corner flourish */}
             <span
-              className="absolute top-0 left-16 right-16 h-[0.2px] bg-[#BD8A3C]/50 md:left-[75px] md:right-[75px] mt-[4.5px]"
+              className="absolute top-0 left-16 right-16 h-[1px] bg-[#BD8A3C]/50 md:left-[75px] md:right-[75px] mt-[4.5px]"
               style={{
                 background: `linear-gradient(
                   to right,
