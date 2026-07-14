@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import { Button } from '../ui/Button'
 import { Link } from 'react-router-dom'
+import { getActiveCoupons } from '../../utils/api'
 
 interface FestiveSpecialProps {
   eyebrow?: string
@@ -14,6 +16,39 @@ export function FestiveSpecial({
   image = '/images/festive_jewellery.png',
   category = 'all',
 }: FestiveSpecialProps) {
+  const [promoText, setPromoText] = useState({ eyebrow, note })
+
+  useEffect(() => {
+    async function fetchPromoCoupon() {
+      try {
+        const coupons = await getActiveCoupons()
+        // Find an active coupon that applies globally to all products
+        const globalCoupon = coupons.find(
+          (c) =>
+            c.isActive &&
+            (!c.applicableProducts || c.applicableProducts.length === 0) &&
+            (!c.excludedProducts || c.excludedProducts.length === 0)
+        )
+
+        if (globalCoupon) {
+          const discountStr =
+            globalCoupon.discountType === 'percentage'
+              ? `Flat ${globalCoupon.discountValue}% Off`
+              : `Flat ₹${globalCoupon.discountValue} Off`
+          
+          const promoNote = `Use code: ${globalCoupon.code} (Min purchase: ₹${globalCoupon.minPurchase || 0})`
+          setPromoText({
+            eyebrow: discountStr,
+            note: promoNote,
+          })
+        }
+      } catch (err) {
+        console.error('Error fetching promo coupon:', err)
+      }
+    }
+    fetchPromoCoupon()
+  }, [])
+
   return (
     <section className="mx-auto max-w-7xl px-4 py-10 md:px-8">
       <div className="relative overflow-hidden bg-black">
@@ -30,9 +65,9 @@ export function FestiveSpecial({
               Festive Special
             </h2>
             <p className="mt-5 text-lg font-bold uppercase tracking-wide text-white md:text-2xl">
-              {eyebrow}
+              {promoText.eyebrow}
             </p>
-            <p className="mt-1 text-sm text-white/80 md:text-base">{note}</p>
+            <p className="mt-1 text-sm text-white/80 md:text-base">{promoText.note}</p>
 
             <div className="mt-8">
               <Link to={`/products?category=${category}`}>
