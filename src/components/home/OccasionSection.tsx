@@ -35,7 +35,7 @@ const occasions: Occasion[] = [
 
 export function OccasionSection() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16">
+    <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16 mb-[50px]">
       {/* Heading with trailing divider */}
       <div className="flex items-center gap-3 md:gap-4">
         <h2
@@ -60,13 +60,13 @@ export function OccasionSection() {
           />
         </span>
       </div>
-      <p className="mt-3 max-w-xl text-sm text-text md:text-base">
+      <p className="mt-3 max-w-xl text-sm text-text md:text-base mb-[50px]">
         Find the perfect ensemble for every wedding event, beautifully curated for
         timeless elegance.
       </p>
 
       {/* Bento grid */}
-      <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 md:[height:600px]">
+      <div className="mt-0 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:grid-rows-2 md:[height:600px]">
         {occasions.map((occasion) => (
           <Link
             key={occasion.name}

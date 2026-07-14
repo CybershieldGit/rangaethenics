@@ -8,10 +8,10 @@ const companyLinks = [
 ]
 
 const quickLinks = [
-  { label: 'Video Gallery', to: '#' },
-  { label: 'Creative Gallery', to: '#' },
-  { label: 'Case Studies', to: '#' },
-  { label: 'Testimonials', to: '#' },
+  { label: 'Clothing', to: '/clothing' },
+  { label: 'Jewellery', to: '/jewellery' },
+  { label: 'About Us', to: '/about' },
+  { label: 'Contact Us', to: '/contact' },
 ]
 
 const policyLinks = [

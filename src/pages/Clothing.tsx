@@ -116,7 +116,7 @@ function ArchCard({ name, image }: { name: string; image: string }) {
           <image
             href={image}
             x="0"
-            y="24"
+            y="8"
             width="311"
             height="420"
             preserveAspectRatio="xMidYMid slice"
