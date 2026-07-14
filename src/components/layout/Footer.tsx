@@ -1,12 +1,5 @@
 import { Link } from 'react-router-dom'
 
-const companyLinks = [
-  { label: 'Portfolio', to: '#' },
-  { label: 'Services', to: '#' },
-  { label: 'Career', to: '#' },
-  { label: 'Contact', to: '/contact' },
-]
-
 const quickLinks = [
   { label: 'Clothing', to: '/clothing' },
   { label: 'Jewellery', to: '/jewellery' },
@@ -87,21 +80,6 @@ export function Footer() {
 
           {/* Link columns */}
           <div className="flex flex-wrap gap-12 sm:gap-16">
-            <div>
-              <h4 className="mb-3 text-sm font-semibold text-gold">Company</h4>
-              <ul className="space-y-2.5">
-                {companyLinks.map((link) => (
-                  <li key={link.label}>
-                    <Link
-                      to={link.to}
-                      className="text-sm text-white/70 transition-colors hover:text-white"
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
             <div>
               <h4 className="mb-3 text-sm font-semibold text-gold">Quicklinks</h4>
               <ul className="space-y-2.5">
