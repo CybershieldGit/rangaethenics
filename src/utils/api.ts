@@ -130,6 +130,34 @@ export async function getCategoriesList(): Promise<Category[]> {
   }
 }
 
+export interface Coupon {
+  _id: string
+  code: string
+  discountType: 'percentage' | 'fixed'
+  discountValue: number
+  minPurchase: number
+  description: string
+  expiryDate?: string
+  isActive: boolean
+  firstOrderOnly: boolean
+  applicableProducts: string[]
+  excludedProducts: string[]
+}
+
+export async function getActiveCoupons(): Promise<Coupon[]> {
+  const url = `${API_BASE_URL}/api/coupons`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) {
+      throw new Error(`API error: ${res.statusText}`)
+    }
+    return await res.json()
+  } catch (error) {
+    console.error('Failed to fetch coupons:', error)
+    return []
+  }
+}
+
 export async function getProducts(params?: {
   category?: string
   subCategory?: string
