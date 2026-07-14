@@ -22,6 +22,7 @@ export function mapProduct(p: any): Product {
     type,
     // Prefer the subcategory as the display label, falling back to the main category
     category: p.subCategory || mainCategory,
+    subCategory: p.subCategory || '',
     name: p.name,
     subtitle: p.subCategory ? p.name : undefined,
     price: sellingPrice,
@@ -105,14 +106,40 @@ export async function getProductDetail(id: string): Promise<ProductDetail | null
   }
 }
 
+export interface Category {
+  _id: string
+  name: string
+  description: string
+  subcategories: {
+    name: string
+    image: string
+  }[]
+}
+
+export async function getCategoriesList(): Promise<Category[]> {
+  const url = `${API_BASE_URL}/api/categories`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) {
+      throw new Error(`API error: ${res.statusText}`)
+    }
+    return await res.json()
+  } catch (error) {
+    console.error('Failed to fetch categories list:', error)
+    return []
+  }
+}
+
 export async function getProducts(params?: {
   category?: string
+  subCategory?: string
   keyword?: string
   pageNumber?: number
   pageSize?: number
 }): Promise<{ products: Product[]; page: number; pages: number }> {
   const query = new URLSearchParams()
   if (params?.category) query.append('category', params.category)
+  if (params?.subCategory) query.append('subCategory', params.subCategory)
   if (params?.keyword) query.append('keyword', params.keyword)
   if (params?.pageNumber) query.append('pageNumber', String(params.pageNumber))
   if (params?.pageSize) query.append('pageSize', String(params.pageSize))
