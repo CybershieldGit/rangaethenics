@@ -180,6 +180,7 @@ export function Products() {
     } else {
       searchParams.set('category', value)
     }
+    searchParams.delete('subCategory')
     setSearchParams(searchParams)
   }
 
