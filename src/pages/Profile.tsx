@@ -615,7 +615,7 @@ export function Profile() {
                   </p>
                 </div>
 
-                <div className="w-full lg:w-[860px] h-auto lg:h-[650px] border border-[#BD8A3C80] bg-[#F8F0E5] p-[30px] flex flex-col shadow-sm mt-[62px]">
+                <div className="w-full lg:w-[860px] h-auto lg:h-[610.5px] border border-[#BD8A3C80] bg-[#F8F0E5] p-[30px] flex flex-col shadow-sm mt-[62px]">
                   {errorMessage && (
                     <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-[16px]">
                       {errorMessage}
