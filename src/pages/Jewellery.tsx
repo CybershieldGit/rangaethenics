@@ -252,7 +252,7 @@ function CollectionGrid({ collections }: { collections: { name: string; image: s
           {collections.map((category) => (
             <div
               key={category.name}
-              className="w-[70%] sm:w-1/2 md:w-1/4 shrink-0 px-[10px] md:px-[12px]"
+              className="w-1/2 sm:w-1/2 md:w-1/4 shrink-0 px-[10px] md:px-[12px]"
             >
               <JewelleryArcCard
                 name={category.name}

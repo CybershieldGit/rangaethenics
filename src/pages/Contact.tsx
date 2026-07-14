@@ -65,15 +65,15 @@ export function Contact() {
           <img src="/historical_seperator.svg" alt="" className="mt-4 h-[14px] w-auto" />
         </div>
 
-        {/* 4 Cards Contiguous Row */}
-        <div className="flex flex-col md:flex-row items-center justify-between bg-[#fffaf3] border-t border-b md:border border-[#BD8A3C]/40 max-w-[1302px] w-full md:h-[330px] mx-auto shadow-sm overflow-x-auto md:overflow-visible py-4 md:py-0">
+        {/* Always horizontal row with dynamic flex-fit on tablet/desktop and scroll on mobile */}
+        <div className="flex flex-row items-center justify-between bg-[#fffaf3] border border-[#BD8A3C]/40 max-w-[1302px] w-full h-[330px] mx-auto shadow-sm overflow-x-auto md:overflow-visible scrollbar-none py-0">
           {contactCards.map((card, idx) => {
             const Icon = card.icon
             const isLast = idx === contactCards.length - 1
             return (
               <Fragment key={idx}>
-                {/* Card Block (310px width, 310px height, exact paddings) */}
-                <div className="w-full md:w-[285px] md:h-[310px] bg-[#fffaf3] pt-[30px] px-[43px] pb-[52px] flex flex-col items-center text-center justify-start shrink-0">
+                {/* Card Block - w-[285px] on mobile, auto/flex-1 on tablet and desktop */}
+                <div className="w-[280px] md:w-auto md:flex-1 h-[310px] bg-[#fffaf3] pt-[30px] px-4 lg:px-[43px] pb-[52px] flex flex-col items-center text-center justify-start shrink-0 md:shrink">
                   {/* Circle Icon Wrapper */}
                   <div className="mb-6 flex h-[100px] w-[100px] items-center justify-center rounded-full bg-[#F4E8D7] text-[#420001] shadow-inner">
                     <Icon size={32} strokeWidth={1} className="text-[#420001]" />
@@ -89,27 +89,14 @@ export function Contact() {
 
                 {/* Separator between cards */}
                 {!isLast && (
-                  <>
-                    {/* Desktop Separator (20px width, 330px height) */}
-                    <div className="hidden md:flex w-[20px] h-[330px] relative shrink-0">
-                      {/* Maroon Bar (20px width, 310px height, top: 10px) */}
-                      <div className="absolute top-[10px] left-0 w-[20px] h-[310px] bg-[#420001]" />
-                      {/* Top Diamond (20x20 bounding box = 14.14x14.14 rotated 45deg, top 0) */}
-                      <div className="absolute top-[10px] left-[10px] -translate-x-1/2 -translate-y-1/2 w-[14.14px] h-[14.14px] bg-[#fffaf3] rotate-45 border border-[#BD8A3C] z-10" />
-                      {/* Bottom Diamond */}
-                      <div className="absolute bottom-[10px] left-[10px] -translate-x-1/2 translate-y-1/2 w-[14.14px] h-[14.14px] bg-[#fffaf3] rotate-45 border border-[#BD8A3C] z-10" />
-                    </div>
-
-                    {/* Mobile Separator (full width, 20px height) */}
-                    <div className="md:hidden w-full h-[20px] relative flex items-center shrink-0">
-                      {/* Maroon Bar */}
-                      <div className="absolute left-[10px] top-0 h-[20px] w-[calc(100%-20px)] bg-[#420001]" />
-                      {/* Left Diamond */}
-                      <div className="absolute left-[10px] top-[10px] -translate-x-1/2 -translate-y-1/2 w-[14.14px] h-[14.14px] bg-[#fffaf3] rotate-45 border border-[#BD8A3C] z-10" />
-                      {/* Right Diamond */}
-                      <div className="absolute right-[10px] top-[10px] translate-x-1/2 -translate-y-1/2 w-[14.14px] h-[14.14px] bg-[#fffaf3] rotate-45 border border-[#BD8A3C] z-10" />
-                    </div>
-                  </>
+                  <div className="flex w-[20px] h-[330px] relative shrink-0">
+                    {/* Maroon Bar */}
+                    <div className="absolute top-[10px] left-0 w-[20px] h-[310px] bg-[#420001]" />
+                    {/* Top Diamond */}
+                    <div className="absolute top-[10px] left-[10px] -translate-x-1/2 -translate-y-1/2 w-[14.14px] h-[14.14px] bg-[#fffaf3] rotate-45 border border-[#BD8A3C] z-10" />
+                    {/* Bottom Diamond */}
+                    <div className="absolute bottom-[10px] left-[10px] -translate-x-1/2 translate-y-1/2 w-[14.14px] h-[14.14px] bg-[#fffaf3] rotate-45 border border-[#BD8A3C] z-10" />
+                  </div>
                 )}
               </Fragment>
             )
