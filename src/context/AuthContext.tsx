@@ -47,8 +47,110 @@ const onRefreshFailed = (err: any) => {
   refreshSubscribers = []
 }
 
+let logoutCallback: (() => void) | null = null
+let userUpdateCallback: ((user: AuthUser | null) => void) | null = null
+
+// Set up global fetch interceptor immediately on module import to catch early child component requests
+const originalFetch = window.fetch
+window.fetch = async (...args) => {
+  const [resource, config] = args
+  const url = typeof resource === 'string' ? resource : (resource as any).url || ''
+  const isRefreshRequest = url.includes('/api/auth/refresh')
+  const isLogoutRequest = url.includes('/api/auth/logout')
+
+  let res = await originalFetch(resource, config)
+
+  // If the refresh token request itself returns a 401, the refresh token is expired/invalid. Log out immediately.
+  if (res.status === 401 && isRefreshRequest) {
+    if (logoutCallback) {
+      logoutCallback()
+    } else {
+      localStorage.removeItem(STORAGE_KEY)
+      window.location.href = '/login'
+    }
+    return res
+  }
+
+  // If unauthorized, try to refresh token
+  if (res.status === 401 && !isRefreshRequest && !isLogoutRequest && readStoredUser()) {
+    const stored = readStoredUser()
+    if (!stored) return res
+
+    if (!isRefreshing) {
+      isRefreshing = true
+      try {
+        const refreshRes = await refreshAccessTokenApi()
+        const newToken = refreshRes.token
+        const updatedUser = { ...stored, token: newToken }
+        
+        if (userUpdateCallback) {
+          userUpdateCallback(updatedUser)
+        } else {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUser))
+        }
+        
+        isRefreshing = false
+        onRefreshed(newToken)
+      } catch (refreshErr) {
+        isRefreshing = false
+        onRefreshFailed(refreshErr)
+        
+        if (logoutCallback) {
+          logoutCallback()
+        } else {
+          localStorage.removeItem(STORAGE_KEY)
+          window.location.href = '/login'
+        }
+        return res
+      }
+    }
+
+    // Wait for token refresh to complete and retry request
+    return new Promise((resolve, reject) => {
+      subscribeTokenRefresh(
+        (newToken) => {
+          // Clone headers and replace Authorization token
+          const headers = new Headers(config?.headers || {})
+          headers.set('Authorization', `Bearer ${newToken}`)
+          resolve(
+            originalFetch(resource, {
+              ...config,
+              headers,
+            })
+          )
+        },
+        (err) => {
+          reject(err)
+        }
+      )
+    })
+  }
+
+  return res
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(() => readStoredUser())
+
+  useEffect(() => {
+    logoutCallback = () => {
+      setUser(null)
+      localStorage.removeItem(STORAGE_KEY)
+      window.location.href = '/login'
+    }
+    userUpdateCallback = (nextUser) => {
+      setUser(nextUser)
+      if (nextUser) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(nextUser))
+      } else {
+        localStorage.removeItem(STORAGE_KEY)
+      }
+    }
+    return () => {
+      logoutCallback = null
+      userUpdateCallback = null
+    }
+  }, [])
 
   useEffect(() => {
     if (user) {
@@ -71,72 +173,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null)
       localStorage.removeItem(STORAGE_KEY)
       window.location.href = '/login'
-    }
-  }, [])
-
-  // Set up global fetch interceptor to handle token refresh automatically
-  useEffect(() => {
-    const { fetch: originalFetch } = window
-
-    window.fetch = async (...args) => {
-      const [resource, config] = args
-      const url = typeof resource === 'string' ? resource : (resource as any).url || ''
-      const isRefreshRequest = url.includes('/api/auth/refresh')
-      const isLogoutRequest = url.includes('/api/auth/logout')
-
-      let res = await originalFetch(resource, config)
-
-      // If unauthorized, try to refresh token
-      if (res.status === 401 && !isRefreshRequest && !isLogoutRequest && readStoredUser()) {
-        const stored = readStoredUser()
-        if (!stored) return res
-
-        if (!isRefreshing) {
-          isRefreshing = true
-          try {
-            const refreshRes = await refreshAccessTokenApi()
-            const newToken = refreshRes.token
-            const updatedUser = { ...stored, token: newToken }
-            setUser(updatedUser)
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedUser))
-            isRefreshing = false
-            onRefreshed(newToken)
-          } catch (refreshErr) {
-            isRefreshing = false
-            onRefreshFailed(refreshErr)
-            setUser(null)
-            localStorage.removeItem(STORAGE_KEY)
-            window.location.href = '/login'
-            return res
-          }
-        }
-
-        // Wait for token refresh to complete and retry request
-        return new Promise((resolve, reject) => {
-          subscribeTokenRefresh(
-            (newToken) => {
-              // Clone headers and replace Authorization token
-              const headers = new Headers(config?.headers || {})
-              headers.set('Authorization', `Bearer ${newToken}`)
-              resolve(
-                originalFetch(resource, {
-                  ...config,
-                  headers,
-                })
-              )
-            },
-            (err) => {
-              reject(err)
-            }
-          )
-        })
-      }
-
-      return res
-    }
-
-    return () => {
-      window.fetch = originalFetch
     }
   }, [])
 

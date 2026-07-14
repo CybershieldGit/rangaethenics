@@ -100,7 +100,7 @@ export function GallerySection() {
           onClick={() => setSelectedVideo(null)}
         >
           <div
-            className="relative max-w-4xl max-h-[90vh] bg-black  overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 flex items-center justify-center"
+            className="relative max-w-4xl max-h-[90vh] bg-black overflow-hidden shadow-2xl animate-in zoom-in-95 duration-300 flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
             <button

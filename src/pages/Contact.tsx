@@ -33,7 +33,7 @@ export function Contact() {
       {/* 1. HERO SECTION */}
       <section
         aria-label="Contact Us"
-        className="relative min-h-[581px] bg-[#fffaf3] bg-[url('/images/about_photo.png')] bg-cover bg-[75%_center] bg-no-repeat md:bg-right border-b border-[#BD8A3C]/10"
+        className="relative min-h-[581px] bg-[#fffaf3] bg-[url('/images/contact_hero_new.png')] bg-cover bg-[75%_center] bg-no-repeat md:bg-right border-b border-[#BD8A3C]/10"
       >
         <div className="relative mx-auto flex min-h-[581px] max-w-7xl items-start px-4 pt-10 pb-12 md:px-8 md:pt-[100px] md:pb-16">
           <div className="flex min-h-[373px] w-full max-w-[558px] flex-col">
@@ -41,13 +41,13 @@ export function Contact() {
               Contact Us
             </h1>
             <img
-              src="/hero_seperator.svg"
+              src="/historical_seperator.svg"
               alt=""
               className="mt-4 h-[14px] w-auto self-start"
             />
             <div className="mt-8 space-y-4 font-inter text-[15px] leading-relaxed text-[#4a3f38] md:text-base">
               <p>
-                Wether you have a question about our products, need help with an older, or want to collaborate with us, our team to assist you.
+                We’re here to help! Whether you have a question about our products, need assistance with your order, or want to collaborate with us, we’d love to hear from you.
               </p>
             </div>
           </div>

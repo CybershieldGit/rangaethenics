@@ -66,16 +66,16 @@ export function HeroCarousel() {
               {slides[current].subtext}
             </p>
 
-            <Link to="/products?category=all">
-              <div className="flex flex-wrap gap-4">
-                <Link to="/about">
-                  <Button className="!px-8 !py-3 cursor-pointer">Our Story</Button>
-                </Link>
+            <div className="flex flex-wrap gap-4">
+              <Link to="/about">
+                <Button className="!px-8 !py-3 cursor-pointer">Our Story</Button>
+              </Link>
+              <Link to="/products?category=all">
                 <Button variant="outline" className="!px-8 !py-3 cursor-pointer">
                   Explore Collections
                 </Button>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

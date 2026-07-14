@@ -14,7 +14,7 @@ export function SectionHeader({ title, subtitle, className = '' }: SectionHeader
       <img
         src="/historical_seperator.svg"
         alt=""
-        className="mx-auto mt-4 h-4 w-auto mb-15 md:mb-0"
+        className="mx-auto mt-4 h-4 w-auto mb-[50px]"
       />
     </div>
   )
