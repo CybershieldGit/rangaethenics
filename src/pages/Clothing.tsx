@@ -7,7 +7,7 @@ import { OccasionSection } from '../components/home/OccasionSection'
 import { ValueProposition } from '../components/home/ValueProposition'
 import { OurStory } from '../components/home/OurStory'
 import { FestiveSpecial } from '../components/jewellery/FestiveSpecial'
-import { getProducts } from '../utils/api'
+import { getProducts, getCategoriesList } from '../utils/api'
 import { Link } from 'react-router-dom'
 import {
   Product,
@@ -18,7 +18,7 @@ import {
 const GOLD_TINT =
   'brightness(0) saturate(100%) invert(63%) sepia(42%) saturate(523%) hue-rotate(358deg) brightness(89%) contrast(86%)'
 
-const collections = [
+const fallbackCollections = [
   {
     name: 'Sarees',
     image: '/images/sarees.png',
@@ -93,17 +93,16 @@ const ARCH_BORDER_PATH =
   'M155.222 1.58203C156.994 3.70146 159.425 5.59289 162.297 7.33105C165.628 9.34719 169.608 11.1909 173.958 12.96C178.31 14.7298 183.063 16.4363 187.942 18.1709C192.829 19.9079 197.844 21.674 202.753 23.5703C212.585 27.3687 221.889 31.655 228.726 37.1807C235.537 42.6857 239.826 49.3544 239.826 57.96V58.9307H242.811C253.542 58.9307 261.938 66.1953 261.938 74.8135V82.1963H285.098V104.688H287.206C299.673 104.688 309.478 113.133 309.478 123.203V394.857H1.93652L0.969727 123.203C0.969727 113.132 10.7716 104.689 23.2383 104.688H25.3477V82.1963H48.5059V74.8135C48.5059 66.1953 56.9033 58.9307 67.6348 58.9307H70.6191V57.96C70.6192 49.3544 74.9082 42.6857 81.7197 37.1807C88.5567 31.6552 97.8596 27.3686 107.691 23.5703C112.6 21.674 117.616 19.9079 122.502 18.1709C127.382 16.4363 132.134 14.7298 136.486 12.96C140.837 11.1909 144.816 9.34719 148.147 7.33105C151.019 5.59305 153.449 3.70121 155.222 1.58203Z'
 
 function ArchCard({ name, image }: { name: string; image: string }) {
-  const slug = name.replace(/\s+/g, '-').toLowerCase()
+  const slug = (name as any || '').replace(/\s+/g, '-').toLowerCase()
   const clipId = `arch-clip-${slug}`
   return (
-    <a href="#" className="group block w-full">
+    <Link to={`/products?category=clothing&subCategory=${encodeURIComponent(name)}`} className="group block w-full animate-fade-in">
       <svg
         viewBox="0 0 311 396"
         className="block w-full"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* Inset version of the arch so the cream padding is equal on all sides */}
           <clipPath id={clipId}>
             <path
               d={ARCH_BORDER_PATH}
@@ -151,44 +150,139 @@ function ArchCard({ name, image }: { name: string; image: string }) {
           {name}
         </text>
       </svg>
-    </a>
+    </Link>
   )
 }
 
-function CollectionsGrid() {
-  return (
-    <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20">
-      <div className="flex items-center gap-3 md:gap-4 mb-15">
-        <h2
-          className="font-serif whitespace-nowrap text-maroon text-[28px] font-bold leading-none tracking-normal sm:text-4xl md:text-[48px]"
-        >
-          Our Signature Collections
-        </h2>
-        <div className="hidden md:flex items-center flex-1">
-          <img
-            src="/square_straight.svg"
-            alt=""
-            className="h-px min-w-0 flex-1 object-fill"
-            style={{ filter: GOLD_TINT }}
-          />
+const getSubcategoryDetails = (name: string, apiImage?: string) => {
+  const lower = name.toLowerCase().trim();
+  let image = apiImage || '';
+  
+  if (!image || image === '/images/placeholder.png') {
+    if (lower.includes('saree')) image = '/images/sarees.png';
+    else if (lower.includes('lehenga') || lower.includes('lehnga')) image = '/images/Lehengas.png';
+    else if (lower.includes('kurti') || lower.includes('kurta')) image = '/images/Kurta_Sets.png';
+    else if (lower.includes('dupatta')) image = '/images/Dupattas.png';
+    else if (lower.includes('gown')) image = '/images/clothing.png';
+    else if (lower.includes('suit')) image = '/images/clothing.png';
+    else image = '/images/clothing.png';
+  }
+  
+  // Normalize names for display consistency
+  let displayName = name.trim();
+  if (lower === 'lehnga' || lower === 'lehengas') displayName = 'Lehengas';
+  else if (lower === 'saree' || lower === 'sarees') displayName = 'Sarees';
+  else if (lower === 'kurti' || lower === 'kurtis') displayName = 'Kurtis';
+  
+  return { name: displayName, image };
+}
 
-          <span className="flex shrink-0 items-center gap-2">
-            <img src="/flower.svg" alt="" className="h-5 w-auto" />
-            <span
-              className="block h-px w-12"
-              style={{
-                background:
-                  'linear-gradient(to right, transparent, #BD8A3C 50%, transparent)',
-              }}
+function CollectionsGrid({ collections }: { collections: { name: string; image: string }[] }) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(4);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsToShow(window.innerWidth >= 768 ? 4 : 2);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const maxIndex = Math.max(0, collections.length - itemsToShow);
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
+  };
+
+  return (
+    <section className="mx-auto max-w-7xl px-4 py-14 md:px-8 md:py-20 overflow-hidden">
+      <div className="flex items-center justify-between mb-10">
+        <div className="flex items-center gap-3 md:gap-4 flex-1">
+          <h2
+            className="font-serif whitespace-nowrap text-maroon text-[28px] font-bold leading-none tracking-normal sm:text-4xl md:text-[48px]"
+          >
+            Our Signature Collections
+          </h2>
+          <div className="hidden md:flex items-center flex-1">
+            <img
+              src="/square_straight.svg"
+              alt=""
+              className="h-px min-w-0 flex-1 object-fill"
+              style={{ filter: GOLD_TINT }}
             />
-          </span>
+
+            <span className="flex shrink-0 items-center gap-2">
+              <img src="/flower.svg" alt="" className="h-5 w-auto" />
+              <span
+                className="block h-px w-12"
+                style={{
+                  background:
+                    'linear-gradient(to right, transparent, #BD8A3C 50%, transparent)',
+                }}
+              />
+            </span>
+          </div>
         </div>
+
+        {/* Navigation Buttons */}
+        {collections.length > itemsToShow && (
+          <div className="hidden md:flex items-center gap-2 ml-4">
+            <button
+              onClick={prevSlide}
+              disabled={currentIndex === 0}
+              className="p-2 rounded-full border border-maroon text-maroon transition-all duration-300 hover:bg-maroon hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-maroon cursor-pointer flex items-center justify-center w-10 h-10"
+              aria-label="Previous slide"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={nextSlide}
+              disabled={currentIndex === maxIndex}
+              className="p-2 rounded-full border border-maroon text-maroon transition-all duration-300 hover:bg-maroon hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-maroon cursor-pointer flex items-center justify-center w-10 h-10"
+              aria-label="Next slide"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        )}
       </div>
 
-      <div className="grid grid-cols-2 gap-5 md:grid-cols-4 md:gap-6">
-        {collections.map((item) => (
-          <ArchCard key={item.name} name={item.name} image={item.image} />
-        ))}
+      <style dangerouslySetInnerHTML={{__html: `
+        .scrollbar-none::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-none {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      `}} />
+
+      <div className="overflow-x-auto md:overflow-hidden mx-[-10px] md:mx-[-12px] scrollbar-none">
+        <div
+          className="flex transition-transform duration-500 ease-out md:transform-none"
+          style={{
+            transform: window.innerWidth >= 768 ? `translateX(-${currentIndex * (100 / itemsToShow)}%)` : 'none',
+          }}
+        >
+          {collections.map((item, index) => (
+            <div
+              key={index}
+              className="w-[70%] sm:w-1/2 md:w-1/4 shrink-0 px-[10px] md:px-[12px]"
+            >
+              <ArchCard name={item.name} image={item.image} />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -197,6 +291,29 @@ function CollectionsGrid() {
 export function Clothing() {
   const [mostSelling, setMostSelling] = useState<Product[]>(fallbackMostSelling)
   const [newArrivals, setNewArrivals] = useState<Product[]>(fallbackNewArrival)
+  const [collections, setCollections] = useState<{ name: string; image: string }[]>([])
+
+  useEffect(() => {
+    async function loadCollections() {
+      const categories = await getCategoriesList()
+      const clothingCategory = categories.find(c => c.name.toLowerCase() === 'clothing')
+      if (clothingCategory && clothingCategory.subcategories && clothingCategory.subcategories.length > 0) {
+        const unique = new Map();
+        clothingCategory.subcategories.forEach(sub => {
+          const details = getSubcategoryDetails(sub.name, sub.image);
+          const key = details.name.toLowerCase();
+          // Keep the one with a non-placeholder image or update if image is available
+          if (!unique.has(key) || (!unique.get(key).image && details.image)) {
+            unique.set(key, details);
+          }
+        });
+        setCollections(Array.from(unique.values()));
+      } else {
+        setCollections(fallbackCollections)
+      }
+    }
+    loadCollections()
+  }, [])
 
   useEffect(() => {
     async function loadClothing() {
@@ -214,7 +331,7 @@ export function Clothing() {
   return (
     <div style={{ backgroundColor: '#f5eee1' }}>
       <ClothingHero />
-      <CollectionsGrid />
+      <CollectionsGrid collections={collections} />
       <ArtisanBanner image="/images/ourstory.png" />
       <div style={{ backgroundColor: '#f0e7d6', position: 'relative' }}>
         <DecorativeDivider className="py-6 absolute top-[-38px] left-0 w-full" />

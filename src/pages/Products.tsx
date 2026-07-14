@@ -69,6 +69,7 @@ export function Products() {
   const initialNewArrivalsOnly = searchParams.get('newArrival') === 'true'
   const initialBestSellingOnly = searchParams.get('bestSelling') === 'true'
   const occasionFilter = searchParams.get('occasion') || ''
+  const subCategoryFilter = searchParams.get('subCategory') || ''
   const [category, setCategory] = useState<CategoryFilter>(
     ['all', 'clothing', 'jewellery'].includes(initialCategory) ? initialCategory : 'all',
   )
@@ -122,6 +123,7 @@ export function Products() {
       }
       if (product.price > maxPrice) return false
       if (occasionFilter && product.occasion !== occasionFilter) return false
+      if (subCategoryFilter && product.subCategory?.toLowerCase() !== subCategoryFilter.toLowerCase()) return false
       return true
     })
 
@@ -142,7 +144,7 @@ export function Products() {
     }
 
     return results
-  }, [products, category, newArrivalsOnly, bestSellingOnly, maxPrice, sortBy, occasionFilter])
+  }, [products, category, newArrivalsOnly, bestSellingOnly, maxPrice, sortBy, occasionFilter, subCategoryFilter])
 
   const totalPages = Math.max(1, Math.ceil(filteredProducts.length / PRODUCTS_PER_PAGE))
   const paginatedProducts = filteredProducts.slice(
