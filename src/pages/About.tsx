@@ -29,9 +29,9 @@ function AboutHero() {
   return (
     <section
       aria-label="About Us"
-      className="relative min-h-[581px] bg-[#fffaf3] bg-[url('/images/about_photo.png')] bg-cover bg-[75%_center] bg-no-repeat md:bg-right"
+      className="relative min-h-[820px] bg-[#fffaf3] bg-[url('/images/about_photo.jpg')] bg-cover bg-[75%_center] bg-no-repeat md:bg-right"
     >
-      <div className="relative mx-auto flex min-h-[581px] max-w-7xl items-start px-4 pt-10 pb-12 md:px-8 md:pt-[100px] md:pb-16">
+      <div className="relative mx-auto flex min-h-[820px] max-w-7xl items-center px-4 pt-10 pb-12 md:px-8 md:pt-[100px] md:pb-16">
         <div className="flex min-h-[373px] w-full max-w-[558px] flex-col">
           <h1 className="font-serif text-[48px] font-normal leading-none tracking-normal text-maroon sm:text-[60px] md:text-[72px]">
             About Us
