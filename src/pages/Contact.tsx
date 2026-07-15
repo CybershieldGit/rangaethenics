@@ -1,4 +1,5 @@
 import { Fragment } from 'react'
+import { Link } from 'react-router-dom'
 import { MapPin, Phone, Mail, Clock } from 'lucide-react'
 import { OurStory } from '../components/home/OurStory'
 
@@ -105,7 +106,7 @@ export function Contact() {
       </section>
 
       {/* 4. BRAND ETHOS BANNER */}
-      <OurStory />
+      <OurStory buttonText="Know More About Us" to="/about" />
     </div>
   )
 }

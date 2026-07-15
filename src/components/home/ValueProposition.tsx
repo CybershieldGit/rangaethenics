@@ -32,7 +32,7 @@ export function ValueProposition() {
   return (
     <section className="pb-0 md:pb-10">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
-        <div className="flex flex-row items-center justify-between pt-8 gap-0">
+        <div className="flex flex-row items-center justify-between md:pt-8 pt-0 gap-0">
           {features.map((feature, idx) => {
             const Icon = feature.icon
             return (

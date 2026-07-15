@@ -141,7 +141,7 @@ export function About() {
         <WhyChooseUs />
       </div>
       <DecorativeDivider className="py-6" />
-      <OurStory />
+      <OurStory buttonText="Explore Collections" to="/products?category=all" />
     </div>
   )
 }

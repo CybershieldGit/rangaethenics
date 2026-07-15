@@ -19,7 +19,7 @@ function Corner({ className }: { className: string }) {
   )
 }
 
-export function OurStory({ background = '#fffaf3' }: { background?: string }) {
+export function OurStory({ background = '#fffaf3', buttonText = 'Explore Collections', to = '/about' }: { background?: string, buttonText?: string, to?: string }) {
   return (
     <section id="about" className="relative pt-0" style={{ backgroundColor: background }}>
       {/* Maroon base that blends seamlessly into the footer below */}
@@ -98,8 +98,8 @@ export function OurStory({ background = '#fffaf3' }: { background?: string }) {
                 reflection of our passion for authenticity, quality, and timeless beauty.
               </p>
               <div className="mt-8 cursor-pointer">
-                <Link to="/about">
-                  <Button>Explore Collections</Button>
+                <Link to={to}>
+                  <Button className="cursor-pointer">{buttonText}</Button>
                 </Link>
               </div>
             </div>
