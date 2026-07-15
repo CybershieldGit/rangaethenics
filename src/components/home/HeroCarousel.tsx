@@ -59,7 +59,7 @@ export function HeroCarousel() {
         </div>
       ))}
 
-      <div className="relative z-10 flex h-full items-start mt-[40px]">
+      <div className="relative z-10 flex h-full items-start mt-[40px] md:mt-[80px]">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
           <div className="max-w-lg">
             <h1 className={`font-serif text-5xl leading-[1.1] text-maroon md:text-6xl lg:text-7xl ${isMobile ? 'text-[24px] w-[220px]' : ''}`}>
