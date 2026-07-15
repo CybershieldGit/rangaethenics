@@ -106,7 +106,7 @@ function JewelleryHero() {
   return (
     <section className="relative h-[85vh] min-h-[560px] max-h-[820px] overflow-hidden">
       <img
-        src="/images/jewellery_hero.png"
+        src="/images/jewellery_hero_new.jpg"
         alt=""
         className="absolute inset-0 h-full w-full object-cover"
       />

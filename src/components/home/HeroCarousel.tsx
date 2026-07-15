@@ -76,12 +76,12 @@ export function HeroCarousel() {
               {slides[current].subtext}
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 md:gap-4">
               <Link to="/about">
-                <Button className="!px-8 !py-3 cursor-pointer">Our Story</Button>
+                <Button className="!px-4 !py-2 text-xs md:!px-8 md:!py-3 md:text-sm cursor-pointer">Our Story</Button>
               </Link>
               <Link to="/">
-                <Button variant="outline" className="!px-8 !py-3 cursor-pointer">
+                <Button variant="outline" className="!px-4 !py-2 text-xs md:!px-8 md:!py-3 md:text-sm cursor-pointer">
                   Explore Collections
                 </Button>
               </Link>
@@ -157,7 +157,7 @@ export function HeroCarousel() {
             className="absolute inset-x-0 bottom-0 z-[5] h-[230px]"
             style={{
               background:
-              "linear-gradient(180deg, rgba(244, 234, 220, 0) 0%, #F4EADC 100%)",
+              "linear-gradient(180deg, rgba(251, 243, 231, 0) 0%, rgba(251, 243, 231, 0.6) 50%, #fbf3e7 100%)",
             }}
           />
         )
