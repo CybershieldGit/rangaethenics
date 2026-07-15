@@ -82,18 +82,33 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-[#F8F0E5]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
-        <Link
-          to="/"
-          className={`flex items-center shrink-0 transition-all duration-300 ${
-            searchOpen ? 'hidden sm:flex' : 'flex'
-          }`}
-        >
-          <img
-            src="/ranga_logo_header.svg"
-            alt="Rangethnics"
-            className="h-10 w-auto md:h-12"
-          />
-        </Link>
+        {/* Left container holding hamburger and logo together (logo left-aligned next to hamburger on mobile) */}
+        <div className="flex items-center gap-2">
+          {/* Leftmost Hamburger Menu Button on Mobile View */}
+          <button
+            type="button"
+            aria-label="Toggle menu"
+            className={`text-maroon lg:hidden mr-2 cursor-pointer shrink-0 transition-all duration-300 ${
+              searchOpen ? 'hidden' : 'block'
+            }`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+          >
+            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+
+          <Link
+            to="/"
+            className={`flex items-center shrink-0 transition-all duration-300 ${
+              searchOpen ? 'hidden sm:flex' : 'flex'
+            }`}
+          >
+            <img
+              src="/ranga_logo_header.svg"
+              alt="Rangethnics"
+              className="h-6 w-auto md:h-12"
+            />
+          </Link>
+        </div>
 
         {/* Desktop Nav */}
         <nav className={`hidden items-center gap-8 lg:flex ${searchOpen ? 'lg:!hidden' : ''}`}>
@@ -117,7 +132,12 @@ export function Header() {
 
         {/* Actions */}
         <div className={`flex items-center gap-3 md:gap-4 ${searchOpen ? 'flex-1 justify-end' : ''}`}>
-          <div ref={searchRef} className={`relative flex items-center ${searchOpen ? 'flex-1 max-w-[450px]' : ''}`}>
+          <div
+            ref={searchRef}
+            className={`relative items-center ${mobileOpen ? 'hidden lg:flex' : 'flex'} ${
+              searchOpen ? 'flex-1 max-w-[450px]' : ''
+            }`}
+          >
             {searchOpen ? (
               <div className="flex items-center gap-2 border-b border-[#BD8A3C]/40 pb-1 w-full transition-all duration-300">
                 <Search size={16} className="text-[#1a1a1a] shrink-0" />
@@ -219,105 +239,109 @@ export function Header() {
             )}
           </Link>
           {isAuthenticated ? (
-            <div ref={profileRef} className="relative hidden md:block">
-              <button
-                type="button"
-                aria-label="Account"
-                onClick={() => setProfileOpen((prev) => !prev)}
-                className="flex items-center text-[#1a1a1a] hover:text-maroon"
-              >
-                <CircleUserRound size={24} strokeWidth={1.5} />
-              </button>
+            <>
+              {/* Profile Dropdown (visible on both mobile and desktop) */}
+              <div ref={profileRef} className={`relative ${mobileOpen ? 'hidden lg:block' : 'block'}`}>
+                <button
+                  type="button"
+                  aria-label="Account"
+                  onClick={() => setProfileOpen((prev) => !prev)}
+                  className="flex items-center text-[#1a1a1a] hover:text-maroon"
+                >
+                  <CircleUserRound size={24} strokeWidth={1.5} />
+                </button>
 
-              {profileOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 border border-[#BD8A3C]/40 bg-white py-1 shadow-lg">
-                  <div className="border-b border-[#BD8A3C]/20 px-4 py-3">
-                    <p className="font-inter text-sm font-semibold text-maroon">
-                      {user?.name}
-                    </p>
-                    <p className="truncate font-inter text-xs text-[#717171]">{user?.email}</p>
+                {profileOpen && (
+                  <div className="absolute right-0 top-full mt-2 w-52 border border-[#BD8A3C]/40 bg-white py-1 shadow-lg z-50">
+                    <div className="border-b border-[#BD8A3C]/20 px-4 py-3">
+                      <p className="font-inter text-sm font-semibold text-maroon">
+                        {user?.name}
+                      </p>
+                      <p className="truncate font-inter text-xs text-[#717171]">{user?.email}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate('/profile', { state: { view: 'profile' } })
+                        setProfileOpen(false)
+                      }}
+                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white cursor-pointer"
+                    >
+                      <CircleUserRound size={16} strokeWidth={1.5} />
+                      Profile Details
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate('/profile', { state: { view: 'orders' } })
+                        setProfileOpen(false)
+                      }}
+                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
+                    >
+                      <Package size={16} strokeWidth={1.5} />
+                      My Order
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate('/profile', { state: { view: 'addresses' } })
+                        setProfileOpen(false)
+                      }}
+                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
+                    >
+                      <MapPin size={16} strokeWidth={1.5} />
+                      Manage Addresses
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate('/profile', { state: { view: 'wishlist' } })
+                        setProfileOpen(false)
+                      }}
+                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
+                    >
+                      <Heart size={16} strokeWidth={1.5} />
+                      Wishlist
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        navigate('/profile', { state: { view: 'logout' } })
+                        setProfileOpen(false)
+                      }}
+                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/20 cursor-pointer"
+                    >
+                      <LogOut size={16} strokeWidth={1.5} />
+                      Log Out
+                    </button>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigate('/profile', { state: { view: 'profile' } })
-                      setProfileOpen(false)
-                    }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white cursor-pointer"
-                  >
-                    <CircleUserRound size={16} strokeWidth={1.5} />
-                    Profile Details
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigate('/profile', { state: { view: 'orders' } })
-                      setProfileOpen(false)
-                    }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
-                  >
-                    <Package size={16} strokeWidth={1.5} />
-                    My Order
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigate('/profile', { state: { view: 'addresses' } })
-                      setProfileOpen(false)
-                    }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
-                  >
-                    <MapPin size={16} strokeWidth={1.5} />
-                    Manage Addresses
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigate('/profile', { state: { view: 'wishlist' } })
-                      setProfileOpen(false)
-                    }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
-                  >
-                    <Heart size={16} strokeWidth={1.5} />
-                    Wishlist
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      navigate('/profile', { state: { view: 'logout' } })
-                      setProfileOpen(false)
-                    }}
-                    className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/20 cursor-pointer"
-                  >
-                    <LogOut size={16} strokeWidth={1.5} />
-                    Log Out
-                  </button>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            </>
           ) : (
             <>
-              <Link
-                to="/login"
-                className="hidden font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] text-maroon hover:underline md:block"
-              >
-                Log In
-              </Link>
-              <span className="hidden h-5 w-px bg-[#1a1a1a]/40 md:block" />
-              <Link to="/signup" className="hidden md:inline-flex">
-                <Button className="rounded-md !px-5 !py-2">Sign Up</Button>
+              {/* Desktop Login / Signup */}
+              <div className="hidden lg:flex items-center gap-3">
+                <Link
+                  to="/login"
+                  className="font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] text-maroon hover:underline"
+                >
+                  Log In
+                </Link>
+                <span className="h-5 w-px bg-[#1a1a1a]/40" />
+                <Link to="/signup">
+                  <Button className="rounded-md !px-5 !py-2">Sign Up</Button>
+                </Link>
+              </div>
+
+              {/* Mobile Login / Signup Button */}
+              <Link to="/login" className={`lg:hidden ${mobileOpen ? 'hidden' : 'block'}`}>
+                <Button className="rounded-md !px-3 !py-1.5 text-xs whitespace-nowrap">
+                  Login / Signup
+                </Button>
               </Link>
             </>
           )}
-
-          <button
-            type="button"
-            aria-label="Toggle menu"
-            className="text-maroon lg:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
       </div>
 
