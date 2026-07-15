@@ -35,7 +35,7 @@ const occasions: Occasion[] = [
 
 export function OccasionSection() {
   return (
-    <section className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-16 mb-[50px]">
+    <section className="mx-auto max-w-7xl px-4 pb-12 md:px-8 md:py-16">
       {/* Heading with trailing divider */}
       <div className="flex items-center gap-3 md:gap-4">
         <h2

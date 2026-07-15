@@ -36,9 +36,9 @@ export function Home() {
   return (
     <>
       <HeroCarousel />
-      <DecorativeDivider className="my-[70px] pb-[50px] mx-auto px-4 md:px-8" type="flower" />
+      <DecorativeDivider className="md:my-[70px] my-[30px] mx-auto px-4 md:px-8" type="flower" />
       <CategoryCards />
-      <DecorativeDivider className="pt-[50px] pb-6" type="flower" />
+      <DecorativeDivider className="md:pt-[50px] pt-[30px] pb-6" type="flower" />
       <ValueProposition />
       <PromoBanner />
       <ProductSection
@@ -57,7 +57,7 @@ export function Home() {
         viewAllLabel="View All Most Selling"
       />
       <GallerySection />
-      <OurStory background="" />
+      <OurStory background="" buttonText="Know More About Us" to="/about" />
     </>
   )
 }

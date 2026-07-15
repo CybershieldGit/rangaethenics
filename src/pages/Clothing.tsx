@@ -354,7 +354,7 @@ export function Clothing() {
       </div>
       <FestiveSpecial eyebrow="Flat 70% Off" note="On all clothing" category="clothing" />
       <ValueProposition />
-      <OurStory background="transparent" />
+      <OurStory background="transparent" buttonText="Know More About Us" to="/about" />
     </div>
   )
 }

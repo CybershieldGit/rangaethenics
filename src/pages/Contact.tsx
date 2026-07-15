@@ -105,7 +105,7 @@ export function Contact() {
       </section>
 
       {/* 4. BRAND ETHOS BANNER */}
-      <OurStory />
+      <OurStory buttonText="Know More About Us" to="/about" />
     </div>
   )
 }

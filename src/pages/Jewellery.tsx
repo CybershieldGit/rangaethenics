@@ -31,7 +31,7 @@ const fallbackCategories = [
 const getJewellerySubcategoryDetails = (name: string, apiImage?: string) => {
   const lower = name.toLowerCase().trim();
   let image = apiImage || '';
-  
+
   if (!image || image === '/images/placeholder.png') {
     if (lower.includes('necklace') || lower.includes('neck')) image = '/images/Necklaces.png';
     else if (lower.includes('earring') || lower.includes('ear ring') || lower.includes('ear')) image = '/images/Earrings.png';
@@ -42,13 +42,13 @@ const getJewellerySubcategoryDetails = (name: string, apiImage?: string) => {
     else if (lower.includes('pendant')) image = '/images/Pendants.png';
     else image = '/images/jewellery.png';
   }
-  
+
   // Normalize names for display consistency
   let displayName = name.trim();
   if (lower === 'ear ring' || lower === 'earrings') displayName = 'Earrings';
   else if (lower === 'necklace' || lower === 'necklaces') displayName = 'Necklaces';
   else if (lower === 'kamar bandh') displayName = 'Kamar Bandh';
-  
+
   return { name: displayName, image };
 }
 
@@ -232,7 +232,8 @@ function CollectionGrid({ collections }: { collections: { name: string; image: s
         Handcrafted pieces that blend heritage craftsmanship with contemporary style.
       </p>
 
-      <style dangerouslySetInnerHTML={{__html: `
+      <style dangerouslySetInnerHTML={{
+        __html: `
         .scrollbar-none::-webkit-scrollbar {
           display: none;
         }
@@ -331,7 +332,7 @@ export function Jewellery() {
       </div>
       <FestiveSpecial category="jewellery" />
       <ValueProposition />
-      <OurStory background="transparent" />
+      <OurStory background="transparent" buttonText="Know More About Us" to="/about" />
     </div>
   )
 }

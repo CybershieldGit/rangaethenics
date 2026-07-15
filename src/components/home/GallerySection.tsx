@@ -39,7 +39,7 @@ export function GallerySection() {
   const repeatedItems = [...items, ...items]
 
   return (
-    <section className="house-elegance">
+    <section className="house-elegance md:mb-0 mb-[30px]">
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <SectionHeader
           title="The House of Elegance"
