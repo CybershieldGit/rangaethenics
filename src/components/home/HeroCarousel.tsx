@@ -80,7 +80,7 @@ export function HeroCarousel() {
               <Link to="/about">
                 <Button className="!px-4 !py-2 text-xs md:!px-8 md:!py-3 md:text-sm cursor-pointer">Our Story</Button>
               </Link>
-              <Link to="/">
+              <Link to="/products?category=all">
                 <Button variant="outline" className="!px-4 !py-2 text-xs md:!px-8 md:!py-3 md:text-sm cursor-pointer">
                   Explore Collections
                 </Button>
