@@ -43,7 +43,7 @@ function FilterCheckbox({
   onChange: (checked: boolean) => void
 }) {
   return (
-    <label className="flex cursor-pointer items-center gap-3 text-[16px] text-text-dark">
+    <label className="flex cursor-pointer items-center gap-3 text-[12px] md:text-[16px] text-text-dark">
       <span
         className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-[1px] border-1 ${checked
           ? 'border-[#420001] bg-[#420001] text-white'
@@ -225,7 +225,7 @@ export function Products() {
                   key={tab.value}
                   type="button"
                   onClick={() => handleCategoryChange(tab.value)}
-                  className={`flex flex-1 items-center justify-center px-2 py-2.5 text-center text-[16px] transition-colors ${i > 0 ? 'border-l border-[#BD8A3C]/50' : ''
+                  className={`flex flex-1 items-center justify-center px-2 py-2.5 text-center text-[12px] md:text-[16px] transition-colors ${i > 0 ? 'border-l border-[#BD8A3C]/50' : ''
                     } ${category === tab.value
                       ? 'bg-maroon text-white'
                       : 'bg-transparent text-text-dark hover:bg-maroon/5'
@@ -235,17 +235,17 @@ export function Products() {
                 </button>
               ))}
             </div>
-            <span className="hidden text-[16px] text-text md:inline">
+            <span className="hidden text-[12px] md:text-[16px] text-text md:inline">
               Showing {filteredProducts.length} products
             </span>
           </div>
 
           <div className="flex items-center justify-between gap-2 md:justify-start">
-            <span className="text-[16px] text-text md:hidden">
+            <span className="text-[12px] md:text-[16px] text-text md:hidden">
               Showing {filteredProducts.length} products
             </span>
             <div className="flex items-center gap-2">
-              <span className="hidden whitespace-nowrap text-[16px] text-text md:inline">Short by:</span>
+              <span className="hidden whitespace-nowrap text-[12px] md:text-[16px] text-text md:inline">Short by:</span>
               <Dropdown<SortOption>
                 value={sortBy}
                 options={sortOptions}
@@ -261,7 +261,7 @@ export function Products() {
           <aside className="w-full shrink-0 lg:w-[311px]">
             <div className="border border-[#BD8A3C]/40 bg-[#F8F0E5]">
               <div className="space-y-5 px-5 py-5">
-                <label className="flex cursor-pointer items-center justify-between text-[16px] text-text-dark">
+                <label className="flex cursor-pointer items-center justify-between text-[12px] md:text-[16px] text-text-dark">
                   New Arrivals
                   <span
                     className={`flex h-6 w-6 items-center justify-center rounded-[1px] border-2 ${newArrivalsOnly
@@ -278,7 +278,7 @@ export function Products() {
                     />
                   </span>
                 </label>
-                <label className="flex cursor-pointer items-center justify-between text-[16px] text-text-dark">
+                <label className="flex cursor-pointer items-center justify-between text-[12px] md:text-[16px] text-text-dark">
                   Best Selling
                   <span
                     className={`flex h-6 w-6 items-center justify-center rounded-[1px] border-2 ${bestSellingOnly
@@ -301,18 +301,16 @@ export function Products() {
 
               <div className="px-5 py-5">
                 <p
-                  className="mb-4 font-sans text-text"
+                  className="mb-4 font-sans text-text text-[14px] md:text-[18px] leading-[20px]"
                   style={{
                     fontWeight: 700,
-                    fontSize: '18px',
-                    lineHeight: '20px',
                     letterSpacing: '1.5%',
                   }}
                 >
                   Filter By
                 </p>
                 <div className="mb-4 flex items-center justify-between">
-                  <p className="text-[16px] text-text-dark">Price</p>
+                  <p className="text-[12px] md:text-[16px] text-text-dark">Price</p>
                   <span className="text-sm font-semibold text-maroon">
                     Up to {formatPrice(maxPrice)}
                     {maxPrice >= PRICE_MAX ? '+' : ''}
@@ -347,7 +345,7 @@ export function Products() {
                   <div className="h-px w-full bg-[#BD8A3C]/30" />
 
                   <div className="px-5 py-5">
-                    <p className="mb-4 text-[16px] text-text-dark">Color</p>
+                    <p className="mb-4 text-[12px] md:text-[16px] text-text-dark">Color</p>
                     <div className="flex flex-wrap gap-3">
                       {colorOptions.map((color) => {
                         // Colors are stored as "Name|#hex" by the admin panel.
@@ -362,12 +360,12 @@ export function Products() {
                             title={name}
                             aria-label={`Filter by color ${name}`}
                             aria-pressed={isSelected}
-                            onClick={() => toggleItem(color, selectedColors, setSelectedColors)}
                             className={`h-7 w-7 rounded-full border-2 transition-transform ${isSelected
                               ? 'scale-110 border-maroon'
                               : 'border-transparent hover:scale-105'
                               }`}
                             style={{ backgroundColor: hex }}
+                            onClick={() => toggleItem(color, selectedColors, setSelectedColors)}
                           />
                         )
                       })}
@@ -377,7 +375,7 @@ export function Products() {
                   <div className="h-px w-full bg-[#BD8A3C]/30" />
 
                   <div className="space-y-4 px-5 py-5">
-                    <p className="text-[16px] text-text-dark">Size</p>
+                    <p className="text-[12px] md:text-[16px] text-text-dark">Size</p>
                     {sizeOptions.map((size) => (
                       <FilterCheckbox
                         key={size}
@@ -391,7 +389,7 @@ export function Products() {
                   <div className="h-px w-full bg-[#BD8A3C]/30" />
 
                   <div className="space-y-4 px-5 py-5">
-                    <p className="text-[16px] text-text-dark">Fabric</p>
+                    <p className="text-[12px] md:text-[16px] text-text-dark">Fabric</p>
                     {visibleFabrics.map((fabric) => (
                       <FilterCheckbox
                         key={fabric}
@@ -404,7 +402,7 @@ export function Products() {
                       <button
                         type="button"
                         onClick={() => setShowMoreFabrics(true)}
-                        className="pt-1 text-[16px] font-medium text-maroon hover:underline"
+                        className="pt-1 text-[12px] md:text-[16px] font-medium text-maroon hover:underline"
                       >
                         + View More
                       </button>
@@ -416,7 +414,7 @@ export function Products() {
                       <div className="h-px w-full bg-[#BD8A3C]/30" />
 
                       <div className="space-y-4 px-5 py-5">
-                        <p className="text-[16px] text-text-dark">Work</p>
+                        <p className="text-[12px] md:text-[16px] text-text-dark">Work</p>
                         {visibleWorks.map((work) => (
                           <FilterCheckbox
                             key={work}
@@ -429,7 +427,7 @@ export function Products() {
                           <button
                             type="button"
                             onClick={() => setShowMoreWorks(true)}
-                            className="pt-1 text-[16px] font-medium text-maroon hover:underline"
+                            className="pt-1 text-[12px] md:text-[16px] font-medium text-maroon hover:underline"
                           >
                             + View More
                           </button>
@@ -461,7 +459,7 @@ export function Products() {
                       type="button"
                       onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
                       disabled={currentPage === 1}
-                      className="border border-[#BD8A3C]/50 px-4 py-2 text-[16px] text-text-dark transition-colors enabled:hover:border-maroon enabled:hover:text-maroon disabled:cursor-not-allowed disabled:opacity-40"
+                      className="border border-[#BD8A3C]/50 px-4 py-2 text-[12px] md:text-[16px] text-text-dark transition-colors enabled:hover:border-maroon enabled:hover:text-maroon disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Previous
                     </button>
@@ -472,7 +470,7 @@ export function Products() {
                         type="button"
                         onClick={() => setCurrentPage(page)}
                         aria-current={currentPage === page ? 'page' : undefined}
-                        className={`flex h-10 w-10 items-center justify-center text-[16px] transition-colors ${currentPage === page
+                        className={`flex h-10 w-10 items-center justify-center text-[12px] md:text-[16px] transition-colors ${currentPage === page
                           ? 'bg-maroon text-white'
                           : 'border border-[#BD8A3C]/50 text-text-dark hover:border-maroon hover:text-maroon'
                           }`}
@@ -485,7 +483,7 @@ export function Products() {
                       type="button"
                       onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
                       disabled={currentPage === totalPages}
-                      className="border border-[#BD8A3C]/50 px-4 py-2 text-[16px] text-text-dark transition-colors enabled:hover:border-maroon enabled:hover:text-maroon disabled:cursor-not-allowed disabled:opacity-40"
+                      className="border border-[#BD8A3C]/50 px-4 py-2 text-[12px] md:text-[16px] text-text-dark transition-colors enabled:hover:border-maroon enabled:hover:text-maroon disabled:cursor-not-allowed disabled:opacity-40"
                     >
                       Next
                     </button>

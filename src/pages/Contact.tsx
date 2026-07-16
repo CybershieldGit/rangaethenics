@@ -33,25 +33,45 @@ export function Contact() {
       {/* 1. HERO SECTION */}
       <section
         aria-label="Contact Us"
-        className="relative min-h-[581px] bg-[#fffaf3] bg-[url('/images/contact_hero_new.png')] bg-cover bg-[75%_center] bg-no-repeat md:bg-right border-b border-[#BD8A3C]/10"
+        className="relative h-[50vh] md:h-auto md:min-h-[581px] max-h-[340px] md:max-h-[581px] overflow-hidden bg-[#fffaf3] border-b border-[#BD8A3C]/10"
       >
-        <div className="relative mx-auto flex min-h-[581px] max-w-7xl items-start px-4 pt-10 pb-12 md:px-8 md:pt-[100px] md:pb-16">
-          <div className="flex min-h-[373px] w-full max-w-[558px] flex-col">
-            <h1 className="font-serif text-[48px] font-normal leading-none tracking-normal text-[#420001] sm:text-[60px] md:text-[72px]">
-              Contact Us
-            </h1>
-            <img
-              src="/historical_seperator.svg"
-              alt=""
-              className="mt-4 h-[14px] w-auto self-start"
-            />
-            <div className="mt-8 space-y-4 font-inter text-[15px] leading-relaxed text-[#4a3f38] md:text-base">
-              <p>
-                We’re here to help! Whether you have a question about our products, need assistance with your order, or want to collaborate with us, we’d love to hear from you.
-              </p>
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/images/mobile_contactus_hero_section.jpg" />
+          <img
+            src="/images/contact_hero_new.png"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover object-[75%_center] md:object-right"
+          />
+        </picture>
+
+        <div className="relative z-10 flex h-full items-start md:items-center pt-[40px] md:pt-[100px] pb-12">
+          <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
+            <div className="max-w-xl lg:max-w-2xl flex flex-col">
+              <h1 className="font-serif text-[24px] w-[220px] md:w-auto leading-[1.1] text-[#420001] md:text-6xl lg:text-7xl font-normal">
+                Contact Us
+              </h1>
+              <img
+                src="/historical_seperator.svg"
+                alt=""
+                className="my-[17px] md:mt-4 h-2 md:h-[14px] max-w-[108px] md:max-w-none w-auto self-start"
+              />
+              <div className="mt-4 md:mt-8 space-y-4 font-inter text-[12px] md:text-base leading-relaxed text-[#4a3f38] font-normal">
+                <p className="w-[200px] md:w-auto">
+                  We’re here to help! Whether you have a question about our products, need assistance with your order, or want to collaborate with us, we’d love to hear from you.
+                </p>
+              </div>
             </div>
           </div>
         </div>
+
+        {/* Decorative bottom fade gradient for mobile only */}
+        <div
+          className="absolute inset-x-0 bottom-0 z-[5] h-[230px] md:hidden"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, 0.6) 50%, #fffaf3 100%)',
+          }}
+        />
       </section>
 
 

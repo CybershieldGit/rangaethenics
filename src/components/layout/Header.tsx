@@ -80,7 +80,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F8F0E5]">
+    <header className="sticky top-0 z-50 bg-[#F8F0E5] shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
         {/* Left container holding hamburger and logo together (logo left-aligned next to hamburger on mobile) */}
         <div className="flex items-center gap-2">

@@ -40,12 +40,12 @@ export function CategoryCards() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
             <div
-              className={`absolute bottom-0 p-6 md:p-8 ${cat.align === 'right' ? 'right-0 text-right' : 'left-0 text-left'}`}
+              className={`absolute bottom-0 p-4 md:p-6 md:p-8 ${cat.align === 'right' ? 'right-0 text-right' : 'left-0 text-left'}`}
             >
-              <h3 className="font-serif text-3xl text-white md:text-4xl">{cat.title}</h3>
-              <p className="mt-2 max-w-xs text-sm text-white/85">{cat.description}</p>
-              <div className={`mt-4 ${cat.align === 'right' ? 'flex justify-end' : ''}`}>
-                <Button variant="ghost" className="!text-sm">
+              <h3 className="font-serif text-[20px] md:text-3xl md:text-4xl text-white">{cat.title}</h3>
+              <p className="mt-1 md:mt-2 max-w-xs text-[11px] md:text-sm text-white/85">{cat.description}</p>
+              <div className={`mt-3 md:mt-4 ${cat.align === 'right' ? 'flex justify-end' : ''}`}>
+                <Button variant="ghost" className="!text-xs md:!text-sm !px-4 !py-2 md:!px-6 md:!py-2.5">
                   {cat.cta}
                 </Button>
               </div>

@@ -39,7 +39,7 @@ export function OccasionSection() {
       {/* Heading with trailing divider */}
       <div className="flex items-center gap-3 md:gap-4">
         <h2
-          className="font-serif whitespace-nowrap text-maroon text-[28px] font-bold leading-none tracking-normal sm:text-4xl md:text-[48px]"
+          className="font-serif whitespace-nowrap text-maroon text-[22px] font-bold leading-none tracking-normal sm:text-4xl md:text-[48px]"
         >
           Shop by Occasion
         </h2>
@@ -60,7 +60,7 @@ export function OccasionSection() {
           />
         </span>
       </div>
-      <p className="mt-3 max-w-xl text-sm text-text md:text-base mb-[50px]">
+      <p className="mt-2 md:mt-3 max-w-xl text-[12px] md:text-sm md:text-base text-text mb-[30px] md:mb-[50px]">
         Find the perfect ensemble for every wedding event, beautifully curated for
         timeless elegance.
       </p>
@@ -79,7 +79,7 @@ export function OccasionSection() {
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <h3 className="absolute bottom-5 left-5 font-serif text-xl text-white md:text-2xl">
+            <h3 className="absolute bottom-4 left-4 md:bottom-5 md:left-5 font-serif text-[16px] md:text-xl md:text-2xl text-white">
               {occasion.name}
             </h3>
           </Link>

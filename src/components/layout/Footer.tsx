@@ -23,25 +23,25 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer id="contact" className="bg-maroon text-white">
-      <div className="mx-auto max-w-7xl px-4 py-12 md:px-8 md:py-14">
+      <div className="mx-auto max-w-7xl px-4 py-8 md:px-8 md:py-14">
         {/* Top row: logo + social */}
-        <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
+        <div className="flex items-center justify-between gap-4">
           <Link to="/" className="inline-flex">
             <img
               src="/ranga_logo_header.svg"
               alt="Rangethnics"
-              className="h-10 w-auto brightness-0 invert md:h-12"
+              className="h-8 w-auto brightness-0 invert md:h-12"
             />
           </Link>
-          <div className="flex gap-3">
+          <div className="flex gap-2.5">
             {socialLinks.map((social) => (
               <a
                 key={social.label}
                 href="#"
-                className="flex h-8 w-8 items-center justify-center rounded-full border border-white/50 transition-colors hover:border-white hover:bg-white/10"
+                className="flex h-7 w-7 items-center justify-center rounded-full border border-white/50 transition-colors hover:border-white hover:bg-white/10"
                 aria-label={social.label}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d={social.path} />
                 </svg>
               </a>
@@ -50,28 +50,28 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="my-8 h-px w-full bg-[#BD8A3C]/50" />
+        <div className="my-6 h-px w-full bg-[#BD8A3C]/50 md:my-8" />
 
         {/* Main content */}
-        <div className="flex flex-col gap-10 lg:flex-row lg:justify-between">
+        <div className="flex flex-col gap-6 lg:flex-row lg:justify-between">
           {/* Contact blocks */}
-          <div className="flex flex-col gap-10 sm:flex-row sm:gap-16">
+          <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-row sm:gap-16">
             <div>
-              <p className="text-sm text-white/60">Email Us</p>
+              <p className="text-xs text-white/60 md:text-sm">Email Us</p>
               <a
                 href="mailto:aditibhatt2@gmail.com"
-                className="mt-1.5 block text-base font-semibold text-white transition-colors hover:text-gold-light"
+                className="mt-1 block text-sm font-semibold text-white transition-colors hover:text-gold-light md:text-base"
               >
                 aditibhatt2@gmail.com
               </a>
             </div>
             <div>
-              <p className="text-sm text-white/60">WhatsApp</p>
+              <p className="text-xs text-white/60 md:text-sm">WhatsApp</p>
               <a
                 href="https://wa.me/917984037909"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-1.5 block text-base font-semibold text-white transition-colors hover:text-gold-light"
+                className="mt-1 block text-sm font-semibold text-white transition-colors hover:text-gold-light md:text-base"
               >
                 7984037909
               </a>
@@ -79,15 +79,15 @@ export function Footer() {
           </div>
 
           {/* Link columns */}
-          <div className="flex flex-wrap gap-12 sm:gap-16">
+          <div className="grid grid-cols-2 gap-4 sm:flex sm:flex-wrap sm:gap-16">
             <div>
-              <h4 className="mb-3 text-sm font-semibold text-gold">Quicklinks</h4>
-              <ul className="space-y-2.5">
+              <h4 className="mb-2 text-xs font-semibold text-gold md:text-sm">Quicklinks</h4>
+              <ul className="space-y-1.5 md:space-y-2.5">
                 {quickLinks.map((link) => (
                   <li key={link.label}>
                     <Link
                       to={link.to}
-                      className="text-sm text-white/70 transition-colors hover:text-white"
+                      className="text-xs text-white/70 transition-colors hover:text-white md:text-sm"
                     >
                       {link.label}
                     </Link>
@@ -96,13 +96,13 @@ export function Footer() {
               </ul>
             </div>
             <div>
-              <h4 className="mb-3 text-sm font-semibold text-gold">Policies</h4>
-              <ul className="space-y-2.5">
+              <h4 className="mb-2 text-xs font-semibold text-gold md:text-sm">Policies</h4>
+              <ul className="space-y-1.5 md:space-y-2.5">
                 {policyLinks.map((link) => (
                   <li key={link.label}>
                     <Link
                       to={link.to}
-                      className="text-sm text-white/70 transition-colors hover:text-white"
+                      className="text-xs text-white/70 transition-colors hover:text-white md:text-sm"
                     >
                       {link.label}
                     </Link>
@@ -114,10 +114,10 @@ export function Footer() {
         </div>
 
         {/* Divider */}
-        <div className="my-8 h-px w-full bg-[#BD8A3C]/50" />
+        <div className="my-6 h-px w-full bg-[#BD8A3C]/50 md:my-8" />
 
         {/* Bottom row */}
-        <div className="flex flex-col items-center justify-center gap-3 text-xs text-white/55 text-center">
+        <div className="flex flex-col items-center justify-center gap-3 text-[10px] text-white/55 text-center md:text-xs">
           <p>
             © {new Date().getFullYear()} All rights reserved to Adlyngo. A unit of
             Cybershield Tecnologies Private Limited.

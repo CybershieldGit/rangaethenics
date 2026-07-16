@@ -77,22 +77,22 @@ export function ProductCard({ product, onAddedToCart }: ProductCardProps) {
 
       <div>
         <Link to={`/product/${product.id}`} className="block">
-          <h3 className="font-serif text-base leading-snug transition-colors hover:text-maroon">
-            <span className="block text-text">{product.category}</span>
-            <span className="block text-text-dark">{product.subtitle ?? product.name}</span>
+          <h3 className="font-serif text-[12px] md:text-base leading-snug transition-colors hover:text-maroon">
+            <span className="block text-[11px] md:text-xs text-text">{product.category}</span>
+            <span className="block text-[12px] md:text-sm font-medium text-text-dark">{product.subtitle ?? product.name}</span>
           </h3>
         </Link>
 
         <div className="mt-2.5 flex flex-wrap items-baseline gap-2">
-          <span className="text-lg font-semibold text-maroon">
+          <span className="text-sm md:text-lg font-semibold text-maroon">
             {formatPrice(product.price)}
           </span>
           {discount > 0 && (
             <>
-              <span className="text-sm text-text line-through">
+              <span className="text-[11px] md:text-sm text-text line-through">
                 {formatPrice(product.originalPrice)}
               </span>
-              <span className="text-sm font-medium text-[#BD8A3C]">{discount}% OFF</span>
+              <span className="text-[11px] md:text-sm font-medium text-[#BD8A3C]">{discount}% OFF</span>
             </>
           )}
         </div>
@@ -102,7 +102,7 @@ export function ProductCard({ product, onAddedToCart }: ProductCardProps) {
             type="button"
             onClick={handleAddToCart}
             disabled={adding}
-            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap border border-maroon px-2 py-3 font-serif text-sm tracking-normal transition-colors disabled:cursor-not-allowed md:py-3.5 md:text-base md:tracking-wide ${
+            className={`flex flex-1 items-center justify-center gap-2 whitespace-nowrap border border-maroon px-2 py-3 font-serif text-[12px] tracking-normal transition-colors disabled:cursor-not-allowed md:py-3.5 md:text-base md:tracking-wide ${
               justAdded || adding
                 ? 'bg-maroon text-white'
                 : 'bg-transparent text-maroon hover:bg-maroon hover:text-white'
