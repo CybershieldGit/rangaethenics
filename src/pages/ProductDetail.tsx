@@ -257,9 +257,8 @@ export function ProductDetail() {
                     key={`${img}-${i}`}
                     type="button"
                     onClick={() => setActiveImage(i)}
-                    className={`aspect-[3/4] w-full overflow-hidden border transition-colors ${
-                      activeImage === i ? 'border-maroon' : 'border-[#BD8A3C]/40 hover:border-maroon/60'
-                    }`}
+                    className={`aspect-[3/4] w-full overflow-hidden border transition-colors ${activeImage === i ? 'border-maroon' : 'border-[#BD8A3C]/40 hover:border-maroon/60'
+                      }`}
                     aria-label={`View image ${i + 1}`}
                   >
                     <img src={img} alt="" className="h-full w-full object-cover object-top" />
@@ -313,7 +312,7 @@ export function ProductDetail() {
 
           {/* Info */}
           <div className="lg:col-span-4">
-            <h1 className="font-serif text-[24px] md:text-3xl font-bold leading-tight text-maroon">
+            <h1 className="font-serif text-[18px] md:text-3xl font-bold leading-tight text-maroon">
               {product.name}
             </h1>
 
@@ -375,11 +374,10 @@ export function ProductDetail() {
                         aria-label={`Select color ${name}`}
                         aria-pressed={isSelected}
                         onClick={() => setSelectedColor(color)}
-                        className={`h-9 w-9 rounded-full transition-transform ${
-                          isSelected
+                        className={`h-9 w-9 rounded-full transition-transform ${isSelected
                             ? 'ring-1 ring-offset-2 ring-offset-[#F8F0E5]'
                             : 'border border-[#BD8A3C]/40 hover:scale-105'
-                        }`}
+                          }`}
                         style={
                           {
                             backgroundColor: hex,
@@ -409,11 +407,10 @@ export function ProductDetail() {
                         type="button"
                         onClick={() => setSelectedSize(size)}
                         aria-pressed={isSelected}
-                        className={`flex h-11 min-w-[44px] items-center justify-center border px-3 text-[12px] md:text-sm transition-colors ${
-                          isSelected
+                        className={`flex h-11 min-w-[44px] items-center justify-center border px-3 text-[12px] md:text-sm transition-colors ${isSelected
                             ? 'border-maroon bg-maroon text-white'
                             : 'border-[#BD8A3C]/50 text-text-dark hover:border-maroon'
-                        }`}
+                          }`}
                       >
                         {size}
                       </button>
