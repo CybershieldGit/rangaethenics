@@ -132,7 +132,7 @@ export function Cart() {
                     <li key={product.id} className="flex gap-4 p-4 sm:gap-5 sm:p-5">
                       {/* Image */}
                       <Link
-                        to="/products"
+                        to={`/product/${product.id}`}
                         className="shrink-0 border border-[#BD8A3C] p-1.5"
                       >
                         <img
