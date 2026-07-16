@@ -56,7 +56,7 @@ function Accordion({ title, children, defaultOpen = false }: AccordionProps) {
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between py-4 text-left font-serif text-base font-semibold text-text-dark"
+        className="flex w-full items-center justify-between py-4 text-left font-serif text-[12px] md:text-base font-semibold text-text-dark"
       >
         {title}
         <ChevronDown
@@ -65,7 +65,7 @@ function Accordion({ title, children, defaultOpen = false }: AccordionProps) {
         />
       </button>
       {open && (
-        <div className="pb-4 text-sm leading-relaxed text-text">{children}</div>
+        <div className="pb-4 text-[12px] md:text-sm leading-relaxed text-text">{children}</div>
       )}
     </div>
   )
@@ -313,7 +313,7 @@ export function ProductDetail() {
 
           {/* Info */}
           <div className="lg:col-span-4">
-            <h1 className="font-serif text-2xl font-bold leading-tight text-maroon md:text-3xl">
+            <h1 className="font-serif text-[24px] md:text-3xl font-bold leading-tight text-maroon">
               {product.name}
             </h1>
 
@@ -334,7 +334,7 @@ export function ProductDetail() {
             </div>
 
             {product.shortDescription && (
-              <p className="mt-4 text-sm leading-relaxed text-text">{product.shortDescription}</p>
+              <p className="mt-4 text-[12px] md:text-sm leading-relaxed text-text">{product.shortDescription}</p>
             )}
 
             {(fabric || work) && (
@@ -357,7 +357,7 @@ export function ProductDetail() {
 
             {product.colors.length > 0 && (
               <div className="mt-6">
-                <p className="text-sm font-semibold text-text-dark">
+                <p className="text-[12px] md:text-sm font-semibold text-text-dark">
                   COLOR:{' '}
                   <span className="font-normal text-text">
                     {selectedColor ? parseColor(selectedColor).name : ''}
@@ -396,7 +396,7 @@ export function ProductDetail() {
             {product.sizes.length > 0 && (
               <div className="mt-6">
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-text-dark">
+                  <p className="text-[12px] md:text-sm font-semibold text-text-dark">
                     SIZE: <span className="font-normal text-text">{selectedSize ?? ''}</span>
                   </p>
                 </div>
@@ -409,7 +409,7 @@ export function ProductDetail() {
                         type="button"
                         onClick={() => setSelectedSize(size)}
                         aria-pressed={isSelected}
-                        className={`flex h-11 min-w-[44px] items-center justify-center border px-3 text-sm transition-colors ${
+                        className={`flex h-11 min-w-[44px] items-center justify-center border px-3 text-[12px] md:text-sm transition-colors ${
                           isSelected
                             ? 'border-maroon bg-maroon text-white'
                             : 'border-[#BD8A3C]/50 text-text-dark hover:border-maroon'
@@ -548,7 +548,7 @@ export function ProductDetail() {
 
         {/* You may also like */}
         <div className="mt-14">
-          <h2 className="mb-6 font-serif text-2xl font-bold text-text-dark">You may also like</h2>
+          <h2 className="mb-6 font-serif text-[22px] md:text-2xl font-bold text-text-dark">You may also like</h2>
           {related.length > 0 ? (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-5">
               {related.map((p) => (

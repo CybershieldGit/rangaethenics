@@ -69,7 +69,7 @@ export function HeroCarousel() {
             <img
               src="/hero_seperator.svg"
               alt=""
-              className={`mt-6 mb-8 h-4 w-auto ${isMobile ? 'h-2 max-w-[108px] my-[17px]]' : ''}`}
+              className={`mt-6 mb-8 h-4 w-auto ${isMobile ? 'h-2 max-w-[108px] my-[17px]' : ''}`}
             />
 
             <p className={`mb-8 max-w-md text-base leading-relaxed text-text-dark ${isMobile ? 'text-[12px] mb-4 w-[200px]' : ''}`}>

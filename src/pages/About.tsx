@@ -29,35 +29,55 @@ function AboutHero() {
   return (
     <section
       aria-label="About Us"
-      className="relative min-h-[820px] bg-[#fffaf3] bg-[url('/images/about_photo.jpg')] bg-cover bg-[75%_center] bg-no-repeat md:bg-right"
+      className="relative h-[50vh] md:h-auto md:min-h-[820px] max-h-[340px] md:max-h-[820px] overflow-hidden bg-[#fffaf3]"
     >
-      <div className="relative mx-auto flex min-h-[820px] max-w-7xl items-center px-4 pt-10 pb-12 md:px-8 md:pt-[100px] md:pb-16">
-        <div className="flex min-h-[373px] w-full max-w-[558px] flex-col">
-          <h1 className="font-serif text-[48px] font-normal leading-none tracking-normal text-maroon sm:text-[60px] md:text-[72px]">
-            About Us
-          </h1>
-          <img
-            src="/about_about.svg"
-            alt=""
-            className="mt-4 h-[19px] w-[166px]"
-          />
-          <h2 className="mt-7 font-serif text-xl font-bold leading-snug text-maroon sm:text-2xl md:mt-8 md:text-[28px] md:leading-tight">
-            Rooted in Tradition.
-            <br />
-            Crafted for Generations.
-          </h2>
-          <div className="mt-5 space-y-4 text-[15px] leading-relaxed text-text-dark md:text-base">
-            <p>
-              At Rang Ethnics, we celebrate the beauty of heritage through timeless jewellery
-              and clothing.
-            </p>
-            <p>
-              Every piece we create is a blend of traditional artistry and modern elegance,
-              designed to make you feel unique, every day.
-            </p>
+      <picture>
+        <source media="(max-width: 767px)" srcSet="/images/mobile_aboutus_hero_section.jpg" />
+        <img
+          src="/images/about_photo.png"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover object-[75%_center] md:object-right"
+        />
+      </picture>
+
+      <div className="relative z-10 flex h-full items-start md:items-center pt-[40px] md:pt-[100px] pb-12">
+        <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
+          <div className="max-w-xl lg:max-w-2xl flex flex-col">
+            <h1 className="font-serif text-[24px] w-[220px] md:w-auto leading-[1.1] text-maroon md:text-6xl lg:text-7xl font-normal">
+              About Us
+            </h1>
+            <img
+              src="/about_about.svg"
+              alt=""
+              className="my-[17px] md:mt-4 h-2 md:h-[19px] max-w-[108px] md:max-w-[166px] w-auto"
+            />
+            <h2 className="mt-2 md:mt-8 font-serif text-xs md:text-[28px] font-bold leading-snug text-maroon md:leading-tight">
+              Rooted in Tradition.
+              <br />
+              Crafted for Generations.
+            </h2>
+            <div className="mt-4 md:mt-5 space-y-4 text-[12px] md:text-base leading-relaxed text-text-dark font-normal">
+              <p className="w-[200px] md:w-auto">
+                At Rang Ethnics, we celebrate the beauty of heritage through timeless jewellery
+                and clothing.
+              </p>
+              <p className="w-[200px] md:w-auto">
+                Every piece we create is a blend of traditional artistry and modern elegance,
+                designed to make you feel unique, every day.
+              </p>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Decorative bottom fade gradient for mobile only */}
+      <div
+        className="absolute inset-x-0 bottom-0 z-[5] h-[230px] md:hidden"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(255, 250, 243, 0) 0%, rgba(255, 250, 243, 0.6) 50%, #fffaf3 100%)',
+        }}
+      />
     </section>
   )
 }

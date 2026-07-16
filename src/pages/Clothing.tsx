@@ -39,17 +39,20 @@ const fallbackCollections = [
 
 function ClothingHero() {
   return (
-    <section className="relative h-[80vh] min-h-[560px] max-h-[780px] overflow-hidden bg-[#F7E9DB]">
-      <img
-        src="/images/clothing_hero.png"
-        alt="Rooted in Heritage"
-        className="absolute inset-0 h-full w-full object-cover object-[75%_center] md:object-right"
-      />
+    <section className="relative h-[50vh] md:h-[80vh] min-h-[340px] md:min-h-[560px] max-h-[340px] md:max-h-[780px] overflow-hidden bg-[#F7E9DB]">
+      <picture>
+        <source media="(max-width: 767px)" srcSet="/images/mobile_clothing_hero_section.jpg" />
+        <img
+          src="/images/clothing_hero.png"
+          alt="Rooted in Heritage"
+          className="absolute inset-0 h-full w-full object-cover object-[75%_center] md:object-right"
+        />
+      </picture>
 
-      <div className="relative z-10 flex h-full items-center">
+      <div className="relative z-10 flex h-full items-start md:items-center pt-[40px] md:pt-0">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
           <div className="max-w-xl lg:max-w-2xl">
-            <h1 className="font-serif text-5xl leading-[1.15] text-maroon md:text-6xl lg:text-7xl font-normal">
+            <h1 className="font-serif text-[24px] w-[220px] md:w-auto leading-[1.1] md:leading-[1.15] text-maroon md:text-6xl lg:text-7xl font-normal">
               Rooted in Heritage,
               <br />
               Woven for You
@@ -58,25 +61,25 @@ function ClothingHero() {
             <img
               src="/hero_seperator.svg"
               alt=""
-              className="mt-6 mb-8 h-4 w-auto"
+              className="my-[17px] md:mt-6 md:mb-8 h-2 md:h-4 max-w-[108px] md:max-w-none w-auto"
             />
 
-            <p className="mb-8 max-w-md text-base md:text-lg leading-relaxed text-text-dark font-normal">
+            <p className="mb-4 md:mb-8 w-[200px] md:w-auto md:max-w-md text-[12px] md:text-base leading-relaxed text-text-dark font-normal">
               Timeless Indian styles in soft cotton and exquisite
               <br />
               oxidised jewellery.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 md:gap-4">
               <Link to="/about">
-                <Button className="!px-8 !py-3.5 bg-maroon text-white border-maroon hover:bg-maroon-dark transition-all duration-300 font-semibold tracking-wide cursor-pointer">
+                <Button className="!px-4 !py-2 text-xs md:!px-8 md:!py-3.5 md:text-sm bg-maroon text-white border-maroon hover:bg-maroon-dark transition-all duration-300 font-semibold tracking-wide cursor-pointer">
                   Our Story
                 </Button>
               </Link>
               <Link to="/products?category=clothing">
                 <Button
                   variant="outline"
-                  className="!px-8 !py-3.5 border-[#BD8A3C] text-maroon hover:bg-[#BD8A3C] hover:text-white transition-all duration-300 font-semibold tracking-wide cursor-pointer"
+                  className="!px-4 !py-2 text-xs md:!px-8 md:!py-3.5 md:text-sm border-[#BD8A3C] text-maroon hover:bg-[#BD8A3C] hover:text-white transition-all duration-300 font-semibold tracking-wide cursor-pointer"
                 >
                   Explore Collections
                 </Button>
@@ -85,6 +88,15 @@ function ClothingHero() {
           </div>
         </div>
       </div>
+
+      {/* Decorative bottom fade gradient for mobile only */}
+      <div
+        className="absolute inset-x-0 bottom-0 z-[5] h-[230px] md:hidden"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(245, 238, 225, 0) 0%, rgba(245, 238, 225, 0.6) 50%, #f5eee1 100%)',
+        }}
+      />
     </section>
   )
 }

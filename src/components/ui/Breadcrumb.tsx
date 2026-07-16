@@ -18,7 +18,7 @@ export function Breadcrumb({ items = [], className = '' }: BreadcrumbProps) {
     <div className={`py-4 ${className}`}>
       <nav
         aria-label="Breadcrumb"
-        className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-3.5 text-[16px] md:px-8"
+        className="mx-auto flex max-w-7xl items-center gap-2 px-4 py-3.5 text-[12px] md:text-[16px] md:px-8"
       >
         {crumbs.map((crumb, i) => {
           const isLast = i === crumbs.length - 1

@@ -89,17 +89,17 @@ export function OurStory({ background = '#fffaf3', buttonText = 'Explore Collect
           </div>
           <div className="grid items-center gap-8 md:grid-cols-2 md:gap-12">
             <div className="flex flex-col justify-center">
-              <h2 className="font-serif font-bold leading-tight text-maroon text-3xl md:text-[40px]">
+              <h2 className="font-serif font-bold leading-tight text-maroon text-[22px] md:text-3xl md:text-[40px]">
                 Rooted in Tradition. Crafted with Purpose.
               </h2>
-              <p className="mt-5 max-w-md text-sm leading-relaxed text-text md:text-[15px]">
+              <p className="mt-3 md:mt-5 max-w-md text-[12px] md:text-sm md:text-[15px] leading-relaxed text-text">
                 At Rang Ethnics, we believe in preserving our rich heritage through
                 intricate craftsmanship and elegant designs. Every piece we create is a
                 reflection of our passion for authenticity, quality, and timeless beauty.
               </p>
-              <div className="mt-8 cursor-pointer">
+              <div className="mt-5 md:mt-8 cursor-pointer">
                 <Link to={to}>
-                  <Button className="cursor-pointer">{buttonText}</Button>
+                  <Button className="cursor-pointer !px-4 !py-2 text-xs md:!px-6 md:!py-3 md:text-sm">{buttonText}</Button>
                 </Link>
               </div>
             </div>

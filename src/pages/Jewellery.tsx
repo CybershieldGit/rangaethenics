@@ -104,40 +104,43 @@ function JewelleryArcCard({
 
 function JewelleryHero() {
   return (
-    <section className="relative h-[85vh] min-h-[560px] max-h-[820px] overflow-hidden">
-      <img
-        src="/images/jewellery_hero_new.jpg"
-        alt=""
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+    <section className="relative h-[50vh] md:h-[85vh] min-h-[340px] md:min-h-[560px] max-h-[340px] md:max-h-[820px] overflow-hidden">
+      <picture>
+        <source media="(max-width: 767px)" srcSet="/images/mobile_jewellery_hero_section.jpg" />
+        <img
+          src="/images/jewellery_hero_new.jpg"
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      </picture>
 
-      <div className="relative z-10 flex h-full items-center">
+      <div className="relative z-10 flex h-full items-start md:items-center pt-[40px] md:pt-0">
         <div className="mx-auto w-full max-w-7xl px-4 md:px-8">
           <div className="max-w-lg">
-            <h1 className="font-serif text-5xl leading-[1.1] text-white md:text-6xl lg:text-7xl">
+            <h1 className="font-serif text-[24px] w-[220px] md:w-auto leading-[1.1] text-white md:text-6xl lg:text-7xl">
               Oxidised Jewellery
             </h1>
-            <p className="mt-4 font-serif text-lg font-semibold text-white md:text-xl">
+            <p className="mt-2 md:mt-4 font-serif text-xs md:text-lg font-semibold text-white md:text-xl">
               Timeless. Versatile. Unapologetically You.
             </p>
 
             <img
               src="/hero_seperator.svg"
               alt=""
-              className="mt-6 mb-8 h-4 w-auto"
+              className="my-[17px] md:mt-6 md:mb-8 h-2 md:h-4 max-w-[108px] md:max-w-none w-auto"
             />
 
-            <p className="mb-8 max-w-md text-base leading-relaxed text-white/75">
+            <p className="mb-4 md:mb-8 w-[200px] md:w-auto md:max-w-md text-[12px] md:text-base leading-relaxed text-white/75">
               Explore our exclusive collection of oxidised jewellery crafted to add a
               touch of tradition to your everyday look.
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3 md:gap-4">
               <Link to="/about">
-                <Button className="!px-8 !py-3 cursor-pointer">Our Story</Button>
+                <Button className="!px-4 !py-2 text-xs md:!px-8 md:!py-3 cursor-pointer">Our Story</Button>
               </Link>
               <Link to="/products?category=jewellery">
-                <Button variant="ghost" className="!px-8 !py-3 cursor-pointer">
+                <Button variant="ghost" className="!px-4 !py-2 text-xs md:!px-8 md:!py-3 cursor-pointer">
                   Explore Collections
                 </Button>
               </Link>
@@ -145,6 +148,15 @@ function JewelleryHero() {
           </div>
         </div>
       </div>
+
+      {/* Decorative bottom fade gradient for mobile only */}
+      <div
+        className="absolute inset-x-0 bottom-0 z-[5] h-[230px] md:hidden"
+        style={{
+          background:
+            'linear-gradient(180deg, rgba(245, 238, 225, 0) 0%, rgba(245, 238, 225, 0.6) 50%, #f5eee1 100%)',
+        }}
+      />
     </section>
   )
 }
