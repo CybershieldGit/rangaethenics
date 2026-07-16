@@ -289,7 +289,7 @@ function CollectionsGrid({ collections }: { collections: { name: string; image: 
           {collections.map((item, index) => (
             <div
               key={index}
-              className="w-1/2 sm:w-1/2 md:w-1/4 shrink-0 px-[10px] md:px-[12px]"
+              className="w-1/3 sm:w-1/3 md:w-1/4 shrink-0 px-[10px] md:px-[12px]"
             >
               <ArchCard name={item.name} image={item.image} />
             </div>
