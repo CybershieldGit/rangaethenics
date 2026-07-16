@@ -521,7 +521,7 @@ export function Checkout() {
   }
 
   return (
-    <div className="bg-[#F8F0E5] pb-16">
+    <div className="bg-[#F8F0E5] pb-16 checkout-page">
       <Breadcrumb items={[{ label: 'Cart', to: '/cart' }, { label: 'Checkout' }]} />
 
       <div className="mx-auto max-w-7xl px-4 md:px-8">

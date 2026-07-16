@@ -2,7 +2,7 @@
 
 export function PrivacyPolicy() {
   return (
-    <div className="bg-[#fffaf3] min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+    <div className="bg-[#fffaf3] min-h-screen py-12 px-4 sm:px-6 lg:px-8 legal-page">
       <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-sm border border-[#BD8A3C]/20 p-8 sm:p-12">
         <h1 className="font-serif text-3xl sm:text-4xl text-maroon font-bold mb-6 text-center border-b border-[#BD8A3C]/20 pb-4">
           Privacy Policy
