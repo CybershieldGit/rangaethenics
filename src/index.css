@@ -75,3 +75,37 @@ html, body {
   border: 2px solid #fffaf3;
   cursor: pointer;
 }
+
+@media (max-width: 767px) {
+  .checkout-page,
+  .checkout-page p,
+  .checkout-page span,
+  .checkout-page input,
+  .checkout-page button,
+  .checkout-page label,
+  .checkout-page select,
+  .checkout-page textarea,
+  .checkout-page .text-sm,
+  .checkout-page .text-base {
+    font-size: 12px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .legal-page,
+  .legal-page p,
+  .legal-page span,
+  .legal-page li,
+  .legal-page select,
+  .legal-page section,
+  .legal-page div,
+  .legal-page .text-base,
+  .legal-page .text-sm {
+    font-size: 12px !important;
+  }
+  .legal-page h1 {
+    font-size: 24px !important;
+  }
+}
+
+

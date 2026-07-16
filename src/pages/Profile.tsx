@@ -510,7 +510,7 @@ export function Profile() {
       <div className="mx-auto max-w-7xl px-4 md:px-8">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-12">
           {/* Left Column */}
-          <div className="md:col-span-4 lg:col-span-4 flex flex-col gap-6">
+          <div className="hidden md:flex md:col-span-4 lg:col-span-4 flex-col gap-6">
             {/* Profile Avatar Card */}
             <div className="w-full lg:max-w-[420px] h-[96px] border border-[#BD8A3C]/30 bg-[#F8F0E5] p-5 flex items-center gap-4 shadow-sm shrink-0">
               <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[#420001] text-white">
@@ -615,7 +615,7 @@ export function Profile() {
                   </p>
                 </div>
 
-                <div className="w-full lg:w-[860px] h-auto lg:h-[610.5px] border border-[#BD8A3C80] bg-[#F8F0E5] p-[30px] flex flex-col shadow-sm mt-[62px]">
+                <div className="w-full lg:w-[860px] h-auto lg:h-[610.5px] border border-[#BD8A3C80] bg-[#F8F0E5] p-[30px] flex flex-col shadow-sm mt-6 md:mt-[62px]">
                   {errorMessage && (
                     <div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-[16px]">
                       {errorMessage}
@@ -987,7 +987,7 @@ export function Profile() {
                 )}
 
                 {/* Main Card List Container (Third Image specs: 860x648, gap 28) */}
-                <div className="flex flex-col gap-[28px] w-full lg:w-[860px] lg:h-auto shrink-0 mt-[62px]">
+                <div className="flex flex-col gap-[28px] w-full lg:w-[860px] lg:h-auto shrink-0 mt-6 md:mt-[62px]">
                   {/* Existing Addresses Cards */}
                   <div className="w-full lg:w-[860px] flex flex-col gap-4">
                     {addresses.length > 0 ? (
@@ -1229,7 +1229,7 @@ export function Profile() {
                 </div>
 
                 {/* Wishlist Items List Container (gap 62px via mt-[62px]) */}
-                <div className="flex flex-col gap-[20px] w-full lg:w-[860px] shrink-0 mt-[62px]">
+                <div className="flex flex-col gap-[20px] w-full lg:w-[860px] shrink-0 mt-6 md:mt-[62px]">
                   {wishlist.length === 0 ? (
                     <div className="text-center py-12 border border-[#BD8A3C1A] bg-[#BD8A3C05] text-[16px] text-[#717171] font-sans">
                       Your wishlist is empty.
