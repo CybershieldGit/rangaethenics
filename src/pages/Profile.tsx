@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate, useLocation } from 'react-router-dom'
+import Edit_icon from '../../public/icons_edit.svg'
 import {
   CircleUserRound,
   Package,
@@ -639,7 +640,7 @@ export function Profile() {
                       {/* Profile Information Header */}
                       <div className="flex items-center pb-2 border-b border-[#BD8A3C]/20">
                         <div className="flex items-center gap-2">
-                          <h3 className="font-serif text-[20px] font-bold text-maroon">Profile Information</h3>
+                          <h3 className="font-serif text-[20px] font-bold text-[#717171]">Profile Information</h3>
                           <button
                             type="button"
                             onClick={() => {
@@ -651,6 +652,7 @@ export function Profile() {
                             className="flex items-center gap-1 text-[16px] font-serif font-bold text-maroon underline transition-colors cursor-pointer"
                           >
                             {isEditingProfile ? 'Cancel' : 'Edit'}
+                            <img src={Edit_icon} alt="Edit" className="w-[18px] h-[18px]" />
                           </button>
                         </div>
                       </div>
