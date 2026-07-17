@@ -43,7 +43,6 @@ export function FestiveSpecial({
           })
         }
       } catch (err) {
-        console.error('Error fetching promo coupon:', err)
       }
     }
     fetchPromoCoupon()

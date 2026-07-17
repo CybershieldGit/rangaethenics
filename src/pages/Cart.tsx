@@ -22,11 +22,9 @@ export function Cart() {
       try {
         await addToWishlist(id)
       } catch (wishlistErr) {
-        console.warn('Wishlist update warning/error (item might already be wishlisted):', wishlistErr)
       }
       await removeFromCart(id)
     } catch (error) {
-      console.error('Failed to move item to wishlist:', error)
     } finally {
       setBusyId(null)
     }
@@ -38,7 +36,6 @@ export function Cart() {
     try {
       await clearCart()
     } catch (error) {
-      console.error('Failed to clear cart:', error)
     } finally {
       setClearing(false)
     }
@@ -50,7 +47,6 @@ export function Cart() {
     try {
       await updateQty(id, qty)
     } catch (error) {
-      console.error('Failed to update quantity:', error)
     } finally {
       setBusyId(null)
     }
@@ -62,7 +58,6 @@ export function Cart() {
     try {
       await removeFromCart(id)
     } catch (error) {
-      console.error('Failed to remove item:', error)
     } finally {
       setBusyId(null)
     }
@@ -76,7 +71,6 @@ export function Cart() {
           setProducts(liveProducts)
         }
       } catch (error) {
-        console.error('Failed to load cart products:', error)
       }
     }
     loadProducts()

@@ -120,7 +120,6 @@ export async function getActiveCoupons(): Promise<Coupon[]> {
   try {
     return await request<Coupon[]>('/api/coupons')
   } catch (error) {
-    console.error('Failed to fetch coupons:', error)
     return []
   }
 }

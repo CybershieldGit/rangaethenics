@@ -170,7 +170,6 @@ export function ProductDetail() {
     try {
       await addToCart(product.id, qty)
     } catch (error) {
-      console.error('Failed to add to cart:', error)
     } finally {
       setAddingToCart(false)
     }
@@ -183,7 +182,6 @@ export function ProductDetail() {
       await addToCart(product.id, qty)
       navigate('/cart')
     } catch (error) {
-      console.error('Failed to process buy now:', error)
     } finally {
       setBuyingNow(false)
     }
@@ -195,7 +193,6 @@ export function ProductDetail() {
     try {
       await toggleWishlist(product.id)
     } catch (error) {
-      console.error('Failed to update wishlist:', error)
     } finally {
       setTogglingWishlist(false)
     }

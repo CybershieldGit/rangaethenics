@@ -101,7 +101,6 @@ export async function getProductDetail(id: string): Promise<ProductDetail | null
     const data = await res.json()
     return mapProductDetail(data)
   } catch (error) {
-    console.error('Failed to fetch product detail:', error)
     return null
   }
 }
@@ -125,7 +124,6 @@ export async function getCategoriesList(): Promise<Category[]> {
     }
     return await res.json()
   } catch (error) {
-    console.error('Failed to fetch categories list:', error)
     return []
   }
 }
@@ -153,7 +151,6 @@ export async function getActiveCoupons(): Promise<Coupon[]> {
     }
     return await res.json()
   } catch (error) {
-    console.error('Failed to fetch coupons:', error)
     return []
   }
 }
@@ -186,7 +183,6 @@ export async function getProducts(params?: {
       pages: data.pages || 1,
     }
   } catch (error) {
-    console.error('Failed to fetch products from backend:', error)
     return { products: [], page: 1, pages: 1 }
   }
 }
@@ -218,7 +214,6 @@ export async function getAttributes(): Promise<AttributesByType> {
     }
     return grouped
   } catch (error) {
-    console.error('Failed to fetch attributes:', error)
     return empty
   }
 }
@@ -233,7 +228,6 @@ export async function getBestSellers(): Promise<Product[]> {
     const data = await res.json()
     return (data || []).map(mapProduct)
   } catch (error) {
-    console.error('Failed to fetch best sellers:', error)
     return []
   }
 }
@@ -259,7 +253,6 @@ export async function getGalleryVideos(): Promise<GalleryVideo[]> {
       title: v.title,
     }))
   } catch (error) {
-    console.error('Failed to fetch gallery videos:', error)
     return []
   }
 }
