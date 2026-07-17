@@ -37,7 +37,7 @@ export function ProductSection({
                 </div>
 
                 {viewAllLabel && (
-                    <div className="mt-[50px] mb-[70px] md:mt-15 text-center">
+                    <div className="mt-[50px] mb-[6px] md:mt-15 text-center">
                         <Link to={viewAllTo}>
                             <Button className="cursor-pointer mb-[50px]">{viewAllLabel}</Button>
                         </Link>
