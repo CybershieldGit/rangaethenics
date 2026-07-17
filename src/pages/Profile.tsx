@@ -888,12 +888,22 @@ export function Profile() {
                       return (
                         <div key={order._id} className="w-full lg:w-[860px] h-auto border border-[#BD8A3C1A] bg-[#BD8A3C05] p-[20px] flex flex-col items-center gap-5 shadow-sm">
                           <div className="w-full lg:w-[820px] flex flex-col lg:flex-row items-stretch lg:items-center gap-[20px] lg:gap-[38px]">
-                            {/* Product Image */}
-                            <img
-                              src={firstItem.product?.image || '/images/Lehengas.png'}
-                              alt={firstItem.name}
-                              className="w-[160px] h-[160px] object-cover shrink-0 mx-auto lg:mx-0"
-                            />
+                            {/* Stacked Product Images */}
+                            <div className="relative w-28 h-20 overflow-hidden">
+                              {order.orderItems.map((item: any, i: number) => (
+                                <img
+                                  key={i}
+                                  src={item.product?.image || "/images/Lehengas.png"}
+                                  alt={item.name}
+                                  className="absolute w-20 h-20 object-cover  shadow-md"
+                                  style={{
+                                    left: `${i * 14}px`, // Horizontal overlap
+                                    top: `${i * 14}px`,   // Slight vertical offset (optional)
+                                    zIndex: order.orderItems.length - i,
+                                  }}
+                                />
+                              ))}
+                            </div>
 
                             {/* Details Column */}
                             <div className="w-full lg:flex-1 flex flex-col gap-[20px] text-left">
@@ -980,7 +990,7 @@ export function Profile() {
                                       <p className="text-[12px] text-[#8A8375]">Qty: {item.quantity}</p>
                                     </div>
                                     <p className="text-[13.5px] font-semibold text-[#5B0E19]">
-                                      {item.price*item.quantity}
+                                      {item.price * item.quantity}
                                     </p>
                                   </div>
                                 ))}
