@@ -217,7 +217,7 @@ export function Header() {
           <Link
             to="/cart"
             aria-label="Cart"
-            className="relative hidden text-[#1a1a1a] hover:text-maroon sm:block"
+            className={`relative text-[#1a1a1a] hover:text-maroon ${mobileOpen ? 'hidden' : 'block'}`}
           >
             <ShoppingBag size={20} strokeWidth={1.5} />
             {cartCount > 0 && (
@@ -229,7 +229,7 @@ export function Header() {
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className="relative hidden text-[#1a1a1a] hover:text-maroon sm:block"
+            className={`relative text-[#1a1a1a] hover:text-maroon ${mobileOpen ? 'hidden' : 'block'}`}
           >
             <Heart size={20} strokeWidth={1.5} />
             {wishlistCount > 0 && (
