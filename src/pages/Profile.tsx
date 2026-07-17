@@ -106,6 +106,7 @@ export function Profile() {
   const [shippingPostalCode, setShippingPostalCode] = useState('')
   const [shippingCountry, setShippingCountry] = useState('India')
   const [selectedTab, setSelectedTab] = useState<'all' | 'Placed' | 'Shipped' | 'Delivered' | 'Cancelled'>('all');
+  const [expanded, setExpanded] = useState(false);
 
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
@@ -278,7 +279,7 @@ export function Profile() {
 
       setAddresses(updatedList || [])
       setSuccess(editingAddressId ? 'Address updated successfully!' : 'Address saved successfully!')
-      
+
       // Clear fields
       setShippingLabel('')
       setShippingFullName('')
@@ -830,8 +831,8 @@ export function Profile() {
                   <span
                     onClick={() => setSelectedTab('all')}
                     className={`cursor-pointer pb-2 ${selectedTab === 'all'
-                        ? 'text-maroon border-b-2 border-maroon font-bold'
-                        : 'text-[#717171] hover:text-maroon'
+                      ? 'text-maroon border-b-2 border-maroon font-bold'
+                      : 'text-[#717171] hover:text-maroon'
                       }`}
                   >
                     All Orders ({orders.length})
@@ -840,8 +841,8 @@ export function Profile() {
                   <span
                     onClick={() => setSelectedTab('Placed')}
                     className={`cursor-pointer pb-2 ${selectedTab === 'Placed'
-                        ? 'text-maroon border-b-2 border-maroon font-bold'
-                        : 'text-[#717171] hover:text-maroon'
+                      ? 'text-maroon border-b-2 border-maroon font-bold'
+                      : 'text-[#717171] hover:text-maroon'
                       }`}
                   >
                     Placed ({orders.filter((order: Order) => (order as any).deliveryStatus === 'Placed').length})
@@ -850,8 +851,8 @@ export function Profile() {
                   <span
                     onClick={() => setSelectedTab('Delivered')}
                     className={`cursor-pointer pb-2 ${selectedTab === 'Delivered'
-                        ? 'text-maroon border-b-2 border-maroon font-bold'
-                        : 'text-[#717171] hover:text-maroon'
+                      ? 'text-maroon border-b-2 border-maroon font-bold'
+                      : 'text-[#717171] hover:text-maroon'
                       }`}
                   >
                     Delivered ({orders.filter((order: Order) => (order as any).deliveryStatus === 'Delivered').length})
@@ -860,8 +861,8 @@ export function Profile() {
                   <span
                     onClick={() => setSelectedTab('Cancelled')}
                     className={`cursor-pointer pb-2 ${selectedTab === 'Cancelled'
-                        ? 'text-maroon border-b-2 border-maroon font-bold'
-                        : 'text-[#717171] hover:text-maroon'
+                      ? 'text-maroon border-b-2 border-maroon font-bold'
+                      : 'text-[#717171] hover:text-maroon'
                       }`}
                   >
                     Cancelled ({orders.filter((order: Order) => (order as any).deliveryStatus === 'Cancelled').length})
@@ -885,7 +886,7 @@ export function Profile() {
                         year: 'numeric'
                       });
                       return (
-                        <div key={order._id} className="w-full lg:w-[860px] h-auto border border-[#BD8A3C1A] bg-[#BD8A3C05] p-[20px] flex items-center shadow-sm">
+                        <div key={order._id} className="w-full lg:w-[860px] h-auto border border-[#BD8A3C1A] bg-[#BD8A3C05] p-[20px] flex flex-col items-center gap-5 shadow-sm">
                           <div className="w-full lg:w-[820px] flex flex-col lg:flex-row items-stretch lg:items-center gap-[20px] lg:gap-[38px]">
                             {/* Product Image */}
                             <img
@@ -940,7 +941,9 @@ export function Profile() {
 
                             {/* Actions Column */}
                             <div className="w-full lg:w-[180px] flex flex-col justify-center gap-2.5 shrink-0 font-sans mt-4 lg:mt-0">
-                              <button className="w-full py-2 border border-[#BD8A3C]/50 text-text-dark text-[16px] font-semibold bg-white hover:bg-black/5 rounded-none transition-all cursor-pointer">
+                              <button
+                                onClick={() => setExpanded((v) => !v)}
+                                className="w-full py-2 border border-[#BD8A3C]/50 text-text-dark text-[16px] font-semibold bg-white hover:bg-black/5 rounded-none transition-all cursor-pointer">
                                 View Details
                               </button>
                               <button className="w-full py-2 bg-[#420001] text-white text-[16px] font-semibold hover:opacity-90 rounded-none flex items-center justify-center gap-1.5 transition-all cursor-pointer">
@@ -956,6 +959,34 @@ export function Profile() {
                               )}
                             </div>
                           </div>
+                          {/* ---- Expandable full item list ---- */}
+                          {expanded && (
+                            <div className="border-t border-[#E4D5BB] px-6 py-4 w-full">
+                              <p className="text-[11px] tracking-wide text-[#8A8375] uppercase mb-3">
+                                Items in this order
+                              </p>
+                              <div className="space-y-3">
+                                {order.orderItems.map((item: any) => (
+                                  <div key={item.id} className="flex items-center gap-4">
+                                    <img
+                                      src={item.product?.image}
+                                      alt={item.name}
+                                      className="w-12 h-12 object-cover rounded-md border border-[#E4D5BB]"
+                                    />
+                                    <div className="flex-1">
+                                      <p className="text-[13.5px] font-medium text-[#241A15]">
+                                        {item.name}
+                                      </p>
+                                      <p className="text-[12px] text-[#8A8375]">Qty: {item.quantity}</p>
+                                    </div>
+                                    <p className="text-[13.5px] font-semibold text-[#5B0E19]">
+                                      {item.price*item.quantity}
+                                    </p>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       );
                     })
