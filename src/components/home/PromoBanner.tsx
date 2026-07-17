@@ -84,7 +84,7 @@ export function PromoBanner() {
         </div>
 
         <div className="absolute inset-0 flex items-center">
-          <div className="w-full px-5 py-6 md:px-12 md:py-0">
+          <div className="w-full px-10 md:px-5 py-6 md:py-0">
             <p className="mb-1 md:mb-2 text-[9px] md:text-[10px] font-medium tracking-widest text-white/80 uppercase">
               Limited Time
             </p>
