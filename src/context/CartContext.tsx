@@ -53,7 +53,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       .then((serverItems) => {
         if (!cancelled) setItems(serverItems)
       })
-      .catch((error) => console.error('Failed to load cart:', error))
+      .catch(() => {})
       .finally(() => {
         if (!cancelled) setLoading(false)
       })

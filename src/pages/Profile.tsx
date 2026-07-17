@@ -159,7 +159,6 @@ export function Profile() {
           const userAddresses = await getAddresses(user.token)
           setAddresses(userAddresses || [])
         } catch (addrErr) {
-          console.error('Failed to fetch user addresses:', addrErr)
         }
 
         // Fetch Orders
@@ -167,7 +166,6 @@ export function Profile() {
           const userOrders = await getUserOrdersApi(user.token)
           setOrders(userOrders || [])
         } catch (orderErr) {
-          console.error('Failed to fetch user orders:', orderErr)
         }
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load profile details')
@@ -181,15 +179,12 @@ export function Profile() {
 
   // Sync full product wishlist items when global wishlist context updates
   useEffect(() => {
-    console.log('Profile syncWishlist triggered. wishlistIds:', wishlistIds, 'userToken:', user?.token)
     if (!user?.token) return
     const syncWishlist = async () => {
       try {
         const userWishlist = await getUserWishlistApi(user.token)
-        console.log('Profile syncWishlist API response:', userWishlist)
         setWishlist(userWishlist || [])
       } catch (wishlistErr) {
-        console.error('Failed to fetch user wishlist:', wishlistErr)
       }
     }
     syncWishlist()
@@ -323,7 +318,6 @@ export function Profile() {
     try {
       await removeFromWishlist(productId)
     } catch (err) {
-      console.error('Failed to remove from wishlist:', err)
     }
   }
 

@@ -168,7 +168,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await logoutUserApi()
     } catch (err) {
-      console.warn('Logout API failed or cookie already cleared:', err)
     } finally {
       setUser(null)
       localStorage.removeItem(STORAGE_KEY)

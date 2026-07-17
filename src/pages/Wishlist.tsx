@@ -22,7 +22,6 @@ export function Wishlist() {
     try {
       await clearWishlist()
     } catch (error) {
-      console.error('Failed to clear wishlist:', error)
     } finally {
       setClearing(false)
     }
@@ -37,7 +36,6 @@ export function Wishlist() {
         await removeFromWishlist(product.id)
       }
     } catch (error) {
-      console.error('Failed to move all to bag:', error)
     } finally {
       setMovingAll(false)
     }
@@ -52,7 +50,6 @@ export function Wishlist() {
           setProducts(liveProducts)
         }
       } catch (error) {
-        console.error('Failed to load wishlist products:', error)
       }
     }
     loadProducts()

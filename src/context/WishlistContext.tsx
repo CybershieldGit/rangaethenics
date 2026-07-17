@@ -47,7 +47,7 @@ export function WishlistProvider({ children }: { children: ReactNode }) {
       .then((serverItems) => {
         if (!cancelled) setItems(serverItems)
       })
-      .catch((error) => console.error('Failed to load wishlist:', error))
+      .catch(() => {})
       .finally(() => {
         if (!cancelled) setLoading(false)
       })

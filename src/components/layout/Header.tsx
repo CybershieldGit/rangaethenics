@@ -47,7 +47,6 @@ export function Header() {
         const { products } = await getProducts({ keyword: searchQuery, pageSize: 10 })
         setSearchResults(products)
       } catch (err) {
-        console.error('Error searching products:', err)
       } finally {
         setSearchLoading(false)
       }
@@ -229,7 +228,7 @@ export function Header() {
           <Link
             to="/wishlist"
             aria-label="Wishlist"
-            className={`relative text-[#1a1a1a] hover:text-maroon ${mobileOpen ? 'hidden' : 'block'}`}
+            className={`relative text-[#1a1a1a] hover:text-maroon hidden sm:${mobileOpen ? 'hidden' : 'block'}`}
           >
             <Heart size={20} strokeWidth={1.5} />
             {wishlistCount > 0 && (

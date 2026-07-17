@@ -38,7 +38,6 @@ export function ProductCard({ product, onAddedToCart }: ProductCardProps) {
       setTimeout(() => setJustAdded(false), 1500)
       onAddedToCart?.(product)
     } catch (error) {
-      console.error('Failed to add to cart:', error)
     } finally {
       setAdding(false)
     }
@@ -54,7 +53,6 @@ export function ProductCard({ product, onAddedToCart }: ProductCardProps) {
     try {
       await toggleWishlist(product.id)
     } catch (error) {
-      console.error('Failed to update wishlist:', error)
     } finally {
       setTogglingWishlist(false)
     }
