@@ -1,41 +1,76 @@
 import { Button } from '../ui/Button'
 import { Link } from 'react-router-dom'
+import React from 'react'
 
 interface ArtisanBannerProps {
   image?: string
+  title?: React.ReactNode
+  description?: React.ReactNode
 }
 
-export function ArtisanBanner({ image = '/images/ourstory.png' }: ArtisanBannerProps) {
+export function ArtisanBanner({
+  image = '/images/ourstory.png',
+  title = (
+    <>
+      Crafted by Artisans.
+      <br />
+      Cherished for Generations
+    </>
+  ),
+  description = "Crafted by master artisans with techniques passed through generations."
+}: ArtisanBannerProps) {
   return (
     <section className="mx-auto max-w-[1300px] px-4 py-12 md:px-8 md:py-16">
-      <div className="relative overflow-hidden rounded-lg h-[363px] w-full">
-        <img
-          src={image}
-          alt="Master artisan at work"
-          className="absolute inset-0 h-full w-full object-center opacity-100"
-          style={{ opacity: 1, boxSizing: 'content-box' }}
-        />
+      <div className="relative overflow-hidden rounded-lg h-[363px] w-full bg-white flex flex-row items-center shadow-sm">
+        
+        {/* Left Side Content Container */}
+        <div className="relative flex-1 h-full flex flex-col justify-center pl-6 sm:pl-10 md:pl-16 pr-6 z-10 max-w-[60%] sm:max-w-[62%]">
+          
+          {/* Decorative Ornate Frame */}
+          <div className="absolute top-6 bottom-6 left-6 right-0 border-t border-b border-l border-maroon/80 pointer-events-none">
+            {/* Top-Left Corner Flourish */}
+            <img 
+              src="/corner_maroon.svg" 
+              alt="" 
+              className="absolute -top-[1.5px] -left-[1.5px] w-8 h-8 md:w-11 md:h-11 object-contain select-none"
+            />
+            {/* Bottom-Left Corner Flourish */}
+            <img 
+              src="/corner_maroon.svg" 
+              alt="" 
+              className="absolute -bottom-[1.5px] -left-[1.5px] w-8 h-8 md:w-11 md:h-11 object-contain select-none scale-y-[-1]"
+            />
+          </div>
 
-        <div className="absolute inset-y-0 left-[15%] sm:left-[16%] flex max-w-[80%] sm:max-w-[38%] flex-col justify-center p-4 sm:p-0">
-          <h2 className="font-serif text-2xl leading-tight text-maroon md:text-3xl lg:text-4xl">
-            Crafted by Artisans.
-            <br />
-            Cherished for
-            <br className="hidden sm:block" />
-            Generations
-          </h2>
-          <p className="mt-4 max-w-md text-sm leading-relaxed text-text md:text-base">
-            Crafted by master artisans with
-            <br className="hidden sm:block" />
-            techniques passed through generations.
-          </p>
-          <div className="mt-7">
-            <Link to="/about">
-              <Button className="rounded-lg !px-8 !py-3 cursor-pointer">Discover Our Story</Button>
-            </Link>
+          {/* Text content */}
+          <div className="relative z-10 py-4 pl-4 md:pl-8 pr-2">
+            <h2 className="font-serif text-lg sm:text-2xl md:text-3xl lg:text-[34px] leading-tight text-maroon font-bold">
+              {title}
+            </h2>
+            <p className="mt-3 md:mt-4 max-w-md text-xs sm:text-sm md:text-base leading-relaxed text-text-dark font-medium opacity-90">
+              {description}
+            </p>
+            <div className="mt-5 md:mt-7">
+              <Link to="/about">
+                <Button className="rounded-lg !px-6 !py-2.5 md:!px-8 md:!py-3 bg-maroon text-white border-maroon hover:bg-maroon-dark transition-all duration-300 cursor-pointer text-xs md:text-sm font-semibold shadow-sm">
+                  Discover Our Story
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
+
+        {/* Right Side Image Container */}
+        <div className="w-[40%] sm:w-[38%] h-full relative overflow-hidden flex items-center justify-end">
+          <img
+            src={image}
+            alt="Artisan Showcase"
+            className="h-full w-full object-cover object-left"
+          />
+        </div>
+
       </div>
     </section>
   )
 }
+

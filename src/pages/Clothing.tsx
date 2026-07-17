@@ -344,7 +344,11 @@ export function Clothing() {
     <div style={{ backgroundColor: '#f5eee1' }}>
       <ClothingHero />
       <CollectionsGrid collections={collections} />
-      <ArtisanBanner image="/images/ourstory.png" />
+      <ArtisanBanner 
+        image="/images/clothing_banner_section.jpg" 
+        title={<>Timeless Ethnic Wear for<br />Every Celebration</>}
+        description="Crafted by master artisans with techniques passed through generations."
+      />
       <div style={{ backgroundColor: '#f0e7d6', position: 'relative' }}>
         <DecorativeDivider className="py-6 absolute top-[-38px] left-0 w-full" />
         <ProductSection
