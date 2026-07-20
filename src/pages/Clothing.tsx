@@ -345,7 +345,7 @@ export function Clothing() {
       <ClothingHero />
       <CollectionsGrid collections={collections} />
       <ArtisanBanner 
-        image="/images/clothing_banner_section.jpg" 
+        image="/images/clothing_banner_section_cutout.png" 
         title={<>Timeless Ethnic Wear for<br />Every Celebration</>}
         description="Crafted by master artisans with techniques passed through generations."
       />
