@@ -1,5 +1,3 @@
-import { ArrowRight } from 'lucide-react'
-
 // Authentic Royal Jali Diamond Medallion with vertical lance lines & finials
 function JaliMedallion({ className = '' }: { className?: string }) {
   return (
@@ -134,17 +132,10 @@ export function RangethnicsCategories() {
             </h2>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between md:justify-end gap-6 max-w-xl">
-            <p className="font-sans text-[#5C4F48] text-xs sm:text-sm leading-relaxed max-w-sm">
+          <div className="max-w-md">
+            <p className="font-sans text-[#5C4F48] text-xs sm:text-sm leading-relaxed md:text-right">
               From everyday elegance to once-in-a-lifetime celebrations, discover collections crafted for every chapter of your story.
             </p>
-            <a
-              href="#categories"
-              className="group inline-flex items-center gap-2 font-serif text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-[#2B1B17] hover:text-[#9E784F] transition-colors shrink-0"
-            >
-              <span>VIEW ALL</span>
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-            </a>
           </div>
         </div>
 
@@ -243,21 +234,14 @@ export function RangethnicsCategories() {
                     {/* Dark Dramatic Vignette Gradient at bottom for high text contrast */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent pointer-events-none z-10" />
 
-                    {/* Bottom Card Labels & Arrow */}
-                    <div className="absolute bottom-6 left-5 right-5 z-20 flex items-end justify-between">
-                      <div>
-                        <h3 className="font-serif text-2xl sm:text-3xl font-light tracking-[0.06em] text-white leading-tight">
-                          {cat.title}
-                        </h3>
-                        <p className="font-sans text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#E8DFC8] font-medium mt-1">
-                          {cat.subtitle}
-                        </p>
-                      </div>
-
-                      {/* Circular Champagne/Gold Metallic Button */}
-                      <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-gradient-to-br from-[#F5ECE0] to-[#DECBB4] text-[#2B1B17] flex items-center justify-center shadow-md transition-all duration-300 group-hover:scale-110 group-hover:shadow-lg shrink-0">
-                        <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
-                      </div>
+                    {/* Bottom Card Labels */}
+                    <div className="absolute bottom-6 left-5 right-5 z-20">
+                      <h3 className="font-serif text-2xl sm:text-3xl font-light tracking-[0.06em] text-white leading-tight">
+                        {cat.title}
+                      </h3>
+                      <p className="font-sans text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#E8DFC8] font-medium mt-1">
+                        {cat.subtitle}
+                      </p>
                     </div>
 
                   </div>

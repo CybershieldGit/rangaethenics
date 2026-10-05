@@ -1,5 +1,3 @@
-import { ArrowRight } from 'lucide-react'
-
 export function RangethnicsSignature() {
   return (
     <section id="signature-edit" className="relative w-full bg-[#FAF6F0] py-16 md:py-24 border-b border-[#E8DFC8]/40">
@@ -30,20 +28,9 @@ export function RangethnicsSignature() {
             </h2>
 
             {/* Subtitle */}
-            <p className="font-sans text-[#5C4F48] text-sm sm:text-base leading-relaxed mb-4 max-w-md">
+            <p className="font-sans text-[#5C4F48] text-sm sm:text-base leading-relaxed mb-8 max-w-md">
               Contemporary silhouettes inspired by India's timeless traditions.
             </p>
-
-            {/* Link */}
-            <div className="mb-8">
-              <a
-                href="#occasions"
-                className="group inline-flex items-center gap-2 font-serif text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-[#2B1B17] hover:text-[#9E784F] transition-colors border-b border-[#2B1B17]/40 pb-1"
-              >
-                <span>DISCOVER THE EDIT</span>
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-              </a>
-            </div>
 
             {/* Dual Product Thumbnail Tiles */}
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
