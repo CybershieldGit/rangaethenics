@@ -1,22 +1,20 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Search, ShoppingBag, Heart, Menu, X, CircleUserRound, LogOut, Package, MapPin } from 'lucide-react'
-import { Button } from '../ui/Button'
+import { Search, ShoppingBag, Menu, X, CircleUserRound, Package } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
-import { useWishlist } from '../../context/WishlistContext'
 import { useCart } from '../../context/CartContext'
 import { getProducts } from '../../utils/api'
 import { formatPrice, type Product } from '../../data/products'
 
 const navLinks = [
-  { label: 'Clothing', to: '/clothing' },
-  { label: 'Jewellery', to: '/jewellery' },
-  { label: 'About Us', to: '/about' },
-  { label: 'Contact Us', to: '/contact' },
+  { label: 'Our World', to: '#categories' },
+  { label: 'Collections', to: '#signature-edit' },
+  { label: 'Celebration', to: '#occasions' },
+  { label: 'About', to: '#our-story' },
 ]
 
 const navLinkBase =
-  'font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] align-middle transition-colors'
+  'font-sans text-[14px] lg:text-[15px] font-normal tracking-[0.01em] text-[#3D332D] hover:text-[#2B1B17] transition-colors'
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -25,8 +23,7 @@ export function Header() {
   const searchRef = useRef<HTMLDivElement>(null)
   const location = useLocation()
   const navigate = useNavigate()
-  const { isAuthenticated, user } = useAuth()
-  const { count: wishlistCount } = useWishlist()
+  const { user } = useAuth()
   const { count: cartCount } = useCart()
 
   const [searchOpen, setSearchOpen] = useState(false)
@@ -79,9 +76,9 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 bg-[#F8F0E5] shadow-sm">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8">
-        {/* Left container holding hamburger and logo together (logo left-aligned next to hamburger on mobile) */}
+    <header className="sticky top-0 z-50 bg-[#FAF7F1] border-b border-[#E8DFC8]/60 shadow-[0_2px_15px_rgba(0,0,0,0.02)]">
+      <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 sm:px-10 lg:px-16 py-3.5 md:py-4">
+        {/* Left container holding hamburger and logo together */}
         <div className="flex items-center gap-2">
           {/* Leftmost Hamburger Menu Button on Mobile View */}
           <button
@@ -104,33 +101,33 @@ export function Header() {
             <img
               src="/ranga_logo_header.svg"
               alt="Rangethnics"
-              className="h-6 w-auto md:h-12"
+              className="h-8 md:h-10 w-auto"
             />
           </Link>
         </div>
 
         {/* Desktop Nav */}
-        <nav className={`hidden items-center gap-8 lg:flex ${searchOpen ? 'lg:!hidden' : ''}`}>
+        <nav className={`hidden items-center gap-7 lg:gap-9 lg:flex ${searchOpen ? 'lg:!hidden' : ''}`}>
           {navLinks.map((link) => {
             const active = isLinkActive(link.to)
             return (
-              <Link
+              <a
                 key={link.label}
-                to={link.to}
+                href={link.to}
                 className={`${navLinkBase} ${
                   active
-                    ? 'text-maroon underline decoration-maroon decoration-1 underline-offset-[6px]'
-                    : 'text-[#717171] hover:text-maroon'
+                    ? 'text-[#2B1B17] font-medium'
+                    : 'text-[#4A3F38]'
                 }`}
               >
                 {link.label}
-              </Link>
+              </a>
             )
           })}
         </nav>
 
         {/* Actions */}
-        <div className={`flex items-center gap-3 md:gap-4 ${searchOpen ? 'flex-1 justify-end' : ''}`}>
+        <div className={`flex items-center gap-5 md:gap-6 ${searchOpen ? 'flex-1 justify-end' : ''}`}>
           <div
             ref={searchRef}
             className={`relative items-center ${mobileOpen ? 'hidden lg:flex' : 'flex'} ${
@@ -213,134 +210,65 @@ export function Header() {
               </div>
             )}
           </div>
+
+          {/* Profile / Account Icon */}
+          <div ref={profileRef} className={`relative ${mobileOpen ? 'hidden lg:block' : 'block'}`}>
+            <button
+              type="button"
+              aria-label="Account"
+              onClick={() => setProfileOpen((prev) => !prev)}
+              className="flex items-center text-[#2B1B17] hover:text-[#A67C52] transition-colors cursor-pointer"
+            >
+              <CircleUserRound size={21} strokeWidth={1.5} />
+            </button>
+
+            {profileOpen && (
+              <div className="absolute right-0 top-full mt-2 w-52 border border-[#BD8A3C]/40 bg-white py-1 shadow-lg z-50">
+                <div className="border-b border-[#BD8A3C]/20 px-4 py-3">
+                  <p className="font-serif text-sm font-semibold text-maroon">
+                    {user?.name || 'My Account'}
+                  </p>
+                  <p className="truncate font-sans text-xs text-[#717171]">{user?.email || 'Welcome to Rangethnics'}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/profile', { state: { view: 'profile' } })
+                    setProfileOpen(false)
+                  }}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 font-sans text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white cursor-pointer"
+                >
+                  <CircleUserRound size={16} strokeWidth={1.5} />
+                  Profile Details
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigate('/profile', { state: { view: 'orders' } })
+                    setProfileOpen(false)
+                  }}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 font-sans text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
+                >
+                  <Package size={16} strokeWidth={1.5} />
+                  My Orders
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Cart Icon */}
           <Link
             to="/cart"
             aria-label="Cart"
-            className={`relative text-[#1a1a1a] hover:text-maroon ${mobileOpen ? 'hidden' : 'block'}`}
+            className={`relative text-[#2B1B17] hover:text-[#A67C52] transition-colors ${mobileOpen ? 'hidden' : 'block'}`}
           >
-            <ShoppingBag size={20} strokeWidth={1.5} />
+            <ShoppingBag size={21} strokeWidth={1.5} />
             {cartCount > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-inter text-[10px] font-semibold leading-none text-white">
+              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-sans text-[10px] font-semibold leading-none text-white">
                 {cartCount}
               </span>
             )}
           </Link>
-          <Link
-            to="/wishlist"
-            aria-label="Wishlist"
-            className={`relative text-[#1a1a1a] hover:text-maroon hidden sm:${mobileOpen ? 'hidden' : 'block'}`}
-          >
-            <Heart size={20} strokeWidth={1.5} />
-            {wishlistCount > 0 && (
-              <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-inter text-[10px] font-semibold leading-none text-white">
-                {wishlistCount}
-              </span>
-            )}
-          </Link>
-          {isAuthenticated ? (
-            <>
-              {/* Profile Dropdown (visible on both mobile and desktop) */}
-              <div ref={profileRef} className={`relative ${mobileOpen ? 'hidden lg:block' : 'block'}`}>
-                <button
-                  type="button"
-                  aria-label="Account"
-                  onClick={() => setProfileOpen((prev) => !prev)}
-                  className="flex items-center text-[#1a1a1a] hover:text-maroon"
-                >
-                  <CircleUserRound size={24} strokeWidth={1.5} />
-                </button>
-
-                {profileOpen && (
-                  <div className="absolute right-0 top-full mt-2 w-52 border border-[#BD8A3C]/40 bg-white py-1 shadow-lg z-50">
-                    <div className="border-b border-[#BD8A3C]/20 px-4 py-3">
-                      <p className="font-inter text-sm font-semibold text-maroon">
-                        {user?.name}
-                      </p>
-                      <p className="truncate font-inter text-xs text-[#717171]">{user?.email}</p>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigate('/profile', { state: { view: 'profile' } })
-                        setProfileOpen(false)
-                      }}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white cursor-pointer"
-                    >
-                      <CircleUserRound size={16} strokeWidth={1.5} />
-                      Profile Details
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigate('/profile', { state: { view: 'orders' } })
-                        setProfileOpen(false)
-                      }}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
-                    >
-                      <Package size={16} strokeWidth={1.5} />
-                      My Order
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigate('/profile', { state: { view: 'addresses' } })
-                        setProfileOpen(false)
-                      }}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
-                    >
-                      <MapPin size={16} strokeWidth={1.5} />
-                      Manage Addresses
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigate('/profile', { state: { view: 'wishlist' } })
-                        setProfileOpen(false)
-                      }}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/10 cursor-pointer"
-                    >
-                      <Heart size={16} strokeWidth={1.5} />
-                      Wishlist
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        navigate('/profile', { state: { view: 'logout' } })
-                        setProfileOpen(false)
-                      }}
-                      className="flex w-full items-center gap-2 px-4 py-2.5 font-inter text-sm text-[#1a1a1a] hover:bg-maroon hover:text-white border-t border-[#BD8A3C]/20 cursor-pointer"
-                    >
-                      <LogOut size={16} strokeWidth={1.5} />
-                      Log Out
-                    </button>
-                  </div>
-                )}
-              </div>
-            </>
-          ) : (
-            <>
-              {/* Desktop Login / Signup */}
-              <div className="hidden lg:flex items-center gap-3">
-                <Link
-                  to="/login"
-                  className="font-inter text-[16px] leading-[24px] font-normal tracking-[0.015em] text-maroon hover:underline"
-                >
-                  Log In
-                </Link>
-                <span className="h-5 w-px bg-[#1a1a1a]/40" />
-                <Link to="/signup">
-                  <Button className="rounded-md !px-5 !py-2">Sign Up</Button>
-                </Link>
-              </div>
-
-              {/* Mobile Login / Signup Button */}
-              <Link to="/login" className={`lg:hidden ${mobileOpen ? 'hidden' : 'block'}`}>
-                <Button className="rounded-md !px-3 !py-1.5 text-xs whitespace-nowrap">
-                  Login / Signup
-                </Button>
-              </Link>
-            </>
-          )}
         </div>
       </div>
 
@@ -350,16 +278,16 @@ export function Header() {
           {navLinks.map((link) => {
             const active = isLinkActive(link.to)
             return (
-              <Link
+              <a
                 key={link.label}
-                to={link.to}
+                href={link.to}
                 className={`block py-2 ${navLinkBase} ${
                   active ? 'text-maroon' : 'text-[#717171] hover:text-maroon'
                 }`}
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
-              </Link>
+              </a>
             )
           })}
           <Link
@@ -378,45 +306,13 @@ export function Header() {
             )}
           </Link>
           <Link
-            to="/wishlist"
+            to="/profile"
             onClick={() => setMobileOpen(false)}
-            className={`flex items-center gap-2 py-2 ${navLinkBase} ${
-              location.pathname === '/wishlist' ? 'text-maroon' : 'text-[#717171] hover:text-maroon'
-            }`}
+            className={`flex items-center gap-2 py-2 ${navLinkBase} text-[#717171] hover:text-[#2B1B17]`}
           >
-            <Heart size={18} strokeWidth={1.5} />
-            Wishlist
-            {wishlistCount > 0 && (
-              <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-maroon px-1 font-inter text-[10px] font-semibold leading-none text-white">
-                {wishlistCount}
-              </span>
-            )}
+            <CircleUserRound size={18} strokeWidth={1.5} />
+            Account
           </Link>
-          <div className="mt-3 flex gap-3">
-            {isAuthenticated ? (
-              <Button
-                variant="outline"
-                className="flex-1"
-                onClick={() => {
-                  navigate('/profile', { state: { view: 'logout' } })
-                  setMobileOpen(false)
-                }}
-              >
-                Log Out
-              </Button>
-            ) : (
-              <>
-                <Link to="/login" className="flex-1" onClick={() => setMobileOpen(false)}>
-                  <Button variant="outline" className="w-full">
-                    Log In
-                  </Button>
-                </Link>
-                <Link to="/signup" className="flex-1" onClick={() => setMobileOpen(false)}>
-                  <Button className="w-full">Sign Up</Button>
-                </Link>
-              </>
-            )}
-          </div>
         </nav>
       )}
     </header>

@@ -32,29 +32,59 @@ function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
+        {/* Active Route: Only the Rangethnics Landing Page is shown */}
         <Route path="/" element={<Home />} />
-        <Route path="/clothing" element={<Clothing />} />
-        <Route path="/jewellery" element={<Jewellery />} />
-        <Route path="/products" element={<Products />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/wishlist" element={<Wishlist />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<Checkout />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verify-email" element={<VerifyEmail />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/shipping-policy" element={<ShippingPolicy />} />
-        <Route path="/return-policy" element={<ReturnPolicy />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/terms-of-service" element={<TermsOfService />} />
+
+        {/* 
+          All other routes are hidden/derouted to the Landing Page as requested, 
+          while keeping all component code and imports completely intact.
+        */}
+        <Route path="/clothing" element={<Home />} />
+        <Route path="/jewellery" element={<Home />} />
+        <Route path="/products" element={<Home />} />
+        <Route path="/product/:id" element={<Home />} />
+        <Route path="/wishlist" element={<Home />} />
+        <Route path="/cart" element={<Home />} />
+        <Route path="/checkout" element={<Home />} />
+        <Route path="/about" element={<Home />} />
+        <Route path="/contact" element={<Home />} />
+        <Route path="/login" element={<Home />} />
+        <Route path="/signup" element={<Home />} />
+        <Route path="/forgot-password" element={<Home />} />
+        <Route path="/verify-email" element={<Home />} />
+        <Route path="/reset-password" element={<Home />} />
+        <Route path="/profile" element={<Home />} />
+        <Route path="/shipping-policy" element={<Home />} />
+        <Route path="/return-policy" element={<Home />} />
+        <Route path="/privacy-policy" element={<Home />} />
+        <Route path="/terms-of-service" element={<Home />} />
+        <Route path="*" element={<Home />} />
       </Route>
     </Routes>
   )
+}
+
+// Preserved original page components in code as requested
+export const _preservedPages = {
+  Clothing,
+  Jewellery,
+  Products,
+  ProductDetail,
+  Wishlist,
+  Cart,
+  Checkout,
+  About,
+  Contact,
+  Login,
+  SignUp,
+  ForgotPassword,
+  VerifyEmail,
+  ResetPassword,
+  Profile,
+  ShippingPolicy,
+  ReturnPolicy,
+  PrivacyPolicy,
+  TermsOfService,
 }
 
 export default App
