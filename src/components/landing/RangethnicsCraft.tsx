@@ -1,5 +1,3 @@
-import { ArrowRight } from 'lucide-react'
-
 // Authentic Royal Mandala & Emblem Icons for the 4 Pillars
 function CraftIcon({ type }: { type: 'fabrics' | 'detailing' | 'techniques' | 'silhouettes' }) {
   if (type === 'fabrics') {
@@ -146,17 +144,6 @@ export function RangethnicsCraft() {
                   </div>
                 </div>
               ))}
-            </div>
-
-            {/* Explore Our Craft Outline Button */}
-            <div>
-              <a
-                href="#signature-edit"
-                className="group inline-flex items-center gap-3 border border-[#2B1B17]/70 hover:border-[#2B1B17] bg-transparent hover:bg-[#2B1B17] text-[#2B1B17] hover:text-white px-7 py-3 text-xs md:text-sm font-serif uppercase tracking-[0.2em] transition-all duration-300"
-              >
-                <span>EXPLORE OUR CRAFT</span>
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-              </a>
             </div>
           </div>
 

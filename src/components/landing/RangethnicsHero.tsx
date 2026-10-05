@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { ArrowRight } from 'lucide-react'
 
 export function RangethnicsHero() {
   const [activeSlide, setActiveSlide] = useState(0)
@@ -71,22 +70,11 @@ export function RangethnicsHero() {
           </h1>
 
           {/* Subtitle in 2 lines */}
-          <p className="font-sans text-[#52443C] text-[14px] sm:text-[15px] md:text-[16px] leading-[1.65] max-w-lg mb-8 font-normal">
+          <p className="font-sans text-[#52443C] text-[14px] sm:text-[15px] md:text-[16px] leading-[1.65] max-w-lg mb-10 font-normal">
             <span>{current.subtextLine1}</span>
             <br className="hidden sm:inline" />
             <span> {current.subtextLine2}</span>
           </p>
-
-          {/* CTA Outline Button */}
-          <div className="flex items-center gap-4 mb-12">
-            <a
-              href="#categories"
-              className="group inline-flex items-center gap-3 border border-[#2B1B17]/70 hover:border-[#2B1B17] bg-transparent hover:bg-[#2B1B17] text-[#2B1B17] hover:text-white px-6 py-2.5 text-[12px] md:text-[13px] font-sans uppercase tracking-[0.2em] font-medium transition-all duration-300 shadow-2xs"
-            >
-              <span>EXPLORE COLLECTION</span>
-              <ArrowRight size={13} className="transition-transform group-hover:translate-x-1" />
-            </a>
-          </div>
 
           {/* Slider Pagination Numbers */}
           <div className="flex items-center gap-6 pt-4 border-t border-[#2B1B17]/15 max-w-[200px]">

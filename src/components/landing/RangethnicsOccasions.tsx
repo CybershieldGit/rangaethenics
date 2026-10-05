@@ -1,5 +1,3 @@
-import { ArrowRight } from 'lucide-react'
-
 export function RangethnicsOccasions() {
   const occasions = [
     {
@@ -31,26 +29,18 @@ export function RangethnicsOccasions() {
         {/* Header Row */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
           <div>
-            <div className="inline-flex items-center gap-2 text-[11px] md:text-xs font-serif uppercase tracking-[0.25em] text-[#9E784F] font-semibold mb-2">
-              <span>OCCASIONS</span>
-              <ArrowRight size={12} />
-            </div>
+            <span className="text-[11px] md:text-xs font-serif uppercase tracking-[0.25em] text-[#9E784F] font-semibold mb-2 block">
+              OCCASIONS
+            </span>
             <h2 className="font-serif text-[#2B1B17] text-3xl sm:text-4xl md:text-5xl font-normal tracking-[0.02em]">
               FOR EVERY CELEBRATION
             </h2>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between md:justify-end gap-6">
-            <p className="font-sans text-[#5C4F48] text-xs sm:text-sm">
+          <div>
+            <p className="font-sans text-[#5C4F48] text-xs sm:text-sm md:text-right">
               Different moments. The same timeless elegance.
             </p>
-            <a
-              href="#occasions"
-              className="group inline-flex items-center gap-2 font-serif text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-[#2B1B17] hover:text-[#9E784F] transition-colors shrink-0"
-            >
-              <span>EXPLORE ALL</span>
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-            </a>
           </div>
         </div>
 
@@ -71,15 +61,11 @@ export function RangethnicsOccasions() {
               {/* Gradient Dark Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
 
-              {/* Card Title & Arrow */}
-              <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between">
+              {/* Card Title */}
+              <div className="absolute bottom-5 left-5 right-5 z-20">
                 <span className="font-serif text-sm md:text-base font-medium tracking-[0.14em] text-white drop-shadow">
                   {occ.title}
                 </span>
-
-                <div className="w-8 h-8 rounded-full bg-white/25 backdrop-blur-md border border-white/40 text-white flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:text-[#2B1B17] group-hover:scale-110 shadow-sm">
-                  <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
-                </div>
               </div>
             </div>
           ))}

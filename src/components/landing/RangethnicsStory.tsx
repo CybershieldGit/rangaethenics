@@ -1,5 +1,3 @@
-import { ArrowRight } from 'lucide-react'
-
 export function RangethnicsStory() {
   return (
     <section id="our-story" className="relative w-full bg-[#FAF6F0] py-16 md:py-24 border-b border-[#E8DFC8]/40 overflow-hidden">
@@ -22,20 +20,12 @@ export function RangethnicsStory() {
             </h2>
 
             {/* Paragraph */}
-            <p className="font-sans text-[#5C4F48] text-sm sm:text-base leading-relaxed max-w-lg mb-7">
+            <p className="font-sans text-[#5C4F48] text-sm sm:text-base leading-relaxed max-w-lg mb-8">
               At Rangethnics, we celebrate India's rich heritage through timeless designs, intricate craftsmanship and modern silhouettes — creating ethnic wear that feels as special as your moments.
             </p>
 
-            {/* CTA & Monogram Seal Row */}
-            <div className="flex items-center gap-8">
-              <a
-                href="#signature-edit"
-                className="group inline-flex items-center gap-2 font-serif text-xs md:text-sm uppercase tracking-[0.2em] font-semibold text-[#2B1B17] hover:text-[#9E784F] transition-colors border-b border-[#2B1B17]/40 pb-1"
-              >
-                <span>DISCOVER OUR STORY</span>
-                <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-              </a>
-
+            {/* Heritage Monogram Seal */}
+            <div className="flex items-center">
               {/* Vector Heritage Monogram Seal - Completely transparent with no box */}
               <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 select-none">
                 <svg
