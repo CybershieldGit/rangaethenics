@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
-import { AnnouncementBar } from './AnnouncementBar'
+export { AnnouncementBar as _AnnouncementBar } from './AnnouncementBar'
 import { Header } from './Header'
 import { Footer } from './Footer'
 
@@ -14,9 +14,8 @@ function ScrollToTop() {
 
 export function Layout() {
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col bg-[#FAF6F0]">
       <ScrollToTop />
-      <AnnouncementBar />
       <Header />
       <main className="w-full flex-1 overflow-x-hidden">
         <Outlet />

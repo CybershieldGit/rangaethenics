@@ -12,8 +12,10 @@
   --color-text: #7a6e67;
   --color-text-dark: #4a3f38;
 
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Inter", system-ui, sans-serif;
+  --font-serif: "Playfair Display", "Cormorant Garamond", Georgia, serif;
+  --font-playfair: "Playfair Display", Georgia, serif;
+  --font-cormorant: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", "Plus Jakarta Sans", system-ui, sans-serif;
   --font-inter: "Inter", system-ui, sans-serif;
 }
 

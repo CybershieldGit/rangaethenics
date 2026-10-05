@@ -1,13 +1,22 @@
 import { useEffect, useState } from 'react'
-import { DecorativeDivider } from '../components/ui/DecorativeDivider'
-import { HeroCarousel } from '../components/home/HeroCarousel'
-import { CategoryCards } from '../components/home/CategoryCards'
-import { ValueProposition } from '../components/home/ValueProposition'
-import { PromoBanner } from '../components/home/PromoBanner'
-import { ProductSection } from '../components/home/ProductSection'
-import { OccasionSection } from '../components/home/OccasionSection'
-import { GallerySection } from '../components/home/GallerySection'
-import { OurStory } from '../components/home/OurStory'
+import { RangethnicsHero } from '../components/landing/RangethnicsHero'
+import { RangethnicsStory } from '../components/landing/RangethnicsStory'
+import { RangethnicsCategories } from '../components/landing/RangethnicsCategories'
+import { RangethnicsCraft } from '../components/landing/RangethnicsCraft'
+import { RangethnicsSignature } from '../components/landing/RangethnicsSignature'
+import { RangethnicsOccasions } from '../components/landing/RangethnicsOccasions'
+import { RangethnicsPromise } from '../components/landing/RangethnicsPromise'
+
+// Preserved original imports to ensure no legacy code is lost
+import { DecorativeDivider as _DecorativeDivider } from '../components/ui/DecorativeDivider'
+import { HeroCarousel as _HeroCarousel } from '../components/home/HeroCarousel'
+import { CategoryCards as _CategoryCards } from '../components/home/CategoryCards'
+import { ValueProposition as _ValueProposition } from '../components/home/ValueProposition'
+import { PromoBanner as _PromoBanner } from '../components/home/PromoBanner'
+import { ProductSection as _ProductSection } from '../components/home/ProductSection'
+import { OccasionSection as _OccasionSection } from '../components/home/OccasionSection'
+import { GallerySection as _GallerySection } from '../components/home/GallerySection'
+import { OurStory as _OurStory } from '../components/home/OurStory'
 import { getProducts } from '../utils/api'
 import {
   Product,
@@ -16,49 +25,50 @@ import {
 } from '../data/products'
 
 export function Home() {
-  const [newArrivals, setNewArrivals] = useState<Product[]>(fallbackNewArrival)
-  const [mostSelling, setMostSelling] = useState<Product[]>(fallbackMostSelling)
+  // Preserved state for products in case needed in background
+  const [, setNewArrivals] = useState<Product[]>(fallbackNewArrival)
+  const [, setMostSelling] = useState<Product[]>(fallbackMostSelling)
 
   useEffect(() => {
     async function loadHomeProducts() {
-      const { products } = await getProducts({ pageSize: 100 })
-      if (products && products.length > 0) {
-        const liveNewArrival = products.filter(p => p.isNewArrival)
-        const liveMostSelling = products.filter(p => p.isBestSelling)
+      try {
+        const { products } = await getProducts({ pageSize: 100 })
+        if (products && products.length > 0) {
+          const liveNewArrival = products.filter(p => p.isNewArrival)
+          const liveMostSelling = products.filter(p => p.isBestSelling)
 
-        if (liveNewArrival.length > 0) setNewArrivals(liveNewArrival.slice(0, 4))
-        if (liveMostSelling.length > 0) setMostSelling(liveMostSelling.slice(0, 4))
+          if (liveNewArrival.length > 0) setNewArrivals(liveNewArrival.slice(0, 4))
+          if (liveMostSelling.length > 0) setMostSelling(liveMostSelling.slice(0, 4))
+        }
+      } catch {
+        // Fallback gracefully
       }
     }
     loadHomeProducts()
   }, [])
 
   return (
-    <>
-      <HeroCarousel />
-      <DecorativeDivider className="md:my-[70px] my-[30px] mx-auto px-4 md:px-8" type="flower" />
-      <CategoryCards />
-      <DecorativeDivider className="md:pt-[50px] pt-[30px] pb-6" type="flower" />
-      <ValueProposition />
-      <PromoBanner />
-      <ProductSection
-        title="New Arrivals"
-        subtitle="Fresh designs, inspired by the tradition and crafted for the modern muse."
-        products={newArrivals}
-        viewAllTo="/products?category=all&newArrival=true"
-        viewAllLabel="View All New Arrivals"
-      />
-      <OccasionSection />
-      <ProductSection
-        title="Most Selling"
-        subtitle="Loved by our customers for their elegance, quality and timeless charm."
-        products={mostSelling}
-        viewAllTo="/products?category=all&bestSelling=true"
-        viewAllLabel="View All Most Selling"
-      />
-      <GallerySection />
-      <OurStory background="" buttonText="Know More About Us" to="/about" />
-    </>
+    <div className="w-full bg-[#FAF6F0] text-[#2B1B17] font-sans selection:bg-[#9E784F]/20 selection:text-[#2B1B17]">
+      {/* 1. Hero Section: Timeless Ethnic. Refined For Today. */}
+      <RangethnicsHero />
+
+      {/* 2. Our Story Section: Rooted In Heritage. Made For The Modern You. */}
+      <RangethnicsStory />
+
+      {/* 3. Shop by Category: Explore Our World (4 Jharokha Arched Portals) */}
+      <RangethnicsCategories />
+
+      {/* 4. Craftsmanship Section: The Art of Craftsmanship */}
+      <RangethnicsCraft />
+
+      {/* 5. The Signature Edit Section: Featured Spotlight */}
+      <RangethnicsSignature />
+
+      {/* 6. Occasions Section: For Every Celebration */}
+      <RangethnicsOccasions />
+
+      {/* 7. Our Promise Section: Wear Your Roots. Define Your Style. */}
+      <RangethnicsPromise />
+    </div>
   )
 }
-
