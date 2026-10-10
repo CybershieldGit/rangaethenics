@@ -21,7 +21,7 @@ export function RangethnicsStory() {
 
             {/* Paragraph */}
             <p className="font-sans text-[#5C4F48] text-sm sm:text-base leading-relaxed max-w-lg mb-8">
-              At Rangethnics, we celebrate India's rich heritage through timeless designs, intricate craftsmanship and modern silhouettes — creating ethnic wear that feels as special as your moments.
+              At Rangethnics, we celebrate the grace and individuality of women through timeless weaves, intricate craftsmanship and contemporary silhouettes — creating ethnic wear that feels as special as your moments.
             </p>
 
             {/* Heritage Monogram Seal */}
@@ -109,12 +109,12 @@ export function RangethnicsStory() {
           <div className="lg:col-span-6 flex items-center justify-center lg:justify-end">
             <div className="relative flex items-center gap-5 sm:gap-7 lg:gap-8">
               
-              {/* Arched Couple Container */}
+              {/* Arched Woman Portrait Container */}
               <div className="relative w-[240px] sm:w-[300px] md:w-[340px] aspect-[3/3.8] overflow-hidden rounded-t-[140px] rounded-b-xl border border-[#C5A059]/40 shadow-[0_15px_35px_rgba(43,27,23,0.08)] bg-[#F5ECE0]">
                 <img
-                  src="/images/landing/assets/our_story_couple.png"
-                  alt="Royal Couple in Ethnic Wear"
-                  className="w-full h-full object-cover object-top transition-transform duration-700 hover:scale-105"
+                  src="/images/about_photo_portrait.png"
+                  alt="Women Ethnic Wear & Heritage Craft"
+                  className="w-full h-full object-cover object-center transition-transform duration-700 hover:scale-105"
                 />
               </div>
 

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { RangethnicsHero } from '../components/landing/RangethnicsHero'
 import { RangethnicsStory } from '../components/landing/RangethnicsStory'
 import { RangethnicsCategories } from '../components/landing/RangethnicsCategories'
+import { RangethnicsHandblockCollection } from '../components/landing/RangethnicsHandblockCollection'
+import { RangethnicsJewelleryCollection } from '../components/landing/RangethnicsJewelleryCollection'
 import { RangethnicsCraft } from '../components/landing/RangethnicsCraft'
 import { RangethnicsSignature } from '../components/landing/RangethnicsSignature'
 import { RangethnicsOccasions } from '../components/landing/RangethnicsOccasions'
@@ -58,16 +60,22 @@ export function Home() {
       {/* 3. Shop by Category: Explore Our World (4 Jharokha Arched Portals) */}
       <RangethnicsCategories />
 
-      {/* 4. Craftsmanship Section: The Art of Craftsmanship */}
+      {/* 4. Handblock & Pure Fabric Ethnic Wear Anthology */}
+      <RangethnicsHandblockCollection />
+
+      {/* 5. Royal Jewels & Artisanal Adornments Edit */}
+      <RangethnicsJewelleryCollection />
+
+      {/* 6. Craftsmanship Section: The Art of Craftsmanship */}
       <RangethnicsCraft />
 
-      {/* 5. The Signature Edit Section: Featured Spotlight */}
+      {/* 7. The Signature Edit Section: Featured Spotlight */}
       <RangethnicsSignature />
 
-      {/* 6. Occasions Section: For Every Celebration */}
+      {/* 8. Occasions Section: For Every Celebration */}
       <RangethnicsOccasions />
 
-      {/* 7. Our Promise Section: Wear Your Roots. Define Your Style. */}
+      {/* 9. Our Promise Section: Wear Your Roots. Define Your Style. */}
       <RangethnicsPromise />
     </div>
   )

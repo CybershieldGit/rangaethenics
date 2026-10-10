@@ -12,9 +12,9 @@ function InstagramIcon({ className = 'w-4 h-4' }: { className?: string }) {
 
 export function RangethnicsInstagram() {
   const images = [
-    { src: '/images/landing/assets/insta_1.png', alt: 'Rangethnics Couple Festive Moment' },
+    { src: '/images/landing/assets/insta_1.png', alt: 'Rangethnics Women Festive Drape' },
     { src: '/images/landing/assets/insta_2.png', alt: 'Zari Embroidery Detail' },
-    { src: '/images/landing/assets/insta_3.png', alt: 'Groom Sherwani Portrait' },
+    { src: '/images/landing/assets/insta_3.png', alt: 'Royal Bridal Portrait' },
     { src: '/images/landing/assets/insta_4.png', alt: 'Bridal Crimson Lehenga' },
     { src: '/images/landing/assets/insta_5.png', alt: 'Contemporary Lilac Lehenga' },
     { src: '/images/landing/assets/insta_6.png', alt: 'Heritage Handloom Textile' },

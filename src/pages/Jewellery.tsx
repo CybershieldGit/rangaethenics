@@ -19,13 +19,16 @@ const GOLD_TINT =
   'brightness(0) saturate(100%) invert(63%) sepia(42%) saturate(523%) hue-rotate(358deg) brightness(89%) contrast(86%)'
 
 const fallbackCategories = [
+  { name: 'AD Diamond Jewellery', image: '/images/collections/ad_cz_jewellery.jpg' },
+  { name: 'CZ Diamond Jewellery', image: '/images/festive_jewellery.png' },
+  { name: 'Silver Replica Jewellery', image: '/images/collections/silver_replica_jewellery.jpg' },
+  { name: 'Brass Jewellery', image: '/images/Pendants.png' },
+  { name: 'Antique Jewellery', image: '/images/collections/pachi_kundan_antique.jpg' },
+  { name: 'Pachi Kundan Jewellery', image: '/images/collections/pachi_kundan_antique.jpg' },
   { name: 'Necklaces', image: '/images/Necklaces.png' },
   { name: 'Earrings', image: '/images/Earrings.png' },
   { name: 'Rings', image: '/images/Rings.png' },
   { name: 'Bracelets', image: '/images/Bracelets.png' },
-  { name: 'Bangles', image: '/images/Bangles.png' },
-  { name: 'Anklets', image: '/images/Anklets.png' },
-  { name: 'Pendants', image: '/images/Pendants.png' },
 ]
 
 const getJewellerySubcategoryDetails = (name: string, apiImage?: string) => {
@@ -33,7 +36,13 @@ const getJewellerySubcategoryDetails = (name: string, apiImage?: string) => {
   let image = apiImage || '';
 
   if (!image || image === '/images/placeholder.png') {
-    if (lower.includes('necklace') || lower.includes('neck')) image = '/images/Necklaces.png';
+    if (lower.includes('ad diamond')) image = '/images/collections/ad_cz_jewellery.jpg';
+    else if (lower.includes('cz diamond')) image = '/images/festive_jewellery.png';
+    else if (lower.includes('silver replica')) image = '/images/collections/silver_replica_jewellery.jpg';
+    else if (lower.includes('brass')) image = '/images/Pendants.png';
+    else if (lower.includes('antique')) image = '/images/collections/pachi_kundan_antique.jpg';
+    else if (lower.includes('pachi kundan') || lower.includes('kundan')) image = '/images/collections/pachi_kundan_antique.jpg';
+    else if (lower.includes('necklace') || lower.includes('neck')) image = '/images/Necklaces.png';
     else if (lower.includes('earring') || lower.includes('ear ring') || lower.includes('ear')) image = '/images/Earrings.png';
     else if (lower.includes('ring')) image = '/images/Rings.png';
     else if (lower.includes('bracelet')) image = '/images/Bracelets.png';

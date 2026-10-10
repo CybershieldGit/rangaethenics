@@ -20,20 +20,28 @@ const GOLD_TINT =
 
 const fallbackCollections = [
   {
-    name: 'Sarees',
-    image: '/images/sarees.png',
+    name: 'Handblock Printed Sarees (Chanderi, Mul Mul, Dola Silk, Maheshwari, Chiffon & Kota Doria)',
+    image: '/images/collections/handblock_sarees.jpg',
   },
   {
-    name: 'Lehengas',
-    image: '/images/Lehengas.png',
+    name: 'Kurta & Pant Sets',
+    image: '/images/collections/kurta_pant_sets.jpg',
   },
   {
-    name: 'Dupattas',
-    image: '/images/Dupattas.png',
+    name: 'Handblock Printed Short Tops',
+    image: '/images/collections/handblock_short_tops.jpg',
   },
   {
-    name: 'Kurta Sets',
-    image: '/images/Kurta_Sets.png',
+    name: 'Cotton Short Tops',
+    image: '/images/clothing_portrait.png',
+  },
+  {
+    name: 'Mul Cotton Stoles & Linen Dupattas',
+    image: '/images/collections/mul_stoles_linen_dupatta.jpg',
+  },
+  {
+    name: 'Chaniya Choli Festive & Wedding Collection',
+    image: '/images/collections/chaniya_choli_festive.jpg',
   },
 ]
 
