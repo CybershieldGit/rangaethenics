@@ -34,12 +34,12 @@ export function RangethnicsSignature() {
 
             {/* Dual Product Thumbnail Tiles */}
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              {/* Tile 1: Men Sherwani */}
+              {/* Tile 1: Women Handblock Kurta Set */}
               <div className="group relative overflow-hidden rounded-xl border border-[#C5A059]/40 bg-[#F5ECE0] shadow-sm transition-all duration-300 hover:shadow-md">
                 <div className="aspect-[4/3.4] overflow-hidden">
                   <img
-                    src="/images/landing/assets/sig_men.png"
-                    alt="Royal Ivory Silk Sherwani"
+                    src="/images/Kurta_Sets.png"
+                    alt="Handblock Printed Pure Cotton Kurta Set"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>

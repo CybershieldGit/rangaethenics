@@ -41,29 +41,29 @@ export function RangethnicsCategories() {
   const categories = [
     {
       num: '01',
-      title: 'MEN',
-      subtitle: 'ETHNIC WEAR',
-      image: '/images/landing/assets/cat_men.png',
-      alt: 'Men Royal Sherwani Collection',
+      title: 'SAREES',
+      subtitle: 'HANDBLOCK & SILK',
+      image: '/images/landing/assets/cat_sarees.jpg',
+      alt: 'Heritage Handblock and Silk Sarees',
     },
     {
       num: '02',
-      title: 'WOMEN',
-      subtitle: 'ETHNIC WEAR',
+      title: 'KURTA SETS',
+      subtitle: 'COTTON & FESTIVE',
       image: '/images/landing/assets/cat_women.png',
-      alt: 'Women Hand-Embroidered Lehenga Collection',
+      alt: 'Women Hand-Embroidered Kurta Sets and Lehengas',
     },
     {
       num: '03',
       title: 'FESTIVE',
-      subtitle: 'COLLECTION',
-      image: '/images/landing/assets/cat_festive.png',
-      alt: 'Festive Attire Collection',
+      subtitle: 'CHANIYA CHOLI',
+      image: '/images/landing/assets/cat_festive_women.png',
+      alt: 'Festive Attire and Chaniya Choli Collection',
     },
     {
       num: '04',
       title: 'WEDDING',
-      subtitle: 'COLLECTION',
+      subtitle: 'BRIDAL COUTURE',
       image: '/images/landing/assets/cat_wedding.png',
       alt: 'Royal Wedding Bridal Collection',
     },
@@ -134,7 +134,7 @@ export function RangethnicsCategories() {
 
           <div className="max-w-md">
             <p className="font-sans text-[#5C4F48] text-xs sm:text-sm leading-relaxed md:text-right">
-              From everyday elegance to once-in-a-lifetime celebrations, discover collections crafted for every chapter of your story.
+              From everyday handblock elegance to once-in-a-lifetime bridal celebrations, discover women's collections crafted for every chapter of your story.
             </p>
           </div>
         </div>

@@ -114,14 +114,18 @@ export function RangethnicsFooter() {
           {/* Column 2: SHOP (Col span 2) */}
           <div className="lg:col-span-2">
             <h4 className="font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#2B1B17] mb-5">
-              SHOP
+              COLLECTIONS
             </h4>
-            <ul className="space-y-3 font-sans text-xs sm:text-sm text-[#6A5E57]">
-              <li><a href="#categories" className="hover:text-[#2B1B17] transition-colors">Men</a></li>
-              <li><a href="#categories" className="hover:text-[#2B1B17] transition-colors">Women</a></li>
-              <li><a href="#occasions" className="hover:text-[#2B1B17] transition-colors">Festive</a></li>
-              <li><a href="#occasions" className="hover:text-[#2B1B17] transition-colors">Wedding</a></li>
-              <li><a href="#categories" className="hover:text-[#2B1B17] transition-colors">All Collections</a></li>
+            <ul className="space-y-2.5 font-sans text-xs text-[#6A5E57]">
+              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Handblock Sarees</a></li>
+              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Kurta &amp; Pant Sets</a></li>
+              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Cotton Short Tops</a></li>
+              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Mul Stoles &amp; Dupattas</a></li>
+              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Chaniya Choli</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">AD &amp; CZ Diamonds</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Pachi Kundan &amp; Antique</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Silver Replica &amp; Brass</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Earrings &amp; Rings</a></li>
             </ul>
           </div>
 

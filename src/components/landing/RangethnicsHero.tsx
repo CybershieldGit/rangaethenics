@@ -5,7 +5,7 @@ export function RangethnicsHero() {
 
   const slides = [
     {
-      eyebrowLine1: "ETHNIC WEAR FOR LIFE'S",
+      eyebrowLine1: "WOMEN'S ETHNIC WEAR FOR",
       eyebrowLine2: 'BEAUTIFUL MOMENTS',
       line1: 'TIMELESS',
       line2: 'ETHNIC.',
