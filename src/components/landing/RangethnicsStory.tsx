@@ -21,7 +21,7 @@ export function RangethnicsStory() {
 
             {/* Paragraph */}
             <p className="font-sans text-[#5C4F48] text-sm sm:text-base leading-relaxed max-w-lg mb-8">
-              At Rangethnics, we celebrate the grace and individuality of women through timeless weaves, intricate craftsmanship and contemporary silhouettes — creating ethnic wear that feels as special as your moments.
+              At Rangethnics, we celebrate the grace and individuality of women through handblock printed sarees in Chanderi, Mul Mul, Dola Silk, Maheshwari, Chiffon, and Kota Doria, alongside pure cotton kurta sets, short tops, and festive Chaniya Choli — paired with exquisite AD/CZ diamond, Pachi Kundan, silver replica, and antique brass jewellery.
             </p>
 
             {/* Heritage Monogram Seal */}

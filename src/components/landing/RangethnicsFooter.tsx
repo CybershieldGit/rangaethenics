@@ -27,7 +27,6 @@ function YoutubeIcon({ className = 'w-4 h-4' }: { className?: string }) {
   )
 }
 
-// Custom Pinterest SVG icon
 function PinterestIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24">
@@ -55,8 +54,8 @@ export function RangethnicsFooter() {
         {/* Main 5-Column Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-14 border-b border-[#E8DFC8]/60">
           
-          {/* Column 1: Brand & Socials (Col span 4) */}
-          <div className="lg:col-span-4 flex flex-col justify-between">
+          {/* Column 1: Brand & Socials (Col span 3) */}
+          <div className="lg:col-span-3 flex flex-col justify-between">
             <div>
               <a href="#" className="inline-block mb-4">
                 <img
@@ -66,7 +65,7 @@ export function RangethnicsFooter() {
                 />
               </a>
               <p className="font-sans text-xs md:text-sm text-[#6A5E57] leading-relaxed max-w-sm mb-6">
-                Celebrating India's heritage through ethnic wear that is timeless, elegant and made for your most special moments.
+                Celebrating Indian heritage through handcrafted handblock textiles and regal artisanal jewellery for your most special moments.
               </p>
             </div>
 
@@ -111,59 +110,94 @@ export function RangethnicsFooter() {
             </div>
           </div>
 
-          {/* Column 2: SHOP (Col span 2) */}
+          {/* Column 2: CLOTHING RANGE (Col span 3) */}
+          <div className="lg:col-span-3">
+            <h4 className="font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#2B1B17] mb-5">
+              CLOTHING RANGE
+            </h4>
+            <ul className="space-y-2 font-sans text-xs text-[#6A5E57]">
+              <li>
+                <a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">
+                  Handblock Printed Sarees
+                  <span className="block text-[10.5px] text-[#9E784F]">
+                    (Chanderi, Mul Mul, Dola Silk, Maheshwari, Chiffon, Kota Doria)
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">
+                  Cotton Kurta &amp; Pant Sets
+                </a>
+              </li>
+              <li>
+                <a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">
+                  Handblock Printed Short Tops
+                </a>
+              </li>
+              <li>
+                <a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">
+                  Cotton Short Tops
+                </a>
+              </li>
+              <li>
+                <a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">
+                  Mul Cotton Stoles
+                </a>
+              </li>
+              <li>
+                <a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">
+                  Linen Dupatta
+                </a>
+              </li>
+              <li>
+                <a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">
+                  Chaniya Choli Festive &amp; Wedding
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: JEWELLERY (Col span 2) */}
           <div className="lg:col-span-2">
             <h4 className="font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#2B1B17] mb-5">
-              COLLECTIONS
+              JEWELLERY
+            </h4>
+            <ul className="space-y-2 font-sans text-xs text-[#6A5E57]">
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">AD Diamond Jewellery</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">CZ Diamond Jewellery</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Silver Replica Jewellery</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Brass Jewellery</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Antique Jewellery</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Pachi Kundan Jewellery</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Bracelets</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Necklace</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Earrings</a></li>
+              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Rings</a></li>
+            </ul>
+          </div>
+
+          {/* Column 4: COMPANY & HELP (Col span 2) */}
+          <div className="lg:col-span-2">
+            <h4 className="font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#2B1B17] mb-5">
+              ABOUT &amp; CARE
             </h4>
             <ul className="space-y-2.5 font-sans text-xs text-[#6A5E57]">
-              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Handblock Sarees</a></li>
-              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Kurta &amp; Pant Sets</a></li>
-              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Cotton Short Tops</a></li>
-              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Mul Stoles &amp; Dupattas</a></li>
-              <li><a href="#handblock-apparel" className="hover:text-[#2B1B17] transition-colors">Chaniya Choli</a></li>
-              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">AD &amp; CZ Diamonds</a></li>
-              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Pachi Kundan &amp; Antique</a></li>
-              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Silver Replica &amp; Brass</a></li>
-              <li><a href="#jewellery-collection" className="hover:text-[#2B1B17] transition-colors">Earrings &amp; Rings</a></li>
-            </ul>
-          </div>
-
-          {/* Column 3: HELP (Col span 2) */}
-          <div className="lg:col-span-2">
-            <h4 className="font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#2B1B17] mb-5">
-              HELP
-            </h4>
-            <ul className="space-y-3 font-sans text-xs sm:text-sm text-[#6A5E57]">
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Shipping Policy</a></li>
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Returns & Exchanges</a></li>
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Size Guide</a></li>
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">FAQs</a></li>
+              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Our Heritage</a></li>
+              <li><a href="#craftsmanship" className="hover:text-[#2B1B17] transition-colors">The Craft</a></li>
+              <li><a href="#occasions" className="hover:text-[#2B1B17] transition-colors">Occasions</a></li>
+              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Shipping &amp; Delivery</a></li>
+              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Returns &amp; Exchanges</a></li>
               <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Contact Us</a></li>
-            </ul>
-          </div>
-
-          {/* Column 4: COMPANY (Col span 2) */}
-          <div className="lg:col-span-2">
-            <h4 className="font-serif text-xs uppercase tracking-[0.2em] font-semibold text-[#2B1B17] mb-5">
-              COMPANY
-            </h4>
-            <ul className="space-y-3 font-sans text-xs sm:text-sm text-[#6A5E57]">
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">About Us</a></li>
-              <li><a href="#craftsmanship" className="hover:text-[#2B1B17] transition-colors">Our Craft</a></li>
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Careers</a></li>
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Blog</a></li>
-              <li><a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Press</a></li>
             </ul>
           </div>
 
           {/* Column 5: BE A PART OF OUR JOURNEY (Col span 2) */}
           <div className="lg:col-span-2">
             <h4 className="font-serif text-xs uppercase tracking-[0.16em] font-semibold text-[#2B1B17] mb-4">
-              BE A PART OF OUR JOURNEY
+              NEWSLETTER
             </h4>
             <p className="font-sans text-xs text-[#6A5E57] mb-4 leading-relaxed">
-              Get updates on new launches, exclusive offers and more.
+              New arrivals, artisan stories &amp; exclusive festive previews.
             </p>
             <form onSubmit={handleSubscribe} className="relative flex items-center">
               <input
@@ -202,8 +236,8 @@ export function RangethnicsFooter() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 font-sans text-xs text-[#7A6E67]">
           <p>© 2024 Rangethnics. All rights reserved.</p>
           <div className="flex items-center gap-6">
-            <a href="#" className="hover:text-[#2B1B17] transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-[#2B1B17] transition-colors">Terms & Conditions</a>
+            <a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Privacy Policy</a>
+            <a href="#our-story" className="hover:text-[#2B1B17] transition-colors">Terms of Service</a>
           </div>
         </div>
 

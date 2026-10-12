@@ -29,13 +29,13 @@ export function RangethnicsSignature() {
 
             {/* Subtitle */}
             <p className="font-sans text-[#5C4F48] text-sm sm:text-base leading-relaxed mb-8 max-w-md">
-              Contemporary silhouettes inspired by India's timeless traditions.
+              Signature pairings uniting our handblock clothing range with royal AD/CZ and Kundan jewellery.
             </p>
 
             {/* Dual Product Thumbnail Tiles */}
             <div className="grid grid-cols-2 gap-4 sm:gap-6">
-              {/* Tile 1: Women Handblock Kurta Set */}
-              <div className="group relative overflow-hidden rounded-xl border border-[#C5A059]/40 bg-[#F5ECE0] shadow-sm transition-all duration-300 hover:shadow-md">
+              {/* Tile 1: Handblock Kurta Set */}
+              <a href="#handblock-apparel" className="group relative overflow-hidden rounded-xl border border-[#C5A059]/40 bg-[#F5ECE0] shadow-sm transition-all duration-300 hover:shadow-md block">
                 <div className="aspect-[4/3.4] overflow-hidden">
                   <img
                     src="/images/Kurta_Sets.png"
@@ -43,18 +43,26 @@ export function RangethnicsSignature() {
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-              </div>
+                <div className="p-2.5 text-center bg-[#FAF5ED]">
+                  <p className="font-serif text-xs text-[#2B1B17] font-medium">Cotton Kurta &amp; Pant Set</p>
+                  <p className="font-sans text-[10px] text-[#9E784F] uppercase tracking-wider">Clothing Range</p>
+                </div>
+              </a>
 
-              {/* Tile 2: Women Festive Blouse/Attire */}
-              <div className="group relative overflow-hidden rounded-xl border border-[#C5A059]/40 bg-[#F5ECE0] shadow-sm transition-all duration-300 hover:shadow-md">
+              {/* Tile 2: Royal AD / CZ & Kundan Jewellery */}
+              <a href="#jewellery-collection" className="group relative overflow-hidden rounded-xl border border-[#C5A059]/40 bg-[#F5ECE0] shadow-sm transition-all duration-300 hover:shadow-md block">
                 <div className="aspect-[4/3.4] overflow-hidden">
                   <img
-                    src="/images/landing/assets/sig_women.png"
-                    alt="Mustard Gold Festive Embellished Saree"
-                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                    src="/images/collections/ad_cz_jewellery.jpg"
+                    alt="AD and CZ Diamond Jewellery with Kundan Polish"
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
-              </div>
+                <div className="p-2.5 text-center bg-[#FAF5ED]">
+                  <p className="font-serif text-xs text-[#2B1B17] font-medium">AD &amp; CZ Diamond Sets</p>
+                  <p className="font-sans text-[10px] text-[#9E784F] uppercase tracking-wider">Jewellery Edit</p>
+                </div>
+              </a>
             </div>
 
           </div>
