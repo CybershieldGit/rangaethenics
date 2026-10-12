@@ -40,7 +40,7 @@ export function RangethnicsSignature() {
                   <img
                     src="/images/Kurta_Sets.png"
                     alt="Handblock Printed Pure Cotton Kurta Set"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
               </div>
@@ -51,7 +51,7 @@ export function RangethnicsSignature() {
                   <img
                     src="/images/landing/assets/sig_women.png"
                     alt="Mustard Gold Festive Embellished Saree"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
               </div>
