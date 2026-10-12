@@ -4,11 +4,11 @@ import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { label: 'Our World', to: '#categories' },
-  { label: 'Handblock & Apparel', to: '#handblock-apparel' },
-  { label: 'Royal Jewellery', to: '#jewellery-collection' },
+  { label: 'Clothing Range', to: '#handblock-apparel' },
+  { label: 'Jewellery', to: '#jewellery-collection' },
   { label: 'Craftsmanship', to: '#craftsmanship' },
   { label: 'Celebration', to: '#occasions' },
-  { label: 'About', to: '#our-story' },
+  { label: 'Our Story', to: '#our-story' },
 ]
 
 const navLinkBase =

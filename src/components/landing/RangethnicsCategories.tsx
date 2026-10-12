@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 // Authentic Royal Jali Diamond Medallion with vertical lance lines & finials
 function JaliMedallion({ className = '' }: { className?: string }) {
   return (
@@ -38,35 +40,101 @@ function JaliMedallion({ className = '' }: { className?: string }) {
 }
 
 export function RangethnicsCategories() {
-  const categories = [
+  const [activeTab, setActiveTab] = useState<'clothing' | 'jewellery'>('clothing')
+
+  const clothingPortals = [
     {
       num: '01',
       title: 'SAREES',
-      subtitle: 'HANDBLOCK & SILK',
-      image: '/images/landing/assets/cat_sarees.jpg',
-      alt: 'Heritage Handblock and Silk Sarees',
+      subtitle: '6 HERITAGE WEAVES',
+      image: '/images/collections/handblock_sarees.jpg',
+      alt: 'Handblock printed sarees in chanderi, mul mul, dola silk, maheshwari, chiffon and kota doria',
+      anchor: '#handblock-apparel',
     },
     {
       num: '02',
       title: 'KURTA SETS',
-      subtitle: 'COTTON & FESTIVE',
-      image: '/images/landing/assets/cat_women.png',
-      alt: 'Women Hand-Embroidered Kurta Sets and Lehengas',
+      subtitle: 'PURE COTTON HANDBLOCK',
+      image: '/images/collections/kurta_pant_sets.jpg',
+      alt: 'Handblock printed cotton kurta and pant sets',
+      anchor: '#handblock-apparel',
     },
     {
       num: '03',
-      title: 'FESTIVE',
-      subtitle: 'CHANIYA CHOLI',
-      image: '/images/landing/assets/cat_festive_women.png',
-      alt: 'Festive Attire and Chaniya Choli Collection',
+      title: 'TOPS & STOLES',
+      subtitle: 'COTTON & LINEN DUPATTAS',
+      image: '/images/collections/handblock_short_tops.jpg',
+      alt: 'Handblock short tops, cotton tops, mul stoles and linen dupatta',
+      anchor: '#handblock-apparel',
     },
     {
       num: '04',
-      title: 'WEDDING',
-      subtitle: 'BRIDAL COUTURE',
-      image: '/images/landing/assets/cat_wedding.png',
-      alt: 'Royal Wedding Bridal Collection',
+      title: 'CHANIYA CHOLI',
+      subtitle: 'FESTIVE & WEDDING',
+      image: '/images/collections/cat_chaniya_choli_palace.jpg',
+      alt: 'Chaniya choli festive and wedding collection',
+      anchor: '#handblock-apparel',
     },
+  ]
+
+  const jewelleryPortals = [
+    {
+      num: '01',
+      title: 'AD & CZ DIAMONDS',
+      subtitle: 'BRILLIANT SOLITAIRES',
+      image: '/images/collections/ad_cz_jewellery.jpg',
+      alt: 'American Diamond and CZ diamond jewellery',
+      anchor: '#jewellery-collection',
+    },
+    {
+      num: '02',
+      title: 'PACHI KUNDAN',
+      subtitle: 'UNCUT POLKI & ANTIQUE',
+      image: '/images/collections/pachi_kundan_jewellery.jpg',
+      alt: 'Pachi kundan and antique jewellery',
+      anchor: '#jewellery-collection',
+    },
+    {
+      num: '03',
+      title: 'SILVER & BRASS',
+      subtitle: '92.5 FINISH & ARTISAN BRASS',
+      image: '/images/collections/silver_replica_jewellery.jpg',
+      alt: 'Silver replica jewellery and brass jewellery',
+      anchor: '#jewellery-collection',
+    },
+    {
+      num: '04',
+      title: 'FINE ACCENTS',
+      subtitle: 'NECKLACES, RINGS, EARRINGS',
+      image: '/images/Necklaces.png',
+      alt: 'Bracelets, necklaces, earrings and rings',
+      anchor: '#jewellery-collection',
+    },
+  ]
+
+  const activePortals = activeTab === 'clothing' ? clothingPortals : jewelleryPortals
+
+  const clothingCategoriesList = [
+    'Handblock Printed Sarees (Chanderi, Mul Mul, Dola Silk, Maheshwari, Chiffon & Kota Doria)',
+    'Handblock Printed Cotton Kurta & Pant Sets',
+    'Handblock Printed Short Tops',
+    'Cotton Short Tops',
+    'Mul Cotton Stoles',
+    'Linen Dupatta',
+    'Chaniya Choli Festive & Wedding Collection',
+  ]
+
+  const jewelleryCategoriesList = [
+    'AD Diamond Jewellery',
+    'CZ Diamond Jewellery',
+    'Silver Replica Jewellery',
+    'Brass Jewellery',
+    'Antique Jewellery',
+    'Pachi Kundan Jewellery',
+    'Bracelets',
+    'Necklace',
+    'Earrings',
+    'Rings',
   ]
 
   return (
@@ -122,7 +190,7 @@ export function RangethnicsCategories() {
       <div className="relative mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
         
         {/* Header Row */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-14">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
           <div>
             <span className="text-[11px] md:text-xs font-serif uppercase tracking-[0.25em] text-[#9E784F] font-semibold mb-2 block">
               SHOP BY CATEGORY
@@ -132,17 +200,54 @@ export function RangethnicsCategories() {
             </h2>
           </div>
 
-          <div className="max-w-md">
-            <p className="font-sans text-[#5C4F48] text-xs sm:text-sm leading-relaxed md:text-right">
-              From everyday handblock elegance to once-in-a-lifetime bridal celebrations, discover women's collections crafted for every chapter of your story.
-            </p>
+          {/* Simple, Classic & Elegant Editorial Tabs */}
+          <div className="flex items-center gap-6 sm:gap-8 self-start md:self-end border-b border-[#C5A059]/30 pb-1.5 select-none">
+            <button
+              type="button"
+              onClick={() => setActiveTab('clothing')}
+              className={`group relative pb-2 font-serif text-xs sm:text-[13px] uppercase tracking-[0.22em] transition-all duration-300 cursor-pointer ${
+                activeTab === 'clothing'
+                  ? 'text-[#2B1B17] font-semibold'
+                  : 'text-[#8C7A70] hover:text-[#2B1B17]'
+              }`}
+            >
+              <span>Clothing Range</span>
+              <span
+                className={`absolute -bottom-1.5 left-0 right-0 h-[1.5px] transition-all duration-300 ${
+                  activeTab === 'clothing'
+                    ? 'bg-[#9E784F] opacity-100'
+                    : 'bg-transparent opacity-0 group-hover:bg-[#9E784F]/40 group-hover:opacity-100'
+                }`}
+              />
+            </button>
+
+            <span className="text-[#C5A059]/60 text-[10px] pb-2">✦</span>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('jewellery')}
+              className={`group relative pb-2 font-serif text-xs sm:text-[13px] uppercase tracking-[0.22em] transition-all duration-300 cursor-pointer ${
+                activeTab === 'jewellery'
+                  ? 'text-[#2B1B17] font-semibold'
+                  : 'text-[#8C7A70] hover:text-[#2B1B17]'
+              }`}
+            >
+              <span>Jewellery Collection</span>
+              <span
+                className={`absolute -bottom-1.5 left-0 right-0 h-[1.5px] transition-all duration-300 ${
+                  activeTab === 'jewellery'
+                    ? 'bg-[#9E784F] opacity-100'
+                    : 'bg-transparent opacity-0 group-hover:bg-[#9E784F]/40 group-hover:opacity-100'
+                }`}
+              />
+            </button>
           </div>
         </div>
 
         {/* 4 Jharokha Cards Section with Connecting Arches & Ornamental Medallions */}
         <div className="relative w-full">
           
-          {/* 5 Vertical Medallions (Far left, between each card pair, and far right) on lg screens */}
+          {/* 5 Vertical Medallions on lg screens */}
           <div className="hidden lg:block absolute inset-0 pointer-events-none z-20">
             {/* Medallion 1: Far Left */}
             <div className="absolute -left-6 top-[48%] -translate-y-1/2">
@@ -172,10 +277,11 @@ export function RangethnicsCategories() {
 
           {/* Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 lg:gap-6 items-start">
-            {categories.map((cat) => (
-              <div
-                key={cat.num}
-                className="group relative flex flex-col cursor-pointer"
+            {activePortals.map((cat) => (
+              <a
+                key={cat.num + activeTab}
+                href={cat.anchor}
+                className="group relative flex flex-col cursor-pointer transition-all duration-300"
               >
                 {/* External Number Badge above each arch with accent dash */}
                 <div className="flex items-center gap-1.5 mb-2 pl-2 sm:pl-3 select-none">
@@ -247,10 +353,34 @@ export function RangethnicsCategories() {
                   </div>
                 </div>
 
-              </div>
+              </a>
             ))}
           </div>
 
+        </div>
+
+        {/* Quiet Editorial Category Ribbon */}
+        <div className="mt-12 py-3.5 px-5 rounded-xl bg-[#F5ECE0]/70 border border-[#E8DFC8]/70 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="shrink-0 flex items-center gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#9E784F]" />
+            <span className="font-serif text-[11px] uppercase tracking-[0.2em] text-[#9E784F] font-semibold">
+              {activeTab === 'clothing' ? 'Clothing Categories:' : 'Jewellery Categories:'}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 font-serif text-xs text-[#3D2D27]">
+            {(activeTab === 'clothing' ? clothingCategoriesList : jewelleryCategoriesList).map((item, idx, arr) => (
+              <a
+                key={item}
+                href={activeTab === 'clothing' ? '#handblock-apparel' : '#jewellery-collection'}
+                className="inline-flex items-center gap-3.5 hover:text-[#9E784F] transition-colors"
+              >
+                <span>{item}</span>
+                {idx < arr.length - 1 && (
+                  <span className="text-[#C5A059]/60 text-[9px]">✦</span>
+                )}
+              </a>
+            ))}
+          </div>
         </div>
 
       </div>

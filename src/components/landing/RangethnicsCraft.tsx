@@ -127,7 +127,7 @@ export function RangethnicsCraft() {
 
             {/* Paragraph */}
             <p className="font-sans text-[#5C4F48] text-xs sm:text-sm md:text-[14.5px] leading-[1.7] mb-8 max-w-lg">
-              Every weave, every motif, every detail is a testament to the skill of our artisans. We blend age-old techniques with contemporary design to create pieces that are truly timeless.
+              From handblock printing on Chanderi, Dola Silk, and pure cottons to meticulous setting of AD/CZ diamonds and royal Pachi Kundan, every creation honours India's finest master artisans.
             </p>
 
             {/* 4 Pillars in a Single Horizontal Row of 4 Icons */}
