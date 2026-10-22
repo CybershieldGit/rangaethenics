@@ -138,7 +138,7 @@ export function RangethnicsCategories() {
   ]
 
   return (
-    <section id="categories" className="relative w-full bg-[#FAF6F0] py-16 md:py-24 border-b border-[#E8DFC8]/40 overflow-hidden">
+    <section id="categories" className="relative w-full bg-[#FAF6F0] py-10 sm:py-16 md:py-24 border-b border-[#E8DFC8]/40 overflow-hidden">
       
       {/* SVG ClipPath Definition for Jharokha Arch Top & Concave Bottom */}
       <svg className="absolute w-0 h-0" aria-hidden="true" focusable="false">
@@ -187,21 +187,21 @@ export function RangethnicsCategories() {
         </svg>
       </div>
 
-      <div className="relative mx-auto max-w-[1440px] px-6 sm:px-10 lg:px-16">
+      <div className="relative mx-auto max-w-[1440px] px-4 sm:px-10 lg:px-16">
         
         {/* Header Row */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-6 sm:mb-10 md:mb-12">
           <div>
-            <span className="text-[11px] md:text-xs font-serif uppercase tracking-[0.25em] text-[#9E784F] font-semibold mb-2 block">
+            <span className="text-[11px] md:text-xs font-serif uppercase tracking-[0.25em] text-[#9E784F] font-semibold mb-1.5 sm:mb-2 block">
               SHOP BY CATEGORY
             </span>
-            <h2 className="font-serif text-[#2B1B17] text-3xl sm:text-4xl md:text-5xl font-normal tracking-[0.02em]">
+            <h2 className="font-serif text-[#2B1B17] text-2xl sm:text-4xl md:text-5xl font-normal tracking-[0.02em]">
               EXPLORE OUR WORLD
             </h2>
           </div>
 
           {/* Simple, Classic & Elegant Editorial Tabs */}
-          <div className="flex items-center gap-6 sm:gap-8 self-start md:self-end border-b border-[#C5A059]/30 pb-1.5 select-none">
+          <div className="flex items-center gap-4 sm:gap-8 self-start md:self-end border-b border-[#C5A059]/30 pb-1.5 select-none">
             <button
               type="button"
               onClick={() => setActiveTab('clothing')}
@@ -275,8 +275,8 @@ export function RangethnicsCategories() {
             </div>
           </div>
 
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7 lg:gap-6 items-start">
+          {/* Cards Grid: 2 columns on mobile, 4 columns on large screens */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-6 items-start">
             {activePortals.map((cat) => (
               <a
                 key={cat.num + activeTab}
@@ -284,11 +284,11 @@ export function RangethnicsCategories() {
                 className="group relative flex flex-col cursor-pointer transition-all duration-300"
               >
                 {/* External Number Badge above each arch with accent dash */}
-                <div className="flex items-center gap-1.5 mb-2 pl-2 sm:pl-3 select-none">
-                  <span className="font-serif text-xs md:text-sm font-semibold tracking-[0.2em] text-[#9E784F]">
+                <div className="flex items-center gap-1.5 mb-1.5 sm:mb-2 pl-1.5 sm:pl-3 select-none">
+                  <span className="font-serif text-[11px] sm:text-xs md:text-sm font-semibold tracking-[0.16em] sm:tracking-[0.2em] text-[#9E784F]">
                     {cat.num}
                   </span>
-                  <span className="w-3.5 h-[1px] bg-[#9E784F]/40" />
+                  <span className="w-2.5 sm:w-3.5 h-[1px] bg-[#9E784F]/40" />
                 </div>
 
                 {/* Outer Architectural Framing Arch & Card Container */}
@@ -297,7 +297,7 @@ export function RangethnicsCategories() {
                   {/* Outer Arch Framing Line */}
                   <svg
                     viewBox="0 0 100 120"
-                    className="absolute -top-3.5 -inset-x-2 w-[calc(100%+16px)] h-28 pointer-events-none z-10 overflow-visible"
+                    className="absolute -top-2 sm:-top-3.5 -inset-x-1 sm:-inset-x-2 w-[calc(100%+8px)] sm:w-[calc(100%+16px)] h-16 sm:h-24 lg:h-28 pointer-events-none z-10 overflow-visible"
                     fill="none"
                   >
                     <path
@@ -310,7 +310,7 @@ export function RangethnicsCategories() {
 
                   {/* Card Body with Jharokha Arch Top & Concave Wave Bottom */}
                   <div
-                    className="relative w-full aspect-[3/4.8] overflow-hidden bg-[#F5ECE0] shadow-[0_14px_35px_rgba(43,27,23,0.08)] transition-all duration-500 group-hover:shadow-[0_22px_45px_rgba(43,27,23,0.16)] group-hover:-translate-y-1"
+                    className="relative w-full aspect-[3/4.2] sm:aspect-[3/4.8] overflow-hidden bg-[#F5ECE0] shadow-[0_8px_25px_rgba(43,27,23,0.06)] sm:shadow-[0_14px_35px_rgba(43,27,23,0.08)] transition-all duration-500 group-hover:shadow-[0_22px_45px_rgba(43,27,23,0.16)] group-hover:-translate-y-1"
                     style={{
                       clipPath: 'url(#jharokhaCardClip)',
                     }}
@@ -341,11 +341,11 @@ export function RangethnicsCategories() {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent pointer-events-none z-10" />
 
                     {/* Bottom Card Labels */}
-                    <div className="absolute bottom-6 left-5 right-5 z-20">
-                      <h3 className="font-serif text-2xl sm:text-3xl font-light tracking-[0.06em] text-white leading-tight">
+                    <div className="absolute bottom-3 sm:bottom-6 left-3 sm:left-5 right-3 sm:right-5 z-20">
+                      <h3 className="font-serif text-sm sm:text-2xl lg:text-3xl font-light tracking-[0.04em] sm:tracking-[0.06em] text-white leading-tight">
                         {cat.title}
                       </h3>
-                      <p className="font-sans text-[10px] md:text-[11px] uppercase tracking-[0.25em] text-[#E8DFC8] font-medium mt-1">
+                      <p className="font-sans text-[8.5px] sm:text-[10px] md:text-[11px] uppercase tracking-[0.16em] sm:tracking-[0.25em] text-[#E8DFC8] font-medium mt-0.5 sm:mt-1 line-clamp-1">
                         {cat.subtitle}
                       </p>
                     </div>
@@ -360,23 +360,23 @@ export function RangethnicsCategories() {
         </div>
 
         {/* Quiet Editorial Category Ribbon */}
-        <div className="mt-12 py-3.5 px-5 rounded-xl bg-[#F5ECE0]/70 border border-[#E8DFC8]/70 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="mt-6 sm:mt-12 py-3 sm:py-3.5 px-3.5 sm:px-5 rounded-xl bg-[#F5ECE0]/70 border border-[#E8DFC8]/70 flex flex-col md:flex-row items-start md:items-center justify-between gap-2.5 sm:gap-4">
           <div className="shrink-0 flex items-center gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-[#9E784F]" />
-            <span className="font-serif text-[11px] uppercase tracking-[0.2em] text-[#9E784F] font-semibold">
+            <span className="font-serif text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-[#9E784F] font-semibold">
               {activeTab === 'clothing' ? 'Clothing Categories:' : 'Jewellery Categories:'}
             </span>
           </div>
-          <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 font-serif text-xs text-[#3D2D27]">
+          <div className="flex flex-wrap items-center gap-x-2.5 sm:gap-x-3.5 gap-y-1 sm:gap-y-1.5 font-serif text-[11px] sm:text-xs text-[#3D2D27]">
             {(activeTab === 'clothing' ? clothingCategoriesList : jewelleryCategoriesList).map((item, idx, arr) => (
               <a
                 key={item}
                 href={activeTab === 'clothing' ? '#handblock-apparel' : '#jewellery-collection'}
-                className="inline-flex items-center gap-3.5 hover:text-[#9E784F] transition-colors"
+                className="inline-flex items-center gap-2 sm:gap-3.5 hover:text-[#9E784F] transition-colors"
               >
                 <span>{item}</span>
                 {idx < arr.length - 1 && (
-                  <span className="text-[#C5A059]/60 text-[9px]">✦</span>
+                  <span className="text-[#C5A059]/60 text-[8px] sm:text-[9px]">✦</span>
                 )}
               </a>
             ))}
