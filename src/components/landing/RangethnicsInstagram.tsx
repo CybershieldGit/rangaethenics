@@ -31,7 +31,7 @@ export function RangethnicsInstagram() {
               FOLLOW US
             </span>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/rang_3918?rpxt=cWh5NWh6b25zYTd2&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               className="group inline-flex items-center gap-2 font-serif text-2xl sm:text-3xl text-[#2B1B17] hover:text-[#9E784F] tracking-[0.04em] transition-colors"

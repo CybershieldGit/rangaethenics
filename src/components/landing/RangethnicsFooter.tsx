@@ -72,7 +72,7 @@ export function RangethnicsFooter() {
             {/* Social Icons */}
             <div className="flex items-center gap-3">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/rang_3918?rpxt=cWh5NWh6b25zYTd2&utm_source=qr"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full border border-[#C5A059]/40 bg-white/60 hover:bg-[#2B1B17] hover:text-white text-[#2B1B17] flex items-center justify-center transition-colors shadow-xs"
@@ -81,7 +81,7 @@ export function RangethnicsFooter() {
                 <InstagramIcon className="w-3.5 h-3.5" />
               </a>
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/share/19ZkvRdity/?mibextid=wwXIfr"
                 target="_blank"
                 rel="noreferrer"
                 className="w-8 h-8 rounded-full border border-[#C5A059]/40 bg-white/60 hover:bg-[#2B1B17] hover:text-white text-[#2B1B17] flex items-center justify-center transition-colors shadow-xs"
